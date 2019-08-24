@@ -572,6 +572,7 @@ namespace settings
 			config["misc_esp_ammo"] = settings::esp::ammo;
 			config["misc_esp_kit"] = settings::esp::haskit;
 			config["misc.choke_indicator"] = settings::visuals::choke;
+			Option::Save(config["mics.rcs_cross_color"], visuals::recoilcolor);
 
 			config["glow.enemy"] = glow::GlowEnemyEnabled;
 			config["glow.team"] = glow::GlowTeamEnabled;
