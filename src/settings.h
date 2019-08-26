@@ -53,7 +53,7 @@ struct weapon_setting
 		bool bt2 = false;
 		int ticks = 6;
 		bool legit = false;
-		int time = 200;
+		float time = 0.2f;
 	} backtrack;
 
 	bool autodelay = false;
