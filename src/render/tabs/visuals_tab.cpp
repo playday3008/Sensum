@@ -181,10 +181,10 @@ namespace render
 				columns(1);
 
 				checkbox("Real Angle Chams", &settings::chams::desync);
-				separator("BT Chams - Mode");
-				ImGui::Combo("BT Chams Mode", &settings::chams::bttype, bttype, IM_ARRAYSIZE(bttype));
-				checkbox("BT Chams - Flat", &settings::chams::btflat);
-				ColorEdit4("BT Color", &settings::chams::btcolor);
+				//separator("BT Chams - Mode"); //BT CHAMS CAUSES FPS DROPS!!!
+				//ImGui::Combo("BT Chams Mode", &settings::chams::bttype, bttype, IM_ARRAYSIZE(bttype));
+				//checkbox("BT Chams - Flat", &settings::chams::btflat);
+				//ColorEdit4("BT Color", &settings::chams::btcolor);
 
 				separator("Colors - Chams");
 				ColorEdit4("Enemy Visible", &settings::chams::EnemyColor_vis);

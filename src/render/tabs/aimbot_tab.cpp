@@ -304,7 +304,7 @@ namespace render
 
 					ImGui::SliderFloatLeftAligned(___("Smooth:", u8"Плавность:"), &settings->smooth, 1, 15.f, "%.1f %");
 
-					ImGui::SliderFloatLeftAligned(___("Lag Compensation:", u8"Лаг компенсация:"), &settings->backtrack.time, 0.f, 0.2f, ___("%.2f ms", u8"%.0f тиков"));
+					ImGui::SliderIntLeftAligned(___("Lag Compensation:", u8"Лаг компенсация:"), &settings->backtrack.ticks, 0, 12, ___("%.0f ms", u8"%.0f тиков"));
 
 					ImGui::SliderIntLeftAligned(___("Hit Chance:", u8"Мин шанс попадания:"), &settings->min_hitchanse, 0, 100, "%.0f%%");
 				}

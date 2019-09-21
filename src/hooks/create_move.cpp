@@ -189,7 +189,7 @@ namespace hooks
 		static int definition_index = 7;
 		auto a_settings = &settings::aimbot::m_items[definition_index];
 
-		g_Backtrack.OnMove(cmd); //new backtrack for backtrack chams (WIP)
+		//g_Backtrack.OnMove(cmd); //New backtrack - CAUSES FPS DROPS
 
 		if (a_settings->recoil.enabled)
 			aimbot::OnMove(cmd);
@@ -223,7 +223,7 @@ namespace hooks
 
 		if (settings::desync::enabled2 && g::client_state->chokedcommands >= max_choke_ticks) {
 			*sendpacket2 = true;
-			//cmd->viewangles = g::client_state->viewangles; //Movement fucked up if ping high.
+			cmd->viewangles = g::client_state->viewangles;
 		}
 
 		slow_walk::handle(cmd);
