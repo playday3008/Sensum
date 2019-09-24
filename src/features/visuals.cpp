@@ -402,7 +402,7 @@ namespace visuals
 		int cy = y / 2;
 
 
-		VGSHelper::Get().DrawTextW(side > 0.0f ? "<" : ">", side > 0.0f ? cx - 50 : cx + 50, cy - 2, Color::White, 20);
+		VGSHelper::Get().DrawText(side > 0.0f ? "<" : ">", side > 0.0f ? cx - 50 : cx + 40, cy - 10, Color::White, 19);
 	}
 
 	void DesyncChams()
@@ -416,7 +416,7 @@ namespace visuals
 		IMaterial* regular = g::mat_system->FindMaterial("simple_regular", TEXTURE_GROUP_MODEL);
 		IMaterial* Metallic = g::mat_system->FindMaterial("simple_reflective", TEXTURE_GROUP_MODEL);
 		OrigAng = g::local_player->GetAbsAngles2();
-		g::local_player->SetAngle2(Vector(0, g::client_state->viewangles.yaw - g::local_player->m_flLowerBodyYawTarget(), 0));
+		g::local_player->SetAngle2(Vector(0, g::local_player->GetPlayerAnimState2()->m_flEyeYaw, 0)); //around 90% accurate
 		if (g::Input->m_fCameraInThirdPerson)
 		{
 			g::mdl_render->ForcedMaterialOverride(Metallic);
