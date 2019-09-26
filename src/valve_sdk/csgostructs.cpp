@@ -124,17 +124,17 @@ bool c_base_entity::is_dormant()
 
 float c_base_combat_weapon::GetInaccuracy()
 {
-	return CallVFunction<float(__thiscall*)(void*)>(this, 477)(this);
+	return CallVFunction<float(__thiscall*)(void*)>(this, 478)(this);
 }
 
 float c_base_combat_weapon::GetSpread()
 {
-	return CallVFunction<float(__thiscall*)(void*)>(this, 447)(this);
+	return CallVFunction<float(__thiscall*)(void*)>(this, 448)(this);
 }
 
 void c_base_combat_weapon::UpdateAccuracyPenalty()
 {
-	CallVFunction<void(__thiscall*)(void*)>(this, 478)(this);
+	CallVFunction<void(__thiscall*)(void*)>(this, 479)(this);
 }
 
 void c_base_player::PVSFix()
@@ -183,18 +183,18 @@ void c_base_player::InvalidateBoneCache()
 
 void c_base_player::UpdateClientSideAnimation()
 {
-	CallVFunction<void(__thiscall*)(void*)>(this, 222)(this);
+	CallVFunction<void(__thiscall*)(void*)>(this, 223)(this);
 }
 
 bool c_base_entity::IsPlayer()
 {
 	//return GetClientClass()->m_ClassID == EClassId::CCSPlayer;
-	return CallVFunction<bool(__thiscall*)(void*)>(this, 156)(this);
+	return CallVFunction<bool(__thiscall*)(void*)>(this, 157)(this);
 }
 
 bool c_base_entity::IsWeapon()
 {
-	return CallVFunction<bool(__thiscall*)(c_base_entity*)>(this, 164)(this);
+	return CallVFunction<bool(__thiscall*)(c_base_entity*)>(this, 165)(this);
 }
 
 bool c_base_entity::IsPlantedC4()
@@ -210,7 +210,7 @@ bool c_base_entity::IsDefuseKit()
 CCSWeaponInfo* c_base_combat_weapon::get_weapon_data()
 {
 	//return interfaces::weapon_system->GetWpnData(m_iItemDefinitionIndex());
-	return CallVFunction<CCSWeaponInfo * (__thiscall*)(void*)>(this, 455)(this);
+	return CallVFunction<CCSWeaponInfo * (__thiscall*)(void*)>(this, 456)(this);
 }
 
 bool c_base_combat_weapon::HasBullets()
