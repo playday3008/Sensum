@@ -20,6 +20,7 @@ namespace color_modulation
 	void event();
 	void handle();
 	void SkyChanger();
+	void SetMatForce();
 }
 
 namespace fake_lags
@@ -37,7 +38,7 @@ namespace visuals
 	void RenderPunchCross();
 	void RenderHitmarker();
 	void RenderNoScopeOverlay();
-	//void DrawGrenade(c_base_entity* ent);
+	void DrawGrenade(c_base_entity* ent);
 	void SpreadCircle();
 	void bomb_esp(c_planted_c4* entity) noexcept;
 	void DrawFov(); //todo
@@ -46,6 +47,9 @@ namespace visuals
 	void AAIndicator();
 	void RenderBacktrack();
 	void RenderSkeleton(c_base_entity* ent);
+	void KnifeLeft();
+	void DrawCircleTest();
+	void NadeHelper();
 }
 
 namespace esp

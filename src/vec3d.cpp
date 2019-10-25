@@ -50,7 +50,7 @@ float vec3_t::normalize_float() {
 	return l;
 }
 
-float vec3_t::distance_to(const vec3_t &other) {
+float vec3_t::distance_to(const vec3_t& other) {
 	vec3_t delta;
 	delta.x = x - other.x;
 	delta.y = y - other.y;
@@ -115,5 +115,5 @@ float vec3_t::dot(const vec3_t other) {
 float vec3_t::dot(const float* other) {
 	const vec3_t& a = *this;
 
-	return(a.x*other[0] + a.y*other[1] + a.z*other[2]);
+	return(a.x * other[0] + a.y * other[1] + a.z * other[2]);
 }

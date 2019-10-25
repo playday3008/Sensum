@@ -26,6 +26,8 @@ namespace globals
 	int yaw_offset = 90; //90
 	float last_yaw_offset = 90.f; //90
 
+	int teamkills = 0;
+
 	std::string settings;
 	std::string playername;
 
@@ -33,6 +35,8 @@ namespace globals
 	ImDrawList* draw_list = nullptr;
 
 	std::map<int, int> team_damage = { };
+
+	std::map<int, int> team_kill = { };
 
 	namespace view_matrix
 	{

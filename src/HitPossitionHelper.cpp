@@ -46,7 +46,7 @@ void HitPossitionHelper::PlayerHurt(IGameEvent* event)
 			info = saver.hitpositions.erase(info);
 			continue;
 		}
-		
+
 		Vector position = info->Pos;
 		float Distance = EPosition.DistTo(position);
 
@@ -104,11 +104,7 @@ void HitPossitionHelper::ShotTracer(Vector shot_pos, Vector hit_pos)
 		return;
 	}
 
-	//Color clr = Color(Math::RandomInt(0, 255), Math::RandomInt(0, 255), Math::RandomInt(0, 255));
-
 	Color clr = settings::visuals::clr_bullet_tracer;
-
-	// !g_Options.vis_bullet_tracer
 
 	BeamInfo_t beamInfo;
 	beamInfo.m_nType = TE_BEAMPOINTS;

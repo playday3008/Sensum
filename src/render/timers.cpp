@@ -5,6 +5,9 @@
 #include "../helpers/entities.h"
 #include "../features/features.h"
 #include "..//helpers/notifies.h"
+#include "render.h"
+#include "..//Sounds.h"
+#include "..//esp.hpp"
 
 namespace render
 {
@@ -143,6 +146,227 @@ namespace render
 					text_pos = ImVec2(start_pos.x + 240.f + 2.f, !is_top ? end_pos.y - 2.f - txt_size2.y : end_pos.y + 2.f);
 					imdraw::outlined_text("HP", text_pos, ImGui::GetColorU32(ImVec4::White));
 				}
+			}
+
+			struct player_info_t
+			{
+				bool is_ct_team;
+				std::string name;
+				int money;
+				int hp;
+				int id;
+				int level;
+				int wins;
+				float distance;
+			};
+
+			struct grief_box_info_t
+			{
+				std::string name;
+				int id;
+			};
+
+			std::vector<player_info_t> pinfo;
+			std::vector<grief_box_info_t> ginfo;
+
+			auto player_resource = *interfaces::player_resource;
+			if (!player_resource)
+				return;
+
+			for (int i = 1; i < interfaces::engine_client->GetMaxClients(); ++i)
+			{
+				c_base_player* player = c_base_player::GetPlayerByIndex(i);
+
+				if (!player)
+					continue;
+
+				auto info = player->GetPlayerInfo();
+
+				//std::string a = std::to_string(logbuy::buy[257]);
+
+				if (player->IsEnemy() && player->IsPlayer() && !(player->GetPlayerInfo().ishltv))
+				{
+
+					pinfo.push_back({
+						player->m_iTeamNum() == team::team_ct,
+						info.szName,
+						player->m_iAccount(),
+						player->m_iHealth(),
+						player->GetPlayerInfo().userId,
+						player_resource->GetLevel()[player->GetIndex()],
+						player_resource->GetWins()[player->GetIndex()],
+						player->IsDead() ? 0 : g::local_player->m_vecOrigin().DistTo(player->m_vecOrigin())
+						});
+				}
+
+				if (!(player->IsEnemy()) && player->IsPlayer() && !(player->GetPlayerInfo().ishltv))
+				{
+					ginfo.push_back({
+						info.szName,
+						player->GetPlayerInfo().userId
+						});
+				}
+			}
+
+			if (settings::visuals::player_info_box)
+			{
+				ImVec2 OldMinSize = ImGui::GetStyle().WindowMinSize;
+				ImGui::GetStyle().WindowMinSize = ImVec2(0.f, 0.f);
+				ImGui::SetNextWindowSize(ImVec2(215.f, 130.f)); //175
+
+				if (ImGui::Begin("Player Info Box", &settings::visuals::player_info_box, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar))
+				{
+
+					columns(6);
+					{
+						ImGui::SetColumnWidth(-1, 40.f);
+						ImGui::Text(___("Name", u8"Имя"));
+
+						ImGui::NextColumn();
+
+						ImGui::SetColumnWidth(-1, 40.f);
+						ImGui::Text(___("Money", u8"Деньги"));
+
+						ImGui::NextColumn();
+
+						ImGui::SetColumnWidth(-1, 25.f); //48
+						ImGui::Text(___(" HP", u8"Дамаг"));
+
+						ImGui::NextColumn();
+
+						ImGui::SetColumnWidth(-1, 30.f); //45
+						ImGui::Text(___("Level", u8"Дамаг"));
+
+						ImGui::NextColumn();
+
+						ImGui::SetColumnWidth(-1, 30.f);
+						ImGui::Text(___("Wins", u8"Дамаг"));
+
+						ImGui::NextColumn();
+
+						ImGui::SetColumnWidth(-1, 30.f);
+						ImGui::Text(___("Dist", u8"Дамаг"));
+					}
+					columns(1);
+
+					for (const auto it : pinfo)
+					{
+
+						/*ImGui::Text("%s", it.name.c_str());
+						ImGui::SameLine();
+						ImGui::Text("$%i", it.money);
+						ImGui::SameLine();
+						ImGui::Text("%i", it.hp);
+						ImGui::SameLine();
+						ImGui::Text("%d/300", globals::team_damage[it.id]); */
+
+						columns(6);
+						{
+							ImGui::SetColumnWidth(-1, 40.f);
+							ImGui::Text("%s", it.name.c_str());
+
+							ImGui::NextColumn();
+
+							ImGui::SetColumnWidth(-1, 40.f);
+							ImGui::Text("$%i", it.money);
+
+							ImGui::NextColumn();
+
+							ImGui::SetColumnWidth(-1, 25.f);
+							ImGui::Text("%i", it.hp); //globals::team_damage[it.id]
+
+							ImGui::NextColumn();
+
+							ImGui::SetColumnWidth(-1, 30.f);
+							ImGui::Text("   %i", it.level == -1 ? 0 : it.level);
+
+							ImGui::NextColumn();
+
+							ImGui::SetColumnWidth(-1, 30.f);
+							ImGui::Text("   %i", it.wins);
+
+							ImGui::NextColumn();
+
+							ImGui::SetColumnWidth(-1, 30.f);
+							ImGui::Text("%1.f", it.distance);
+						}
+						columns(1);
+
+						if (it.distance > 0 && it.distance <= 1000)
+						{
+							int x, y;
+							g::engine_client->GetScreenSize(x, y);
+
+							text_pos = ImVec2(x / 2, y / 2 - 50);
+							//imdraw::outlined_text("Enemy is close", text_pos, ImGui::GetColorU32(ImVec4::Red));
+
+							settings::visuals::recoilcolor = Color::Red;
+						}
+						else
+						{
+							settings::visuals::recoilcolor = Color::White;
+						}
+					}
+				}
+				pinfo.clear();
+
+				ImGui::End();
+
+				ImGui::GetStyle().WindowMinSize = OldMinSize;
+			}
+
+			if (settings::visuals::grief_box)
+			{
+				ImVec2 OldMinSize = ImGui::GetStyle().WindowMinSize;
+				ImGui::GetStyle().WindowMinSize = ImVec2(0.f, 0.f);
+				ImGui::SetNextWindowSize(ImVec2(145.f, 130.f)); //145.f
+
+				if (ImGui::Begin("Grief Box", &settings::visuals::grief_box, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar))
+				{
+
+					columns(3);
+					{
+						ImGui::SetColumnWidth(-1, 40.f);
+						ImGui::Text(___("Name", u8"Имя"));
+
+						ImGui::NextColumn();
+
+						ImGui::SetColumnWidth(-1, 48.f);
+						ImGui::Text(___("Damage", u8"Дамаг"));
+
+						ImGui::NextColumn();
+
+						ImGui::SetColumnWidth(-1, 45.f);
+						ImGui::Text(___("Kills", u8"Дамаг"));
+					}
+					columns(1);
+
+					for (const auto it : ginfo)
+					{
+
+						columns(3);
+						{
+							ImGui::SetColumnWidth(-1, 40.f);
+							ImGui::Text("%s", it.name.c_str());
+
+							ImGui::NextColumn();
+
+							ImGui::SetColumnWidth(-1, 48.f);
+							ImGui::Text(" %d/300", globals::team_damage[it.id]);
+
+							ImGui::NextColumn();
+
+							ImGui::SetColumnWidth(-1, 45.f);
+							ImGui::Text(" %d/3", globals::team_kill[it.id]);
+						}
+						columns(1);
+					}
+				}
+				pinfo.clear();
+
+				ImGui::End();
+
+				ImGui::GetStyle().WindowMinSize = OldMinSize;
 			}
 
 			ImGui::PopFont();

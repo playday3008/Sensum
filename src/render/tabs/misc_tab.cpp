@@ -152,6 +152,30 @@ namespace render
 
 				ImGui::SliderFloatLeftAligned(___("View Model:", u8"Руки:"), &settings::misc::viewmodel_fov, 54, 120, "%.0f *");
 				ImGui::SliderIntLeftAligned(___("Debug:", u8"Обзор:"), &settings::misc::debug_fov, 80, 120, "%.0f *");
+
+				static const char* skyList[] = { "Baggage", "Tibet", "Embassy", "Italy", "Daylight 1", "Daylight 2", "Daylight 3", "Daylight 4", "Cloudy", "Night 1", "Night 2", "Night Flat", "Day HD", "Day", "Rural", "Vertigo HD", "Vertigo", "Dusty Sky", "Jungle", "Nuke", "Office" };
+
+				separator("Skybox Changer");
+
+				columns(2);
+				{
+					checkbox("Enabled", &settings::visuals::skychanger);
+
+					ImGui::NextColumn();
+					ImGui::Combo("List", &settings::visuals::skychanger_mode, skyList, IM_ARRAYSIZE(skyList));
+				}
+				columns(1);
+
+				if (settings::visuals::skychanger)
+				{
+					color_modulation::SkyChanger();
+				}
+
+				/*if (ImGui::Button("Apply", ImVec2(ImGui::GetContentRegionAvailWidth(), 0.f)))
+				  {
+						color_modulation::SkyChanger();
+				  } */
+
 			});
 
 			ImGui::NextColumn();
@@ -162,10 +186,7 @@ namespace render
 				//checkbox("Disable Animations (?)", u8"Отключить анимации (?)", &globals::no_animations);
 				//tooltip("Disables the cheat menu animations.", u8"Отключает анимации меню чита.");
 
-				static const char* skyList[] = { "Baggage", "Tibet", "Embassy", "Italy", "Daylight 1", "Daylight 2", "Daylight 3", "Daylight 4", "Cloudy", "Night 1", "Night 2", "Night Flat", "Day HD", "Day", "Rural", "Vertigo HD", "Vertigo", "Dusty Sky", "Jungle", "Nuke", "Office" };
-
 				checkbox("Engine Prediction", &settings::movement::engine_prediction);
-
 				checkbox("Radar", u8"Радар", &settings::misc::radar);
 				checkbox("No Flash", u8"Убрать световые", &settings::misc::no_flash);
 				checkbox("No Smoke", u8"Убрать дымовые", &settings::misc::no_smoke);
@@ -178,18 +199,10 @@ namespace render
 				checkbox("Resolver", u8"Постообработка", &settings::desync::resolver);
 				checkbox("Humanised Bhop", u8"Постообработка", &settings::misc::human_bhop);
 				checkbox("Noscope Overlay", u8"Постообработка", &settings::misc::noscope);
+				checkbox("No 3rd Person on Equiped Weapons.", &settings::misc::disable_on_weapon);
+				checkbox("Left Hand Knife", &settings::misc::lefthandknife);
 				checkbox("-98 Nade (?)", &settings::misc::selfnade);
 				tooltip("Look up, Hold mouse 2,When you're fully primed to throw with mouse 2 start holding mouse 1, crouch when released.");
-				checkbox("Bullet Tracer", &settings::visuals::bullet_tracer);
-				ColorEdit4("Bullet Tracer Color (?)", &settings::visuals::clr_bullet_tracer);
-				tooltip("Disabled saving of Bullet Tracer - Causes bug that will make beams not render :(. Default color is purple.");
-
-				separator("Skybox Changer");
-				ImGui::Combo("Sky List", &settings::visuals::skychanger_mode, skyList, IM_ARRAYSIZE(skyList));
-				if (ImGui::Button("Apply", ImVec2(ImGui::GetContentRegionAvailWidth(), 0.f)))
-				{
-					color_modulation::SkyChanger();
-				}
 			});
 
 			ImGui::NextColumn();
@@ -205,33 +218,22 @@ namespace render
 				separator(___("Humanised Bhop Settings", u8"Фейк лаги"));
 
 				ImGui::SliderIntLeftAligned("Bhop Hit Chance", &settings::misc::bhop_hit_chance, 0, 100, "%.0f %%");
+				tooltip("The chance of second hop, first hop is always at 100%");
 				ImGui::SliderIntLeftAligned("Hops Limit", &settings::misc::hops_restricted_limit, 0, 12);
+				tooltip("Will fuckup the bhop after certain amount of hops to look legit.");
 				ImGui::SliderIntLeftAligned("Max Hops Limit", &settings::misc::max_hops_hit, 0, 12);
+				tooltip("Will fuckup the bhop after certain amount of hops to look legit.");
 
-				separator("Chams - Misc");
-
-				checkbox("Viewmodel Weapons", &settings::chams::wepchams);
-				checkbox("Planted C4", &settings::chams::plantedc4_chams);
-				checkbox("Dropped Weapons", &settings::chams::wep_droppedchams);
-				checkbox("Grenades", &settings::chams::nade_chams);
-
-				separator("Chams Misc - Colors");
-
-				ImGui::ColorEdit4("Viewmodel Weapons", settings::chams::clr_weapon_chams, ImGuiColorEditFlags_NoInputs);
-				ImGui::ColorEdit4("Planted C4", settings::chams::clr_plantedc4_chams, ImGuiColorEditFlags_NoInputs);
-				ImGui::ColorEdit4("Dropped Weapons", settings::chams::clr_weapon_dropped_chams, ImGuiColorEditFlags_NoInputs);
-				ImGui::ColorEdit4("Grenades", settings::chams::clr_nade_chams, ImGuiColorEditFlags_NoInputs);
-
-				if (!interfaces::local_player)
+				/*if (!interfaces::local_player)
 				{
 					ImGui::Separator();
 
 					char btn_label[256];
-					sprintf_s(btn_label, "%s (%d)", ___("Invite nearby players", u8"Пригласить ближ. игроков"), lobby_inviter::max_count);
+					sprintf_s(btn_label, "%s (%d)", ___("Invite nearby players", u8"Пригласить ближ. игроков"), lobby_inviter::max_count); //Not working anymore.
 
 					if (ImGui::Button(btn_label, ImVec2(ImGui::GetContentRegionAvailWidth(), 0.f)))
 						lobby_inviter::inviteAll();
-				}
+				} */
 			});
 		}
 	}

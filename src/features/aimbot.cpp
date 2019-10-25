@@ -6,6 +6,7 @@
 #include "../helpers/entities.h"
 #include "..\\hooks\hooks.h"
 #include "..//Backtrack_new.h"
+#include "..//helpers/notifies.h"
 
 QAngle CurrentPunch = { 0,0,0 };
 QAngle RCSLastPunch = { 0,0,0 };
@@ -699,6 +700,7 @@ namespace aimbot
 			reset_vars();
 			return;
 		}
+
 
 		weapon_data = weapon->get_weapon_data();
 

@@ -274,6 +274,7 @@ public:
 	NETVAR(bool, m_bGunGameImmunity, "CCSPlayer", "m_bGunGameImmunity");
 	NETVAR(int32_t, m_iShotsFired, "CCSPlayer", "m_iShotsFired");
 	NETVAR(QAngle, m_angEyeAngles, "CCSPlayer", "m_angEyeAngles[0]");
+	NETVAR(Vector, m_angEyeAngles2, "CCSPlayer", "m_angEyeAngles[0]");
 	NETVAR(int, m_ArmorValue, "CCSPlayer", "m_ArmorValue");
 	NETVAR(bool, m_bHasHeavyArmor, "CCSPlayer", "m_bHasHeavyArmor");
 	NETVAR(bool, m_bHasHelmet, "CCSPlayer", "m_bHasHelmet");
@@ -349,6 +350,11 @@ public:
 		{
 			return this->m_iTeamNum() != g::local_player->m_iTeamNum();
 		}
+	}
+
+	bool IsLocalPlayerEnemy()
+	{
+		return g::local_player->m_iTeamNum() != this->m_iTeamNum();
 	}
 
 	std::array<float, 24> m_flPoseParameter() const
@@ -432,6 +438,7 @@ class c_cs_player_resource : public c_player_resource
 public:
 	NETVAR(int[MAX_PLAYERS], GetRank, "CCSPlayerResource", "m_iCompetitiveRanking");
 	NETVAR(int[MAX_PLAYERS], GetWins, "CCSPlayerResource", "m_iCompetitiveWins");
+	NETVAR(int[MAX_PLAYERS], GetLevel, "CCSPlayerResource", "m_nPersonaDataPublicLevel");
 	NETVAR(int[MAX_PLAYERS], GetTeamColor, "CCSPlayerResource", "m_iCompTeammateColor");
 	NETVAR(char[MAX_PLAYERS][16], GetClanTag, "CCSPlayerResource", "m_szClan");
 	NETVAR(unsigned[MAX_PLAYERS], GetCoin, "CCSPlayerResource", "m_nActiveCoinRank");

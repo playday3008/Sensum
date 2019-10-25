@@ -8,7 +8,7 @@
 Chams::Chams() {
 	std::ofstream("csgo\\materials\\simple_regular.vmt") << R"#("VertexLitGeneric"
 {
-  "$basetexture" "vgui/white_additive"
+  "$basetexture" "vgui/white"
   "$ignorez"      "0"
   "$envmap"       ""
   "$nofog"        "1"
@@ -22,7 +22,7 @@ Chams::Chams() {
 )#";
 	std::ofstream("csgo\\materials\\simple_ignorez.vmt") << R"#("VertexLitGeneric"
 {
-  "$basetexture" "vgui/white_additive"
+  "$basetexture" "vgui/white"
   "$ignorez"      "1"
   "$envmap"       ""
   "$nofog"        "1"
@@ -36,7 +36,7 @@ Chams::Chams() {
 )#";
 	std::ofstream("csgo\\materials\\simple_flat.vmt") << R"#("UnlitGeneric"
 {
-  "$basetexture" "vgui/white_additive"
+  "$basetexture" "vgui/white"
   "$ignorez"      "0"
   "$envmap"       ""
   "$nofog"        "1"
@@ -50,7 +50,7 @@ Chams::Chams() {
 )#";
 	std::ofstream("csgo\\materials\\simple_flat_ignorez.vmt") << R"#("UnlitGeneric"
 {
-  "$basetexture" "vgui/white_additive"
+  "$basetexture" "vgui/white"
   "$ignorez"      "1"
   "$envmap"       ""
   "$nofog"        "1"
@@ -68,6 +68,8 @@ Chams::Chams() {
 	materialFlatIgnoreZ = g::mat_system->FindMaterial("simple_flat_ignorez", TEXTURE_GROUP_MODEL);
 	materialFlat = g::mat_system->FindMaterial("simple_flat", TEXTURE_GROUP_MODEL);
 }
+
+//"$basetexture" "vgui/white_additive"
 
 Chams::~Chams() {
 	std::remove("csgo\\materials\\simple_regular.vmt");
@@ -138,11 +140,11 @@ void Chams::OnSceneEnd()
 			continue;
 		}
 
-		
-		 Color clr = IsLocal ? LocalColor : (IsTeam ? TeamColor : EnemyColor);
-		 Color clr2 = IsLocal ? LocalColorXqz : (IsTeam ? TeamColorXqz : EnemyColorXqz);
-				
-		
+
+		Color clr = IsLocal ? LocalColor : (IsTeam ? TeamColor : EnemyColor);
+		Color clr2 = IsLocal ? LocalColorXqz : (IsTeam ? TeamColorXqz : EnemyColorXqz);
+
+
 		switch (mode)
 		{
 		case ChamsModes::NORMAL:
@@ -222,48 +224,3 @@ void Chams::OverrideMaterial(bool ignoreZ, bool flat, bool wireframe, bool glass
 
 	g::mdl_render->ForcedMaterialOverride(material);
 }
-
-void Chams::OnDrawModelExecute(void* pResults, DrawModelInfo_t* pInfo, matrix3x4_t* pBoneToWorld,
-	float* flpFlexWeights, float* flpFlexDelayedWeights, Vector& vrModelOrigin, int iFlags) {
-	static auto fnDME = hooks::mdlrender::hook.get_original<hooks::mdlrender::draw_model_execute::DrawModelExecute>(hooks::mdlrender::draw_model_execute::index);
-
-	if (!pInfo->m_pClientEntity || !g::local_player)
-		return;
-
-	const auto mdl = pInfo->m_pClientEntity->GetModel();
-
-	float hue = 266.f; //276
-
-	if (settings::chams::bttype == 1 || settings::chams::bttype == 2 && strstr(mdl->szName, "models/player") != nullptr) {
-		
-		auto ent = (c_base_player*)(pInfo->m_pClientEntity->GetIClientUnknown()->GetBaseEntity());
-
-		if (ent && ent->IsPlayer() && ent->IsAlive()) {
-			const auto enemy = ent->m_iTeamNum() != g::local_player->m_iTeamNum();
-			if (!enemy)
-				return;
-
-			if (settings::chams::bttype && g_Backtrack.data.count(ent->EntIndex()) > 0) {
-				auto& data = g_Backtrack.data.at(ent->EntIndex());
-				if (data.size() > 0) {
-					if (settings::chams::bttype == 2) {
-						for (auto& record : data) {
-							hue += 0.2f;
-							if (hue > 276.f)
-								hue = 266.f;
-							OverrideMaterial(false, settings::chams::btflat, false, false, Color(settings::chams::btcolor));  //Color::FromHSB(hue, 1.0f, 1.0f)
-							fnDME(g::g_studiorender, pResults, pInfo, record.boneMatrix, flpFlexWeights, flpFlexDelayedWeights, vrModelOrigin, iFlags);
-						}
-					}
-					else if (settings::chams::bttype == 1) {
-						auto& back = data.back();
-						OverrideMaterial(false, settings::chams::btflat, false, false, Color(settings::chams::btcolor));
-						fnDME(g::g_studiorender, pResults, pInfo, back.boneMatrix, flpFlexWeights, flpFlexDelayedWeights, vrModelOrigin, iFlags);
-					}
-				}
-			}
-		}
-	}
-}
-
- 

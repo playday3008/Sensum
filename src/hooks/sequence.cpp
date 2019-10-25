@@ -116,6 +116,16 @@ namespace hooks
 				return sequence - 1;
 			}
 		}
+		case FNV("models/weapons/v_knife_css.mdl"):
+		{
+			switch (sequence)
+			{
+			case SEQUENCE_DEFAULT_LOOKAT01:
+				return utils::random(SEQUENCE_CSS_LOOKAT01, SEQUENCE_CSS_LOOKAT02);
+			default:
+				return sequence;
+			}
+		}
 		default:
 			return sequence;
 		}

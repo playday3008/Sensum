@@ -1,4 +1,4 @@
-#include "backtrack_new.h"
+﻿#include "backtrack_new.h"
 #include "features/features.h"
 #include "helpers/math.h"
 #include "settings.h"
@@ -15,8 +15,22 @@ void Backtrack::OnMove(CUserCmd* pCmd) {
 		return;
 	}
 
+	weapon_setting a_settings;
+	int definition_index;
+
+	if (settings::aimbot::setting_type == settings_type_t::for_all)
+	{
+		definition_index = 0;
+
+		a_settings = settings::aimbot::m_items[definition_index];
+	}
+	else
+	{
+		a_settings = settings::aimbot::m_items[pWeapon->m_iItemDefinitionIndex()];
+	}
+
 	auto weaponData = pWeapon->get_weapon_data();
-	auto a_settings = settings::aimbot::m_items[pWeapon->m_iItemDefinitionIndex()];
+	//auto a_settings = settings::aimbot::m_items[pWeapon->m_iItemDefinitionIndex()];
 	if (!a_settings.enabled) {
 		data.clear();
 		return;
@@ -33,7 +47,7 @@ void Backtrack::OnMove(CUserCmd* pCmd) {
 	static ConVar* cl_interp = g::cvar->find("cl_interp");
 	static ConVar* cl_updaterate = g::cvar->find("cl_updaterate");
 
-	float updaterate = cl_updaterate->GetFloat();
+	float updaterate = cl_updaterate->GetFloat(); //wasnt static ↓
 
 	float minupdaterate = sv_minupdaterate->GetFloat();
 	float maxupdaterate = sv_maxupdaterate->GetFloat();
@@ -104,6 +118,7 @@ void Backtrack::OnMove(CUserCmd* pCmd) {
 		*(Vector*)((uintptr_t)player + 0xA0) = player->m_vecOrigin();
 		*(int*)((uintptr_t)player + 0xA68) = 0;
 		*(int*)((uintptr_t)player + 0xA30) = 0;
+
 		player->InvalidateBoneCache();
 		player->SetupBones(bd.boneMatrix, 128, BONE_USED_BY_ANYTHING, g::global_vars->curtime);
 

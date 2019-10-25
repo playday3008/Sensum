@@ -99,6 +99,9 @@ namespace color_modulation
 
 		static auto sv_skyname = interfaces::cvar->find(xorstr_("sv_skyname"));
 
+		if (!settings::visuals::skychanger)
+			return;
+
 		switch (settings::visuals::skychanger_mode)
 		{
 		case 0: //Baggage
@@ -170,6 +173,8 @@ namespace color_modulation
 		case 22: //Office
 			sv_skyname->SetValue("office");
 			break;
+		default:
+			break;
 		}
 
 
@@ -194,18 +199,6 @@ namespace color_modulation
 			debug_fov->m_fnChangeCallbacks.m_Size = 0;
 		}
 
-		if (!pitchdown)
-		{
-			pitchdown = interfaces::cvar->find(xorstr_("cl_pitchdown"));
-			pitchdown->m_fnChangeCallbacks.m_Size = 0;
-		}
-
-		if (!pitchup)
-		{
-			pitchup = interfaces::cvar->find(xorstr_("cl_pitchup"));
-			pitchup->m_fnChangeCallbacks.m_Size = 0;
-		}
-
 		r_modelAmbientMin->SetValue(settings::visuals::night_mode ? 1.f : 0.f);
 		mat_force_tonemap_scale->SetValue(settings::visuals::night_mode ? 0.2f : 1.f);
 
@@ -213,13 +206,16 @@ namespace color_modulation
 		//debug_fov->SetValue(settings::misc::debug_fov);
 		mat_postprocess_enable->SetValue(post_processing ? 1 : 0);
 
+	}
 
-		if (settings::esp::mat_force)
-		{
-			static auto mat_force_tonemap_scale = interfaces::cvar->find(xorstr_("mat_force_tonemap_scale"));
+	void SetMatForce()
+	{
+		if (!settings::visuals::night_mode)
+			return;
 
-			mat_force_tonemap_scale->SetValue(settings::esp::mfts);
-		}
+		static auto mat_force_tonemap_scale = interfaces::cvar->find(xorstr_("mat_force_tonemap_scale"));
+
+		mat_force_tonemap_scale->SetValue(settings::esp::mfts);
 	}
 
 	void sniper_crosshair()
@@ -266,7 +262,7 @@ namespace color_modulation
 		if (!is_vars_changed())
 			return;
 
-		last_sky = settings::visuals::sky;
+		//last_sky = settings::visuals::sky;
 
 		post_processing = globals::post_processing;
 		view_model_fov = settings::misc::viewmodel_fov;
@@ -278,6 +274,12 @@ namespace color_modulation
 		arms_wireframe_state = settings::chams::arms::wireframe;
 
 		set_convars();
+		SetMatForce();
+
+
+		static auto sv_skyname = interfaces::cvar->find(xorstr_("sv_skyname"));
+		static auto sv_skyname_backup = interfaces::cvar->find(xorstr_("sv_skyname"))->GetString();
+
 
 		for (auto i = interfaces::mat_system->FirstMaterial(); i != interfaces::mat_system->InvalidMaterial(); i = interfaces::mat_system->NextMaterial(i))
 		{
@@ -314,27 +316,63 @@ namespace color_modulation
 				material->SetMaterialVarFlag(MATERIAL_VAR_WIREFRAME, settings::chams::arms::enabled && settings::chams::arms::wireframe);
 			}
 
-			if (_group == static_prop_textures && settings::visuals::night_mode) //Static props, aka Ticket box on A Mirage or boxes.
+			/*if (_group == static_prop_textures) //Static props, aka Ticket box on A Mirage or boxes.
 			{
-				material->ColorModulate(0.5f, 0.5f, 0.5f);
+				material->ColorModulate(1.f, 1.f, 1.f); //was 0.5
 				//material->SetMaterialVarFlag(MATERIAL_VAR_TRANSLUCENT, false);
-				//material->AlphaModulate(1.0f);
-			}
-
-			/*if (_group == world_textures && settings::visuals::night_mode) //walls
-			{
-				//material->SetMaterialVarFlag(MATERIAL_VAR_TRANSLUCENT, false);
-				material->ColorModulate(0.2f, 0.2f, 0.2f);
 				//material->AlphaModulate(1.0f);
 			} */
 
-			if (_group == particle_textures)
-				material->SetMaterialVarFlag(MATERIAL_VAR_NO_DRAW, false);
+			if (strstr(name, "models/props/de_dust/palace_bigdome"))
+				material->SetMaterialVarFlag(MATERIAL_VAR_NO_DRAW, true);
 
-			static auto sv_skyname = interfaces::cvar->find(xorstr_("sv_skyname"));
+			if (strstr(name, "models/props/de_dust/palace_pillars"))
+				material->ColorModulate(0.30f, 0.30f, 0.30f);
+
+			/*	if (_group == world_textures && settings::visuals::night_mode) //walls
+				{
+					//material->SetMaterialVarFlag(MATERIAL_VAR_TRANSLUCENT, false);
+					material->ColorModulate(0.1f, 0.1f, 0.1f); //was 0.2
+					//material->AlphaModulate(1.0f);
+				} */
+
+			if (_group == particle_textures)
+				material->SetMaterialVarFlag(MATERIAL_VAR_NO_DRAW, true);
 
 			if (settings::visuals::night_mode)
 				sv_skyname->SetValue("sky_csgo_night02");
+
+			if (!settings::visuals::night_mode)
+			{
+				static auto mat_force_tonemap_scale = interfaces::cvar->find(xorstr_("mat_force_tonemap_scale"));
+
+				mat_force_tonemap_scale->SetValue(1.0f);
+				sv_skyname->SetValue(sv_skyname_backup);
+
+				if (_group == static_prop_textures) //Static props, aka Ticket box on A Mirage or boxes.
+				{
+					material->ColorModulate(1.f, 1.f, 1.f); //was 0.5
+					//material->SetMaterialVarFlag(MATERIAL_VAR_TRANSLUCENT, false);
+					material->AlphaModulate(1.0f);
+				}
+
+				if (strstr(name, "models/props/de_dust/palace_bigdome"))
+					material->SetMaterialVarFlag(MATERIAL_VAR_NO_DRAW, false);
+
+				if (strstr(name, "models/props/de_dust/palace_pillars"))
+					material->ColorModulate(1.f, 1.f, 1.f);
+
+				/*if (_group == world_textures && settings::visuals::night_mode) //walls
+				{
+					//material->SetMaterialVarFlag(MATERIAL_VAR_TRANSLUCENT, false);
+					material->ColorModulate(1.f, 1.f, 1.f); //was 0.2
+					//material->AlphaModulate(1.0f);
+				} */
+
+				if (_group == particle_textures)
+					material->SetMaterialVarFlag(MATERIAL_VAR_NO_DRAW, false);
+
+			}
 		}
 	}
 }

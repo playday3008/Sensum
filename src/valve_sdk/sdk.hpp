@@ -76,7 +76,17 @@ private:
 class c_cs_player_resource;
 class CRender;
 class IVEngineVGui;
-class IVDebugOverlay;
+
+class IVDebugOverlay
+{
+public:
+	bool ScreenPosition(const Vector& vIn, Vector& vOut)
+	{
+		typedef bool(__thiscall * oScreenPosition)(void*, const Vector&, Vector&);
+		return CallVFunction<oScreenPosition>(this, 13)(this, vIn, vOut);
+	}
+};
+
 class IRecipientFilter;
 class IEngineSound;
 class IInputSystem
@@ -121,7 +131,7 @@ public:
 		static auto fn = reinterpret_cast<DWORD(__thiscall*)(void*, const char*)>(ptr);
 
 		return (T*)fn(this, name);
-	}
+	} 
 };
 
 class CCSGO_HudChat : public CHud
@@ -136,6 +146,41 @@ public:
 	bool m_isOpen; //0x0058 
 private:
 	char pad_0x0059[0x427]; //0x0059
+};
+
+class CHudChat
+{
+public:
+	enum ChatFilters
+	{
+		CHAT_FILTER_NONE = 0,
+		CHAT_FILTER_JOINLEAVE = 0x000001,
+		CHAT_FILTER_NAMECHANGE = 0x000002,
+		CHAT_FILTER_PUBLICCHAT = 0x000004,
+		CHAT_FILTER_SERVERMSG = 0x000008,
+		CHAT_FILTER_TEAMCHANGE = 0x000010,
+		//=============================================================================
+		// HPE_BEGIN:
+		// [tj]Added a filter for achievement announce
+		//=============================================================================
+
+		CHAT_FILTER_ACHIEVEMENT = 0x000020,
+
+		//=============================================================================
+		// HPE_END
+		//=============================================================================
+	};
+
+	void ChatPrintf(int iPlayerIndex, int iFilter, const char* fmt, ...)
+	{
+		char msg[1024];
+
+		va_list args;
+		va_start(args, fmt);
+		vsprintf(msg, fmt, args);
+		CallVFunction<void(__cdecl*)(void*, int, int, const char*, ...)>(this, 27)(this, iPlayerIndex, iFilter, fmt);
+		va_end(args);
+	}
 };
 
 class C_TEFireBullets
@@ -193,7 +238,7 @@ namespace interfaces
 	extern IFileSystem* file_system;
 	extern CModelRenderSystem* model_render_system;
 	extern IViewRenderBeams* view_render_beams;
-	extern CCSGO_HudChat* hud_chat;
+	extern CHudChat* hud_chat;
 	extern C_TEFireBullets* fire_bullets;
 	extern c_cs_game_rules_proxy* game_rules_proxy;
 	extern glow_manager_t* glow_manager;

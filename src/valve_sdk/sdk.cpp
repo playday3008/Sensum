@@ -60,7 +60,7 @@ namespace interfaces
 	ISteamFriends* steam_friends = nullptr;
 	ISteamGameCoordinator* game_coordinator = nullptr;
 
-	CCSGO_HudChat* hud_chat = nullptr;
+	CHudChat* hud_chat = nullptr;
 	C_TEFireBullets* fire_bullets = nullptr;
 	c_cs_game_rules_proxy* game_rules_proxy = nullptr;
 
@@ -144,7 +144,7 @@ namespace interfaces
 		steam_friends = steam_client->GetISteamFriends(_steam_user, _steam_pipe, "SteamFriends015");
 		steam_http = steam_client->GetISteamHTTP(_steam_user, _steam_pipe, "STEAMHTTP_INTERFACE_VERSION002");
 
-		//hud_chat = Hud->FindHudElement<CCSGO_HudChat>("CCSGO_HudChat");
+		hud_chat = Hud->FindHudElement<CHudChat>("CHudChat"); //"CCSGO_HudChat"
 
 #ifdef _DEBUG
 		PRINT_INTERFACE(global_vars);
@@ -198,4 +198,3 @@ namespace interfaces
 }
 
 namespace g = interfaces; //You dont need now to type interfaces:: , "g::" is shorter,cause why not //MJ409  
-

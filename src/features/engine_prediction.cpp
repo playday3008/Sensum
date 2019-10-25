@@ -23,6 +23,9 @@ namespace engine_prediction
 		if (!was_predicted)
 			return;
 
+		if (!g::engine_client->IsConnected() || !g::engine_client->IsInGame())
+			return;
+
 		if (!m_pPredictionRandomSeed)
 			m_pPredictionRandomSeed = *(int**)(utils::pattern_scan(PREDICTION_RANDOM_SEED) + 2);
 

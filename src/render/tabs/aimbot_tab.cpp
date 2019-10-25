@@ -275,6 +275,10 @@ namespace render
 
 				if (ImGui::Button(___("Current", u8"Текущее")))
 					definition_index = item_definition_index;
+
+				if (weapon)
+					definition_index = item_definition_index;
+
 			});
 
 			ImGui::NextColumn();
@@ -289,7 +293,7 @@ namespace render
 				if (settings->silent.with_smooth && settings->fov < settings->silent.fov)
 					settings->silent.fov = settings->fov;
 
-				ImGui::SliderFloatLeftAligned(___("FOV:", u8"Радиус:"), &settings->silent.fov, 0, settings->silent.with_smooth ? settings->fov : 20.f, "%.1f %");
+				ImGui::SliderFloatLeftAligned(___("FOV:", u8"Радиус:"), &settings->silent.fov, 0, settings->silent.with_smooth ? settings->fov : 20.f, "%.1f %"); //20f
 				//ImGui::SliderInt("##silent.chanse", &settings->silent.chanse, 1, 10, ___("Chanse: %.0f", u8"Шанс срабатывания: %.0f"));
 
 				separator(___("Other", u8"Прочее"));
@@ -304,6 +308,7 @@ namespace render
 
 					ImGui::SliderFloatLeftAligned(___("Smooth:", u8"Плавность:"), &settings->smooth, 1, 15.f, "%.1f %");
 
+					//ImGui::SliderFloatLeftAligned(___("Lag Compensation:", u8"Лаг компенсация:"), &settings->backtrack.time, 0.f, 0.2f, ___("%.2f ms", u8"%.0f тиков"));
 					ImGui::SliderIntLeftAligned(___("Lag Compensation:", u8"Лаг компенсация:"), &settings->backtrack.ticks, 0, 12, ___("%.0f ms", u8"%.0f тиков"));
 
 					ImGui::SliderIntLeftAligned(___("Hit Chance:", u8"Мин шанс попадания:"), &settings->min_hitchanse, 0, 100, "%.0f%%");

@@ -32,10 +32,11 @@ namespace settings
 		bool beams = false;
 		int esp_on_chance;
 		int esp_off_chance;
+		int esp_chance;
 		bool is_flashed = false;
 		bool is_defusing = false;
 		bool is_reloading = false;
-		float mfts = 0.1f;
+		float mfts = 0.2f;
 		bool mat_force = false;
 		bool drawFov;
 		bool bomb_esp = false;
@@ -43,9 +44,12 @@ namespace settings
 		bool haskit = false;
 		bool money = false;
 		bool antiobs = false;
+		bool soundesp = false;
+		bool mat_force_apply = false;
 
 		Color visible_color = Color(0, 200, 80);
 		Color occluded_color = Color(0, 0, 0);
+		float soundesp_color[4]{ 0.603f, 0.f, 1.0f, 1.0f };
 	}
 
 	namespace glow
@@ -62,7 +66,6 @@ namespace settings
 		float GlowC4Planted[4]{ 1.0f, 0.f, 0.f, 255.0f };
 		float GlowDroppedWeapons[4]{ 1.0f, 0.f, 0.f, 255.0f };
 		float GlowNades[4]{ 1.0f, 0.f, 0.f, 255.0f };
-
 	}
 
 	namespace chams
@@ -133,6 +136,8 @@ namespace settings
 	namespace visuals
 	{
 		bool grenade_prediction = false;
+		bool player_info_box = false;
+		bool grief_box = false;
 		bool world_grenades = false;
 		bool sniper_crosshair = true;
 		bool defuse_kit = false;
@@ -161,6 +166,7 @@ namespace settings
 		Color clr_bullet_tracer = Color(154, 0, 255, 255);
 		Color spread_cross_color = Color(255, 0, 0, 255);
 		Color skeletoncolor = Color(255, 255, 255, 255);
+		Color drawfov_color = Color(255, 255, 255, 255);
 	}
 
 	namespace desync
@@ -197,6 +203,7 @@ namespace settings
 	namespace misc
 	{
 		bool radar = false;
+		bool disable_on_weapon = false;
 		bool bhop = false;
 		bool auto_strafe = false;
 		bool no_smoke = false;
@@ -217,6 +224,9 @@ namespace settings
 		bool selfnade;
 		bool lefthandknife;
 		bool legitpeek = false;
+		bool fastpeek = false;
+		bool equip = false;
+
 	};
 
 	void load(std::string name)
@@ -247,6 +257,8 @@ namespace settings
 			Option::Load(root["esp.mat_force_enabled"], esp::mat_force);
 			Option::Load(root["esp.mat_force_value"], esp::mfts);
 			Option::Load(root["esp.draw_aimbot_fov"], esp::drawFov);
+			Option::Load(root["esp.chance_value"], settings::esp::esp_chance);
+			Option::Load(root["esp.sound_esp"], settings::esp::soundesp);
 
 			Option::Load(root["esp.visible_color"], esp::visible_color, Color(0, 200, 80));
 			Option::Load(root["esp.occluded_color"], esp::occluded_color, Color::Black);
@@ -276,11 +288,6 @@ namespace settings
 			Option::Load(root["chams.team_mode"], chams::teammodenew);
 			Option::Load(root["chams.local_mode"], chams::localmodenew);
 
-			Option::Load(root["chams.legit_aa"], chams::desync);
-			Option::Load(root["chams.backtrack"], chams::bttype);
-			Option::Load(root["chams.backtrack_flat"], chams::btflat);
-			Option::Load(root["chams.backtrack_color"], chams::btcolor, Color(0, 255, 248, 147));
-
 			Option::Load(root["chams.enemy_color_vis"], chams::EnemyColor_vis, Color::Black);
 			Option::Load(root["chams.team_color_vis"], chams::TeamColor_vis, Color::Black);
 			Option::Load(root["chams.local_color_vis"], chams::LocalColor_vis, Color::Black);
@@ -288,6 +295,12 @@ namespace settings
 			Option::Load(root["chams.enemy_color_xqz"], chams::EnemyColor_XQZ, Color(0, 200, 80));
 			Option::Load(root["chams.team_color_xqz"], chams::TeamColor_XQZ, Color(0, 200, 80));
 			Option::Load(root["chams.local_color_xqz"], chams::LocalColor_XQZ, Color(0, 200, 80));
+
+			Option::Load(root["chams.legit_aa"], chams::desync);
+
+			Option::Load(root["chams.backtrack"], chams::bttype);
+			Option::Load(root["chams.backtrack_flat"], chams::btflat);
+			Option::Load(root["chams.backtrack_color"], chams::btcolor);
 
 			Option::Load(root["chams.viewmodel_weapons"], chams::wepchams);
 			//Option::Load(root["chams.viewmodel_weapons_color"], chams::clr_weapon_chams[3], (255.f, 255.f, 255.f, 255.f));
@@ -299,7 +312,7 @@ namespace settings
 			//Option::Load(root["chams.plantedc4_color"], chams::clr_plantedc4_chams[3]);
 
 			Option::Load(root["chams.nades"], chams::nade_chams);
-			//Option::Load(root["chams.nades_color"], chams::clr_nade_chams[3]);
+			//Option::Load(root["chams.nades_color"], chams::clr_nade_chams[4]);
 
 			Option::Load(root["chams.arms.enabled"], chams::arms::enabled, false);
 			Option::Load(root["chams.arms.wireframe"], chams::arms::wireframe, true);
@@ -331,7 +344,7 @@ namespace settings
 			Option::Load(root["misc.rcs_cross"], visuals::rcs_cross);
 			Option::Load(root["misc.rcs_cross_mode"], visuals::rcs_cross_mode);
 			Option::Load(root["misc.bullet_tracer"], visuals::bullet_tracer, false);
-			//Option::Load(root["misc.bullet_tracer_color"], visuals::clr_bullet_tracer, Color(154, 0, 255, 255));
+			//Option::Load(root["misc.bullet_tracer_color"], visuals::clr_bullet_tracer, Color(154, 0, 255, 255)); //edited here
 			Option::Load(root["misc.radius"], visuals::radius, 12.f);
 			Option::Load(root["mics.rcs_cross_color"], visuals::recoilcolor);
 			Option::Load(root["misc.no_scope_overlay"], misc::noscope);
@@ -346,6 +359,10 @@ namespace settings
 			Option::Load(root["misc_esp_ammo"], settings::esp::ammo);
 			Option::Load(root["misc_esp_kit"], settings::esp::haskit);
 			Option::Load(root["misc.choke_indicator"], settings::visuals::choke);
+			Option::Load(root["misc.player_info_box"], settings::visuals::player_info_box);
+			Option::Load(root["misc.grief_box"], settings::visuals::grief_box);
+			Option::Load(root["misc.disable_3rd_person_on_weapon"], settings::misc::disable_on_weapon);
+			Option::Load(root["misc.left_hand_knife"], settings::misc::lefthandknife);
 
 			Option::Load(root["glow.enemy"], glow::GlowEnemyEnabled);
 			Option::Load(root["glow.team"], glow::GlowTeamEnabled);
@@ -384,8 +401,7 @@ namespace settings
 				Option::Load(settings["backtrack.legit"], data.backtrack.legit);
 				Option::Load(settings["backtrack.ticks"], data.backtrack.ticks, 6);
 				Option::Load(settings["backtrack.time"], data.backtrack.time, 200);
-
-				if (data.backtrack.ticks < 1 || data.backtrack.ticks > 12)
+				if (data.backtrack.ticks < 0 || data.backtrack.ticks > 12)
 					data.backtrack.ticks = 6;
 
 				if (data.backtrack.time < 0 || data.backtrack.time > 200)
@@ -482,6 +498,8 @@ namespace settings
 			config["esp.mat_force_enabled"] = esp::mat_force;
 			config["esp.mat_force_value"] = esp::mfts;
 			config["esp.draw_aimbot_fov"] = esp::drawFov;
+			config["esp.chance_value"] = settings::esp::esp_chance;
+			config["esp.sound_esp"] = settings::esp::soundesp;
 
 			Option::Save(config["esp.visible_color"], esp::visible_color);
 			Option::Save(config["esp.occluded_color"], esp::occluded_color);
@@ -509,8 +527,8 @@ namespace settings
 			config["chams.legit_aa"] = chams::desync;
 			config["chams.backtrack"] = chams::bttype;
 			config["chams.backtrack_flat"] = chams::btflat;
-
 			Option::Save(config["chams.backtrack_color"], chams::btcolor);
+
 			Option::Save(config["chams.enemy_color_vis"], chams::EnemyColor_vis);
 			Option::Save(config["chams.team_color_vis"], chams::TeamColor_vis);
 			Option::Save(config["chams.local_color_vis"], chams::LocalColor_vis);
@@ -523,7 +541,7 @@ namespace settings
 			config["chams.plantedc4"] = chams::plantedc4_chams;
 			//Option::Save(config["chams.plantedc4_color"], chams::clr_plantedc4_chams[3]);
 			config["chams.nades"] = chams::nade_chams;
-			//Option::Save(config["chams.nades_color"], chams::clr_nade_chams[3]);
+			//Option::Save(config["chams.nades_color"], chams::clr_nade_chams[4]);
 			//Option::Save(config["chams.viewmodel_weapons_color"], chams::clr_weapon_chams[3]);
 
 
@@ -558,7 +576,6 @@ namespace settings
 			config["misc.rcs_cross"] = visuals::rcs_cross;
 			config["misc.rcs_cross_mode"] = visuals::rcs_cross_mode;
 			config["misc.bullet_tracer"] = visuals::bullet_tracer;
-			//Option::Save(config["misc.bullet_tracer_color"], visuals::clr_bullet_tracer); //Here the bug happens
 			config["misc.radius"] = visuals::radius;
 			config["misc.no_scope_overlay"] = misc::noscope;
 			config["misc.self_nade"] = misc::selfnade;
@@ -568,11 +585,16 @@ namespace settings
 			config["misc_kevlar_info"] = settings::esp::kevlarinfo;
 			config["misc_spread_crosshair"] = settings::visuals::spread_cross;
 			Option::Save(config["misc_spread_crosshair_color"], settings::visuals::spread_cross_color);
+			Option::Save(config["mics.rcs_cross_color"], visuals::recoilcolor);
+			//Option::Save(config["misc.bullet_tracer_color"], settings::visuals::clr_bullet_tracer); //Here the bug happens
 			config["misc_esp_money"] = settings::esp::money;
 			config["misc_esp_ammo"] = settings::esp::ammo;
 			config["misc_esp_kit"] = settings::esp::haskit;
 			config["misc.choke_indicator"] = settings::visuals::choke;
-			Option::Save(config["mics.rcs_cross_color"], visuals::recoilcolor);
+			config["misc.player_info_box"] = settings::visuals::player_info_box;
+			config["misc.grief_box"] = settings::visuals::grief_box;
+			config["misc.disable_3rd_person_on_weapon"] = settings::misc::disable_on_weapon;
+			config["misc.left_hand_knife"] = settings::misc::lefthandknife;
 
 			config["glow.enemy"] = glow::GlowEnemyEnabled;
 			config["glow.team"] = glow::GlowTeamEnabled;

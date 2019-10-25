@@ -7,6 +7,15 @@
 
 #include <mutex>
 
+Vector get_rotated_position(Vector start, const float rotation, const float distance)
+{
+	const auto rad = DEG2RAD(rotation);
+	start.x += cosf(rad) * distance;
+	start.y += sinf(rad) * distance;
+
+	return start;
+};
+
 namespace offscreen_entities
 {
 	int alpha = 0;
@@ -39,50 +48,6 @@ namespace offscreen_entities
 
 	}
 
-	void ringbeam(Color color, const Vector& sound_pos)
-	{
-		if (g::local_player || !settings::esp::sound)
-			return;
-
-		//Color clr = Color(Math::RandomInt(0, 255), Math::RandomInt(0, 255), Math::RandomInt(0, 255));
-
-		//Color clr = settings::visuals::clr_bullet_tracer;
-
-		// !g_Options.vis_bullet_tracer
-
-		BeamInfo_t beamInfo;
-		beamInfo.m_nType = TE_BEAMRINGPOINT;
-		beamInfo.m_pszModelName = "sprites/physbeam.vmt";
-		beamInfo.m_nModelIndex = interfaces::mdl_info->GetModelIndex("sprites/physbeam.vmt");
-		beamInfo.m_nHaloIndex = -1;
-		beamInfo.m_flHaloScale = 5;
-		beamInfo.m_flLife = 1.5f; //2.5f
-		beamInfo.m_flWidth = 10.f; //2.5f
-		beamInfo.m_flFadeLength = 1.0f;
-		beamInfo.m_flAmplitude = 0.f; // 3.0f
-		beamInfo.m_flBrightness = color.a();
-		beamInfo.m_flSpeed = 0.f;
-		beamInfo.m_nStartFrame = 0;
-		beamInfo.m_flFrameRate = 60.f;
-		beamInfo.m_flRed = color.r();
-		beamInfo.m_flGreen = color.g();
-		beamInfo.m_flBlue = color.b();
-		beamInfo.m_nSegments = 2;
-		beamInfo.m_bRenderable = true;
-		beamInfo.m_nFlags = FBEAM_SHADEIN;
-		beamInfo.m_vecStart = sound_pos; //+Vector(0, 0, 5); //Sound location
-		beamInfo.m_flStartRadius = 20.f;
-		beamInfo.m_flEndRadius = 640.f;
-
-		auto beam = g::view_render_beams->CreateBeamRingPoint(beamInfo);
-		if (beam)
-		{
-			g::view_render_beams->DrawBeam(beam);
-		}
-
-		g::engine_client->ClientCmd("say called");
-	}
-
 	void sound()
 	{
 		sndList.RemoveAll();
@@ -113,8 +78,6 @@ namespace offscreen_entities
 			if (settings::esp::sound)
 			{
 				//globals::draw_list->AddCircle(ImVec2(vScreen.x, vScreen.y), 12.f, sound_color);
-				ringbeam(Color::Orange, *sndList[i].m_pOrigin);
-
 			}
 
 

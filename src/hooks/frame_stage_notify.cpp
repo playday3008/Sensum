@@ -4,6 +4,7 @@
 #include "../helpers/utils.h"
 #include "../helpers/console.h"
 #include "../features/features.h"
+#include "..//soundesp.h"
 
 namespace hooks
 {
@@ -32,7 +33,7 @@ namespace hooks
 	{
 		skins::handle();
 		resolver::handle();
-
+		sound_esp.draw();
 
 		hook.get_original<fn>(index)(static_cast<IClientNetworkable*>(interfaces::local_player), update_type);
 	}

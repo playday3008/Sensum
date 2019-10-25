@@ -16,6 +16,8 @@ namespace globals
 	extern int yaw_offset;
 	extern float last_yaw_offset;
 
+	extern int teamkills;
+
 	extern QAngle angles;
 	extern ImDrawList* draw_list;
 
@@ -23,6 +25,7 @@ namespace globals
 	extern std::string playername;
 
 	extern std::map<int, int> team_damage;
+	extern std::map<int, int> team_kill;
 
 	void save();
 	void load();

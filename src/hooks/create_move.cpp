@@ -32,6 +32,100 @@ float AngleDiff(float destAngle, float srcAngle) {
 	return delta;
 }
 
+bool IntersectionBoundingBox(const Vector& src, const Vector& dir, const Vector& min, const Vector& max, Vector* hit_point)
+{
+	/*
+	Fast Ray-Box Intersection
+	by Andrew Woo
+	from "Graphics Gems", Academic Press, 1990
+	*/
+
+	constexpr int NUMDIM = 3;
+	constexpr int RIGHT = 0;
+	constexpr int LEFT = 1;
+	constexpr int MIDDLE = 2;
+
+	bool inside = true;
+	char quadrant[NUMDIM];
+	int i;
+
+	// Rind candidate planes; this loop can be avoided if
+	// rays cast all from the eye(assume perpsective view)
+	Vector candidatePlane;
+	for (i = 0; i < NUMDIM; i++)
+	{
+		if (src[i] < min[i])
+		{
+			quadrant[i] = LEFT;
+			candidatePlane[i] = min[i];
+			inside = false;
+		}
+		else if (src[i] > max[i])
+		{
+			quadrant[i] = RIGHT;
+			candidatePlane[i] = max[i];
+			inside = false;
+		}
+		else
+		{
+			quadrant[i] = MIDDLE;
+		}
+	}
+
+	// Ray origin inside bounding box
+	if (inside)
+	{
+		if (hit_point)
+			* hit_point = src;
+		return true;
+	}
+
+	// Calculate T distances to candidate planes
+	Vector maxT;
+	for (i = 0; i < NUMDIM; i++)
+	{
+		if (quadrant[i] != MIDDLE && dir[i] != 0.f)
+			maxT[i] = (candidatePlane[i] - src[i]) / dir[i];
+		else
+			maxT[i] = -1.f;
+	}
+
+	// Get largest of the maxT's for final choice of intersection
+	int whichPlane = 0;
+	for (i = 1; i < NUMDIM; i++)
+	{
+		if (maxT[whichPlane] < maxT[i])
+			whichPlane = i;
+	}
+
+	// Check final candidate actually inside box
+	if (maxT[whichPlane] < 0.f)
+		return false;
+
+	for (i = 0; i < NUMDIM; i++)
+	{
+		if (whichPlane != i)
+		{
+			float temp = src[i] + maxT[whichPlane] * dir[i];
+			if (temp < min[i] || temp > max[i])
+			{
+				return false;
+			}
+			else if (hit_point)
+			{
+				(*hit_point)[i] = temp;
+			}
+		}
+		else if (hit_point)
+		{
+			(*hit_point)[i] = candidatePlane[i];
+		}
+	}
+
+	// ray hits box
+	return true;
+}
+
 namespace hooks
 {
 	bool __stdcall client_mode::create_move_shared::hooked(float input_sample_frametime, CUserCmd* cmd)
@@ -147,7 +241,7 @@ namespace hooks
 					|| std::fabsf(g::local_player->m_vecVelocity().z) <= 100.0f;
 
 				if ((cmd->command_number % 2) == 1) {
-					cmd->viewangles.yaw += 120.0f * side; //was 120.0f
+					cmd->viewangles.yaw += 120.0f * side; //was 120.0f * side
 					if (should_move)
 						cmd->sidemove -= minimal_move;
 					*send_packet = false;
@@ -189,10 +283,11 @@ namespace hooks
 		static int definition_index = 7;
 		auto a_settings = &settings::aimbot::m_items[definition_index];
 
-		//g_Backtrack.OnMove(cmd); //New backtrack - CAUSES FPS DROPS
-
 		if (a_settings->recoil.enabled)
 			aimbot::OnMove(cmd);
+
+		//if (a_settings->backtrack.time >= 0.01f) //NEW BACKTRACK, ENABLE ONLY IF YOU WANT FPS DROPS
+			//g_Backtrack.OnMove(cmd);
 
 		if (g::local_player && g::local_player->IsAlive() && (cmd->buttons & IN_ATTACK || cmd->buttons & IN_ATTACK2))
 			saver.LastShotEyePos = g::local_player->GetEyePos();
@@ -214,6 +309,9 @@ namespace hooks
 
 		if (settings::misc::selfnade)
 			features::SelfNade(cmd);
+
+		if (settings::misc::lefthandknife)
+			visuals::KnifeLeft();
 
 		if (settings::desync::enabled2 && std::fabsf(g::local_player->m_flSpawnTime() - g::global_vars->curtime) > 1.0f)
 			Desync(cmd, sendpacket2);

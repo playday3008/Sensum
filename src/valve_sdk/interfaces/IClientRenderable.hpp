@@ -28,7 +28,7 @@ public:
     virtual int                        GetBody() = 0;
     virtual void                       GetColorModulation(float* color) = 0;
     virtual bool                       LODTest() = 0;
-    virtual bool                       SetupBones(matrix3x4_t *pBoneToWorldOut, int nMaxBones, int boneMask, float currentTime) = 0;
+    virtual bool					   SetupBones(matrix3x4_t *pBoneToWorldOut, int nMaxBones, int boneMask, float currentTime) = 0;
     virtual void                       SetupWeights(const matrix3x4_t *pBoneToWorld, int nFlexWeightCount, float *pFlexWeights, float *pFlexDelayedWeights) = 0;
     virtual void                       DoAnimationEvents(void) = 0;
     virtual void* /*IPVSNotify*/       GetPVSNotifyInterface() = 0;

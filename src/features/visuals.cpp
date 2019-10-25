@@ -112,8 +112,8 @@ namespace visuals
 		if (interfaces::local_player->IsFlashed())
 			return;
 
-		if (!interfaces::local_player->CanSeePlayer(entity, entity->GetRenderOrigin()))
-			return;
+		/*if (!interfaces::local_player->CanSeePlayer(entity, entity->GetRenderOrigin()))
+			return; */
 
 		if (utils::is_line_goes_through_smoke(interfaces::local_player->GetEyePos(), entity->GetRenderOrigin()))
 			return;
@@ -174,6 +174,23 @@ namespace visuals
 
 	}
 
+	void KnifeLeft()
+	{
+
+		static auto left_knife = g::cvar->find("cl_righthand");
+
+		if (!g::local_player || !g::local_player->IsAlive())
+		{
+			left_knife->SetValue(1);
+			return;
+		}
+
+		auto weapon = g::local_player->m_hActiveWeapon();
+		if (!weapon) return;
+
+		left_knife->SetValue(!weapon->IsKnife());
+	}
+
 	void Choke()
 	{
 		std::stringstream ss;
@@ -218,7 +235,7 @@ namespace visuals
 
 			float radiusFOV = tanf(DEG2RAD(aimbot::get_fov())) / tanf(screenFov) * center.x;
 
-			VGSHelper::Get().DrawCircle(center.x, center.y, radiusFOV, 32, Color(255, 255, 255, 100));
+			VGSHelper::Get().DrawCircle(center.x, center.y, radiusFOV, 32, settings::visuals::drawfov_color);
 		}
 	}
 
@@ -358,7 +375,7 @@ namespace visuals
 					}
 					if (settings::chams::nade_chams) {
 						interfaces::render_view->SetColorModulation(settings::chams::clr_nade_chams);
-						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, false);
+						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
 						interfaces::mdl_render->ForcedMaterialOverride(mat);
 						entity->DrawModel(1, 255);
 					}
@@ -408,6 +425,9 @@ namespace visuals
 	void DesyncChams()
 	{
 		if (!g::engine_client->IsInGame() || !g::engine_client->IsConnected())
+			return;
+
+		if (interfaces::local_player->m_bGunGameImmunity() || interfaces::local_player->m_fFlags() & FL_FROZEN)
 			return;
 
 		Vector OrigAng;
@@ -531,7 +551,6 @@ namespace visuals
 		VGSHelper::Get().DrawTextW(buffer, bomb_position.x - 13, bomb_position.y + 8, Color::White, 15);
 		//VGSHelper::Get().DrawFilledBox(bomb_position.x - c4_timer / 2, bomb_position.y + 13, c4_timer, 3, Color::Black);  //wont draw 
 		//VGSHelper::Get().DrawFilledBox(bomb_position.x - c4_timer / 2, bomb_position.y + 13, explode_time, 3, Color::Blue);
-
 	}
 
 	void SpreadCircle()
@@ -549,7 +568,6 @@ namespace visuals
 		if (spread == 0.f)
 			return;
 
-		//Console.WriteLine(spread);
 		int x, y;
 		g::engine_client->GetScreenSize(x, y);
 		float cx = x / 2.f;
@@ -557,7 +575,7 @@ namespace visuals
 		VGSHelper::Get().DrawCircle(cx, cy, spread, 35, settings::visuals::spread_cross_color);
 	}
 
-	/*void DrawGrenade(c_base_entity* ent) // !!! CAUSES FPS DROPS !!!
+	void DrawGrenade(c_base_entity* ent)
 	{
 		auto id = ent->GetClientClass()->m_ClassID;
 		Vector vGrenadePos2D;
@@ -599,22 +617,22 @@ namespace visuals
 
 			if (name.find("incendiarygrenade") != std::string::npos || name.find("fraggrenade") != std::string::npos)
 			{
-				//VGSHelper::Get().DrawBox(bbox.left, bbox.top, bbox.right, bbox.bottom, Color::Red);
+				VGSHelper::Get().DrawBox(bbox.left, bbox.top, bbox.right, bbox.bottom, Color::Red);
 				return;
 			}
-			//VGSHelper::Get().DrawBox(bbox.left, bbox.top, bbox.right, bbox.bottom, Color::Yellow);
+			VGSHelper::Get().DrawBox(bbox.left, bbox.top, bbox.right, bbox.bottom, Color::Yellow);
 			break;
 		}
 
 		case EClassId::CMolotovProjectile:
-			//VGSHelper::Get().DrawBox(bbox.left, bbox.top, bbox.right, bbox.bottom, Color::Red);
+			VGSHelper::Get().DrawBox(bbox.left, bbox.top, bbox.right, bbox.bottom, Color::Red);
 			break;
 
 		case EClassId::CDecoyProjectile:
-			//VGSHelper::Get().DrawBox(bbox.left, bbox.top, bbox.right, bbox.bottom, Color::White);
+			VGSHelper::Get().DrawBox(bbox.left, bbox.top, bbox.right, bbox.bottom, Color::Green);
 			break;
 		}
-	} */
+	}
 
 	void glow() noexcept {
 
@@ -698,6 +716,7 @@ namespace visuals
 		for (auto i = 1; i <= interfaces::entity_list->GetHighestEntityIndex(); ++i)
 		{
 			auto* entity = c_base_player::GetPlayerByIndex(i);
+
 			if (!entity || entity->IsPlayer() || entity->is_dormant() || entity == interfaces::local_player)
 				continue;
 

@@ -427,7 +427,7 @@ namespace render
 		auto current_tab = 0;
 		auto s_visible = false;
 		float window_alpha = 0.f;
-		const auto window_size = ImVec2(720.f, 580.f); //680, 460
+		const auto window_size = ImVec2(720.f, 585.f); //680, 460
 
 		bool is_visible()
 		{
@@ -713,7 +713,7 @@ namespace render
 					___(xorstr_("Misc"), xorstr_(u8"Прочее")),
 					___(xorstr_("Skins"), xorstr_(u8"Скины")),
 					___(xorstr_("Players"), xorstr_(u8"Игроки")),
-					___(xorstr_("Glow"), xorstr_(u8"Визуалы")),
+					___(xorstr_("Colors"), xorstr_(u8"Визуалы")),
 					___(xorstr_("Configs"), xorstr_(u8"Конфиги"))
 				};
 
@@ -853,7 +853,7 @@ namespace render
 						else if (current_tab == 4)
 							players_tab();
 						else if (current_tab == 5)
-							glow_tab();
+							colors_tab();
 						else if (current_tab == 6)
 							configs_tab();
 

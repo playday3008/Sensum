@@ -78,53 +78,6 @@ namespace utils
 			interfaces::view_render_beams->DrawBeam(beam);
 	}
 
-	void sound_esp_beam(c_base_player* player, const Vector& sound_pos)
-	{
-		if (!sound_pos.IsValid())
-			return;
-
-		for (int i = 1; g::global_vars->maxClients; i++)
-		{
-			auto* player = c_base_player::GetPlayerByIndex(i);
-		}
-		if (!player || !player->IsPlayer() || player == interfaces::local_player)
-			return;
-
-		if (player->m_iTeamNum() == interfaces::local_player->m_iTeamNum() && !settings::misc::deathmatch)
-			return;
-
-		//if (player->GetEyePos().DistTo(sound_pos) < 0.1f)
-			//return;
-
-		BeamInfo_t beamInfo;
-		beamInfo.m_nType = TE_BEAMRINGPOINT; //TE_BEAMPOINTS;
-		beamInfo.m_pszModelName = "sprites/laserbeam.vmt"; //"sprites/physbeam.vmt";
-		beamInfo.m_nModelIndex = -1;
-		beamInfo.m_flHaloScale = 0.0f;
-		beamInfo.m_flLife = 0.75f;
-		beamInfo.m_flWidth = 1.5f;
-		beamInfo.m_flEndWidth = 1.5f;
-		beamInfo.m_flFadeLength = 1.0f;
-		beamInfo.m_flAmplitude = 0.f;
-		beamInfo.m_flBrightness = 255.f;
-		beamInfo.m_flSpeed = 2.f;
-		beamInfo.m_nStartFrame = 0;
-		beamInfo.m_flFrameRate = 30.f;
-		beamInfo.m_flRed = player->m_iTeamNum() == team::team_ct ? 0.f : 240.f;
-		beamInfo.m_flGreen = 50.f;
-		beamInfo.m_flBlue = player->m_iTeamNum() == team::team_ct ? 240.f : 0.f;
-		beamInfo.m_nSegments = 1;
-		beamInfo.m_bRenderable = true;
-		beamInfo.m_nFlags = 0;
-		beamInfo.m_vecStart = sound_pos; //Sound location
-		beamInfo.m_flStartRadius = 0.f;
-		beamInfo.m_flEndRadius = 20.f;
-
-		Beam_t* beam = interfaces::view_render_beams->CreateBeamPoints(beamInfo);
-		if (beam)
-			interfaces::view_render_beams->DrawBeam(beam);
-	}
-
 	ImU32 to_im32(const Color& color, const float& alpha)
 	{
 		return ImGui::GetColorU32(ImVec4(color.r() / 255.f, color.g() / 255.f, color.b() / 255.f, alpha));

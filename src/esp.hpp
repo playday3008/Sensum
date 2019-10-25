@@ -19,6 +19,7 @@ public:
 	void DrawTriangle(int count, Vertex_t* vertexes, Color c);
 	void DrawBoxEdges(float x1, float y1, float x2, float y2, Color clr, float edge_size, float size = 1.f);
 	void DrawCircle(float x, float y, float r, int seg, Color clr);
+	void DrawCircle(Vector2D position, float r, int seg, Color clr);
 
 	ImVec2 GetSize(std::string text, int size = 15);
 private:

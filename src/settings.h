@@ -9,6 +9,15 @@ struct aimbot_group
 	std::vector<int> weapons = { };
 };
 
+struct k_weapon_data {
+	int itemDefinitionIndex;
+	int paintKit;
+	int rarity;
+	int seed;
+	float wear;
+	char* name = "";
+};
+
 enum settings_type_t : int
 {
 	separately = 0,
@@ -152,6 +161,7 @@ namespace settings
 		extern bool beams;
 		extern int esp_on_chance;
 		extern int esp_off_chance;
+		extern int esp_chance;
 		extern bool is_reloading;
 		extern float mfts;
 		extern bool mat_force;
@@ -162,9 +172,13 @@ namespace settings
 		extern bool money;
 		extern bool ammo;
 		extern bool antiobs;
+		extern bool soundesp;
+		extern bool mat_force_apply;
 
 		extern Color visible_color;
 		extern Color occluded_color;
+
+		extern float soundesp_color[4];
 	}
 
 	namespace glow
@@ -253,6 +267,8 @@ namespace settings
 	namespace visuals 
 	{
 		extern bool grenade_prediction;
+		extern bool player_info_box;
+		extern bool grief_box;
 		extern bool world_grenades;
 		extern bool sniper_crosshair;
 		extern bool defuse_kit;
@@ -280,6 +296,7 @@ namespace settings
 		extern Color clr_bullet_tracer;
 		extern Color floatc;
 		extern Color skeletoncolor;
+		extern Color drawfov_color;
 
 		extern ImVec4 sky;
 	}
@@ -324,6 +341,7 @@ namespace settings
 		extern float viewmodel_fov;
 		extern bool moon_walk;
 		extern bool deathmatch;
+		extern bool disable_on_weapon;
 		extern bool knife_bot;
 		extern bool radar;
 		extern bool human_bhop;
@@ -338,6 +356,8 @@ namespace settings
 		extern bool selfnade;
 		extern bool lefthandknife;
 		extern bool legitpeek;
+		extern bool fastpeek;
+		extern bool equip;
 	}
 }
 

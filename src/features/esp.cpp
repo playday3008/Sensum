@@ -283,8 +283,11 @@ namespace esp
 					if (settings::esp::armour && settings::esp::armour_position == 2)
 						y_pos += 7.f;
 
+					if (!settings::esp::ammo)
+						y_pos -= 10.f;
+
 					if (!settings::esp::money)
-						y_pos = 22.f;
+						y_pos -= 10.f;
 
 					imdraw::outlined_text(buf, ImVec2(box.left + width / 2.f - defusing_text_size.x / 2.f, y_pos), white_color);
 				}
@@ -450,6 +453,13 @@ void VGSHelper::DrawCircle(float x, float y, float r, int seg, Color clr)
 	g::surface->DrawSetColor(clr);
 	g::surface->DrawOutlinedCircle(x, y, r, seg);
 }
+
+void VGSHelper::DrawCircle(Vector2D position, float r, int seg, Color clr)
+{
+	g::surface->DrawSetColor(clr);
+	g::surface->DrawOutlinedCircle(position.x, position.y, r, seg);
+}
+
 ImVec2 VGSHelper::GetSize(std::string text, int size)
 {
 	if (!Inited)

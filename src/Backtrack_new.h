@@ -9,7 +9,7 @@ struct backtrack_data {
 	Vector hitboxPos;
 	Vector origin;
 	QAngle angle;
-	matrix3x4_t boneMatrix[128];
+	matrix3x4_t boneMatrix[128]; //wasnt static
 };
 
 class Backtrack {

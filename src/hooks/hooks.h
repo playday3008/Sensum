@@ -62,18 +62,6 @@ namespace hooks
 		};
 	};
 
-	struct mdlrender
-	{
-		static vfunc_hook hook;
-
-		struct draw_model_execute
-		{
-			static const int index = 29; //was 21
-			using DrawModelExecute = void(__thiscall*)(void*, void*, DrawModelInfo_t*, matrix3x4_t*, float*, float*, Vector&, int);
-			static void __fastcall hooked(void* pEcx, void* pEdx, void* pResults, DrawModelInfo_t* pInfo, matrix3x4_t* pBoneToWorld, float* flpFlexWeights, float* flpFlexDelayedWeights, Vector& vrModelOrigin, int32_t iFlags);
-		};
-	};
-
 	struct renderview
 	{
 		static vfunc_hook hook;

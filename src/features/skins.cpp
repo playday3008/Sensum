@@ -5,6 +5,7 @@
 #include "../helpers/http.h"
 #include "../helpers/console.h"
 
+
 namespace skins
 {
 	std::map<int, item_setting> m_items = { };
@@ -31,6 +32,7 @@ namespace skins
 		{ WEAPON_KNIFE_GYPSY_JACKKNIFE,{ "models/weapons/v_knife_gypsy_jackknife.mdl", "knife_gypsy_jackknife" } },
 		{ WEAPON_KNIFE_STILETTO,{ "models/weapons/v_knife_stiletto.mdl", "knife_stiletto" } },
 		{ WEAPON_KNIFE_WIDOWMAKER,{ "models/weapons/v_knife_widowmaker.mdl", "knife_widowmaker" } },
+		{ WEAPON_KNIFE_CSS, { "models/weapons/v_knife_css.mdl", "knife_css" } },
 		{ GLOVE_STUDDED_BLOODHOUND,{ "models/weapons/v_models/arms/glove_bloodhound/v_glove_bloodhound.mdl" } },
 		{ GLOVE_T_SIDE,{ "models/weapons/v_models/arms/glove_fingerless/v_glove_fingerless.mdl" } },
 		{ GLOVE_CT_SIDE,{ "models/weapons/v_models/arms/glove_hardknuckle/v_glove_hardknuckle.mdl" } },
@@ -55,10 +57,11 @@ namespace skins
 		{ WEAPON_KNIFE_SURVIVAL_BOWIE, "Bowie Knife" },
 		{ WEAPON_KNIFE_BUTTERFLY, "Butterfly Knife" },
 		{ WEAPON_KNIFE_PUSH, "Shadow Daggers" },
-		{WEAPON_KNIFE_URSUS, "Ursus Knife"},
+		{ WEAPON_KNIFE_URSUS, "Ursus Knife" },
 		{ WEAPON_KNIFE_GYPSY_JACKKNIFE, "Navaja Knife" },
 		{ WEAPON_KNIFE_STILETTO, "Stiletto Knife" },
 		{ WEAPON_KNIFE_WIDOWMAKER, "Talon Knife" },
+		{ WEAPON_KNIFE_CSS, "Classic Knife" },
 	};
 
 	std::vector<weapon_name_t> glove_names =
@@ -85,7 +88,7 @@ namespace skins
 				for (auto& weapon : item["weapons"])
 					weapons.emplace_back(weapon_kit_t{ weapon["index"].asInt(), weapon["rarity"].asString() });
 
-				skin_kits.emplace_back(paint_kit_t{ item["id"].asInt(), item["english"].asString(), item["russian"].asString(), weapons });
+				skin_kits.emplace_back(paint_kit_t{ item["id"].asInt(), item["english"].asString(), weapons });
 			}
 		});
 	}

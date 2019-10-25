@@ -16,6 +16,7 @@ namespace render
 			int rank;
 			int money;
 			int id;
+			int level;
 		};
 
 		std::vector<player_info_t> list;
@@ -82,9 +83,9 @@ namespace render
 				ImGui::NextColumn();
 
 				if (item.rank == 0)
-					ImGui::Text("%s", ranks[item.rank]);
+					ImGui::Text("[%i] %s", item.level, ranks[item.rank]);
 				else
-					ImGui::Text("[%d] %s", item.rank, ranks[item.rank]);
+					ImGui::Text("[%i] %s", item.level, ranks[item.rank]);
 
 				ImGui::PopStyleColor();
 
@@ -145,7 +146,8 @@ namespace render
 					player_resource->GetWins()[player->GetIndex()],
 					player_resource->GetRank()[player->GetIndex()],
 					player->m_iAccount(),
-					player->GetPlayerInfo().userId
+					player->GetPlayerInfo().userId,
+					player_resource->GetLevel()[player->GetIndex()]
 					});
 			}
 

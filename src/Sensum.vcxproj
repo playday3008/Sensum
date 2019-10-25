@@ -14,14 +14,14 @@
     <ProjectGuid>{F3E42845-8D56-4BB3-821D-8163AB1337F0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Sensum</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectName>Sensum</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
@@ -117,7 +117,7 @@
   <ItemGroup>
     <ClCompile Include="Backtrack_new.cpp" />
     <ClCompile Include="Chams.cpp" />
-    <ClCompile Include="glow_tab.cpp" />
+    <ClCompile Include="colors_tab.cpp" />
     <ClCompile Include="config.cpp" />
     <ClCompile Include="deps\blackbone\LocalHook\LocalHookBase.cpp" />
     <ClCompile Include="deps\blackbone\LocalHook\TraceHook.cpp" />
@@ -164,8 +164,8 @@
     <ClCompile Include="hooks\reset.cpp" />
     <ClCompile Include="hooks\sequence.cpp" />
     <ClCompile Include="human_bhop.cpp" />
-    <ClCompile Include="LagPeek.cpp" />
     <ClCompile Include="MaterialManager.cpp" />
+    <ClCompile Include="nade_helper.cpp" />
     <ClCompile Include="render\fonts\droidsans.hpp" />
     <ClCompile Include="render\tabs\aimbot_tab.cpp" />
     <ClCompile Include="render\tabs\configs_tab.cpp" />
@@ -191,6 +191,7 @@
     <ClCompile Include="jsoncpp\jsoncpp.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="options.cpp" />
+    <ClCompile Include="soundesp.cpp" />
     <ClCompile Include="Sounds.cpp" />
     <ClCompile Include="valve_sdk\csgostructs.cpp" />
     <ClCompile Include="valve_sdk\math\Vectors.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="imgui\stb_truetype.h" />
     <ClInclude Include="IStudioRender.h" />
     <ClInclude Include="MaterialManager.h" />
+    <ClInclude Include="nade_helper.h" />
     <ClInclude Include="render\render.h" />
     <ClInclude Include="runtime_saver.h" />
     <ClInclude Include="security\importer.h" />
@@ -252,6 +254,7 @@
     <ClInclude Include="jsoncpp\json.h" />
     <ClInclude Include="options.hpp" />
     <ClInclude Include="singleton.hpp" />
+    <ClInclude Include="soundesp.h" />
     <ClInclude Include="Sounds.h" />
     <ClInclude Include="valve_sdk\csgostructs.hpp" />
     <ClInclude Include="valve_sdk\interfaces\CClientState.h" />
@@ -315,6 +318,9 @@
     <ClInclude Include="valve_sdk\netvars.hpp" />
     <ClInclude Include="valve_sdk\steam.h" />
     <ClInclude Include="vec3d.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

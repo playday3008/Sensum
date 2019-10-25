@@ -304,9 +304,6 @@
     <ClCompile Include="Sounds.cpp">
       <Filter>features\misc</Filter>
     </ClCompile>
-    <ClCompile Include="LagPeek.cpp">
-      <Filter>features\movement</Filter>
-    </ClCompile>
     <ClCompile Include="vec3d.cpp">
       <Filter>valve_sdk\math</Filter>
     </ClCompile>
@@ -319,14 +316,20 @@
     <ClCompile Include="MaterialManager.cpp">
       <Filter>helpers</Filter>
     </ClCompile>
-    <ClCompile Include="glow_tab.cpp">
-      <Filter>render\tabs</Filter>
-    </ClCompile>
     <ClCompile Include="HitPossitionHelper.cpp">
       <Filter>helpers</Filter>
     </ClCompile>
     <ClCompile Include="Backtrack_new.cpp">
       <Filter>features\movement</Filter>
+    </ClCompile>
+    <ClCompile Include="soundesp.cpp">
+      <Filter>features\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="nade_helper.cpp">
+      <Filter>features\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="colors_tab.cpp">
+      <Filter>render\tabs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -657,5 +660,14 @@
     <ClInclude Include="IStudioRender.h">
       <Filter>valve_sdk\interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="soundesp.h">
+      <Filter>features\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="nade_helper.h">
+      <Filter>features\misc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

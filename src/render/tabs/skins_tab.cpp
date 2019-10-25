@@ -79,7 +79,7 @@ namespace render
 					const auto has_query = query_length > 0;
 
 					const auto is_glove = selected_entry.definition_index == GLOVE_CT_SIDE || selected_entry.definition_index == GLOVE_T_SIDE;
-					for (size_t k = 0; k < skins::skin_kits.size(); k++)
+					for (size_t k = 0; k < skins::skin_kits.size(); k++) //for (size_t k = 0; k < skins::skin_kits.size(); k++)
 					{
 						weapon_kit_t weapon_kit;
 						if (!show_all_kits)
@@ -94,18 +94,18 @@ namespace render
 								continue;
 						}
 
-						const auto name = globals::russian_language ? skins::skin_kits[k].russian : skins::skin_kits[k].english;
+						const auto name = skins::skin_kits[k].english;
 						if (has_query)
 						{
-							if (skins::skin_kits[k].russian.length() < query_length && skins::skin_kits[k].english.length() < query_length)
+							if (skins::skin_kits[k].english.length() < query_length)
 								continue;
 
-							if (skins::skin_kits[k].english.find(query) == -1 && skins::skin_kits[k].russian.find(query) == -1)
+							if (skins::skin_kits[k].english.find(query) == -1)
 								continue;
 						}
 
 						ImVec4 color;
-						if (weapon_kit.rarity == "common")
+						/*if (weapon_kit.rarity == "common")
 							color = ImVec4(0.69f, 0.76f, 0.85f, 1.f);
 						else if (weapon_kit.rarity == "rare")
 							color = ImVec4(0.29f, 0.41f, 1.f, 1.f);
@@ -120,8 +120,9 @@ namespace render
 						else if (weapon_kit.rarity == "immortal")
 							color = ImVec4(0.89f, 0.68f, 0.22f, 1.f);
 						else
-							continue;
+							continue; */
 
+						color = ImVec4(0.f, 0.f, 0.f, 1.f);
 						ImGui::PushStyleColor(ImGuiCol_Text, color);
 
 						char buf_name[256];
@@ -138,7 +139,6 @@ namespace render
 			});
 
 			ImGui::NextColumn();
-
 
 			child(___("Customizing", u8"Настройки"), [&selected_entry, &sel_entry2]()
 			{
@@ -191,9 +191,10 @@ namespace render
 				else
 					selected_entry.definition_override_index = 0;
 
+
+
 				if (selected_entry.definition_index != GLOVE_CT_SIDE && selected_entry.definition_index != GLOVE_T_SIDE)
 					checkbox("Enabled", u8"Включено", &selected_entry.enabled);
-
 
 				/*	int index;
 

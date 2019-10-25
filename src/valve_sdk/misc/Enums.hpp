@@ -138,6 +138,7 @@ enum EItemDefinitionIndex
 	WEAPON_SNOWBALL,
 	WEAPON_BUMPMINE,
 	WEAPON_KNIFE_BAYONET = 500,
+	WEAPON_KNIFE_CSS = 503,
 	WEAPON_KNIFE_FLIP = 505,
 	WEAPON_KNIFE_GUT,
 	WEAPON_KNIFE_KARAMBIT,
@@ -690,6 +691,9 @@ enum ESequence
 	SEQUENCE_DAGGERS_HEAVY_MISS2 = 11,
 	SEQUENCE_DAGGERS_HEAVY_MISS1 = 12,
 
+	SEQUENCE_CSS_LOOKAT01 = 14, //was 14
+	SEQUENCE_CSS_LOOKAT02 = 15,
+
 	SEQUENCE_BOWIE_IDLE1 = 1,
 };
 
@@ -713,8 +717,11 @@ struct item_setting
 {
 	bool enabled = false;
 	char name[32] = "Default";
+	int definition_vector_index = 0;
 	int definition_index = 1;
+	int paint_kit_vector_index = 0;
 	int paint_kit_index = 0;
+	int definition_override_vector_index = 0;
 	int definition_override_index = 0;
 	int seed = 0;
 	struct
@@ -748,9 +755,8 @@ struct paint_kit_t
 {
 	int id;
 	std::string english;
-	std::string russian;
 	std::vector<weapon_kit_t> weapons;
-};
+}; 
 
 struct weapon_info_t
 {

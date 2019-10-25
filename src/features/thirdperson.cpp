@@ -17,6 +17,9 @@ void features::thirdperson()
 	if (weapon_type == WEAPONTYPE_GRENADE)
 		interfaces::Input->m_fCameraInThirdPerson = false;
 
+	if ((weapon_type == WEAPONTYPE_PISTOL || weapon_type == WEAPONTYPE_MACHINEGUN || weapon_type == WEAPONTYPE_RIFLE || weapon_type == WEAPONTYPE_SHOTGUN || weapon_type == WEAPONTYPE_SNIPER_RIFLE || weapon_type == WEAPONTYPE_SUBMACHINEGUN) && settings::misc::disable_on_weapon)
+		interfaces::Input->m_fCameraInThirdPerson = false;
+
 	QAngle angles;
 	interfaces::engine_client->GetViewAngles(angles);
 

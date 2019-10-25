@@ -12,6 +12,7 @@
 #include "..//runtime_saver.h"
 #include "..//jsoncpp/json.h"
 #include "..//helpers/input.h"
+#include "..//soundesp.h"
 
 
 using namespace blackbone;
@@ -26,7 +27,6 @@ namespace hooks
 	vfunc_hook client_mode::hook;
 	vfunc_hook sound_hook::hook;
 	vfunc_hook vgui_panel::hook;
-	vfunc_hook mdlrender::hook;
 	vfunc_hook renderview::hook;
 	vfunc_hook events::hook;
 	vfunc_hook SL::hook;
@@ -78,10 +78,6 @@ namespace hooks
 		sound_hook::hook.setup(interfaces::engine_sound, xorstr_("engine.dll"));
 		sound_hook::hook.hook_index(sound_hook::emit_sound1::index, sound_hook::emit_sound1::hooked);
 
-		//mdlrender::hook.setup(interfaces::mdl_render, xorstr_("client_panorama.dll"));
-		mdlrender::hook.setup(interfaces::g_studiorender);
-		mdlrender::hook.hook_index(mdlrender::draw_model_execute::index, mdlrender::draw_model_execute::hooked);
-
 		renderview::hook.setup(interfaces::render_view, xorstr_("engine.dll"));
 		renderview::hook.hook_index(renderview::scene_end::index, renderview::scene_end::hooked);
 
@@ -105,6 +101,8 @@ namespace hooks
 		interfaces::game_events->add_listener(event_listener, xorstr_("round_freeze_end"), false);
 		interfaces::game_events->add_listener(event_listener, xorstr_("announce_phase_end"), false);
 		interfaces::game_events->add_listener(event_listener, xorstr_("round_start"), false);
+		interfaces::game_events->add_listener(event_listener, xorstr_("player_footstep"), false);
+		interfaces::game_events->add_listener(event_listener, xorstr_("player_death"), false);
 	}
 
 	void destroy()
@@ -116,7 +114,6 @@ namespace hooks
 		client_mode::hook.unhook_all();
 		vgui_panel::hook.unhook_all();
 		sound_hook::hook.unhook_all();
-		mdlrender::hook.unhook_all();
 		renderview::hook.unhook_all();
 		events::hook.unhook_all();
 		SL::hook.unhook_all();
@@ -146,6 +143,11 @@ namespace hooks
 
 		if (!g::local_player->m_bIsScoped())
 			view->fov = settings::misc::debug_fov;
+
+		if (globals::binds::fake_duck > 0)
+		{
+			view->origin.z = g::local_player->GetAbsOrigin().z + 64.f;
+		}
 
 		//view->fov = settings::misc::debug_fov;
 
@@ -179,6 +181,8 @@ namespace hooks
 		if (settings::visuals::rcs_cross)
 			visuals::RenderPunchCross();
 
+		//visuals::NadeHelper(); //todo
+
 		if (settings::visuals::hitmarker)
 			visuals::RenderHitmarker();
 
@@ -197,17 +201,16 @@ namespace hooks
 		if (settings::esp::drawFov && g::engine_client->IsInGame() && g::engine_client->IsConnected())
 			visuals::DrawFov();
 
-		/*for (auto i = 1; i <= g::entity_list->GetHighestEntityIndex(); ++i)
+		for (int i = 1; i < g::entity_list->GetHighestEntityIndex(); i++)
 		{
-			auto entity = c_base_entity::GetEntityByIndex(i);
+			auto entity = reinterpret_cast<c_base_combat_weapon*>(interfaces::entity_list->GetClientEntity(i));
 
-			if (!entity)
-				continue;
-
-			if (settings::visuals::world_grenades)  // !!! CAUSES FPS DROPS !!!
-				visuals::DrawGrenade(entity);
-
-		}*/
+			if (entity)
+			{
+				if (settings::visuals::world_grenades)
+					visuals::DrawGrenade(entity);
+			}
+		}
 
 		for (int i = 1; i < interfaces::entity_list->GetHighestEntityIndex(); i++) {
 			auto entity = reinterpret_cast<c_planted_c4*>(interfaces::entity_list->GetClientEntity(i));
@@ -228,7 +231,7 @@ namespace hooks
 		{
 			const auto panelName = interfaces::vgui_panel->GetName(panel);
 
-			if (!strcmp(panelName, "FocusOverlayPanel"))
+			if (!strcmp(panelName, "FocusOverlayPanel"))  //FocusOverlayPanel
 				panelId = panel;
 		}
 		else if (panelId == panel)
@@ -253,7 +256,7 @@ namespace hooks
 		if (!strcmp(pSoundEntry, "UIPanorama.popup_accept_match_beep")) {
 			static auto fnAccept = reinterpret_cast<bool(__stdcall*)(const char*)>(utils::pattern_scan(GetModuleHandleA("client_panorama.dll"), "55 8B EC 83 E4 F8 8B 4D 08 BA ? ? ? ? E8 ? ? ? ? 85 C0 75 12"));
 
-			HWND window = FindWindow(NULL, L"Counter - Strike: Global Offensive");
+			HWND window = FindWindow(NULL, L"Counter-Strike: Global Offensive");
 
 			if (fnAccept) {
 
@@ -272,21 +275,6 @@ namespace hooks
 		}
 
 		original(interfaces::engine_sound, filter, iEntIndex, iChannel, pSoundEntry, nSoundEntryHash, pSample, flVolume, nSeed, flAttenuation, iFlags, iPitch, pOrigin, pDirection, pUtlVecOrigins, bUpdatePositions, soundtime, speakerentity, unk);
-	}
-
-	void __fastcall mdlrender::draw_model_execute::hooked(void* pEcx, void* pEdx, void* pResults, DrawModelInfo_t* pInfo, matrix3x4_t* pBoneToWorld, float* flpFlexWeights, float* flpFlexDelayedWeights, Vector& vrModelOrigin, int32_t iFlags)
-	{
-		static auto original = hook.get_original<DrawModelExecute>(index);
-
-		//visuals::chams_misc(pInfo);
-		bool forced_mat = !g::mdl_render->IsForcedMaterialOverride();
-		if (forced_mat)
-			Chams::Get().OnDrawModelExecute(pResults, pInfo, pBoneToWorld, flpFlexWeights, flpFlexDelayedWeights, vrModelOrigin, iFlags);
-
-		original(pEcx, pResults, pInfo, pBoneToWorld, flpFlexWeights, flpFlexDelayedWeights, vrModelOrigin, iFlags);
-
-		if (forced_mat)
-			g::mdl_render->ForcedMaterialOverride(nullptr);
 	}
 
 	void __fastcall renderview::scene_end::hooked(IVRenderView*& view)
@@ -341,7 +329,6 @@ namespace hooks
 			m_local.isBombPlantedStatus = false;
 			m_local.AfterPlant = false;
 		}
-
 
 		/* if (Options::Misc::killTrashTalk)
 		{

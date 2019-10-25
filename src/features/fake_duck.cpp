@@ -47,6 +47,7 @@ namespace fake_duck
 		if (!need_crouch && anim_state->m_flDuckAmount <= 0.55f)
 		{
 			//console::print("m_flDuckAmount lower than 0.5f");
+			anim_state->m_flDuckAmount = 1;
 			need_crouch = true;
 		}
 

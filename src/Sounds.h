@@ -3,9 +3,9 @@
 
 namespace Sounds
 {
-	extern char cod[11752];
-	extern char skeet[36402];
-	extern char punch[145760];
-	extern char metal[260036];
-	extern char boom[110108];
+	extern const char cod[11752];
+	extern const char skeet[36402];
+	extern const char punch[145760];
+	extern const char metal[260036];
+	extern const char boom[110108];
 }
