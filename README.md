@@ -3,7 +3,7 @@
 
 
 
-# Dont sell pastes, its gay.
+# Be sure to put game-items.json file into memesense folder in csgo folder.
 
 
 
