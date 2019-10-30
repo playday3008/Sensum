@@ -53,7 +53,7 @@ void setup_hotkeys(LPVOID base)
 			if (render::menu::is_visible())
 				//render::switch_hwnd();
 
-				hooks::destroy();
+			hooks::destroy();
 
 			is_active = false;
 		});

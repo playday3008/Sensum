@@ -213,6 +213,7 @@ namespace render
 				ImVec2 OldMinSize = ImGui::GetStyle().WindowMinSize;
 				ImGui::GetStyle().WindowMinSize = ImVec2(0.f, 0.f);
 				ImGui::SetNextWindowSize(ImVec2(215.f, 130.f)); //175
+				ImGui::SetNextWindowBgAlpha(settings::visuals::player_info_box_alpha);
 
 				if (ImGui::Begin("Player Info Box", &settings::visuals::player_info_box, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar))
 				{
@@ -278,12 +279,12 @@ namespace render
 							ImGui::NextColumn();
 
 							ImGui::SetColumnWidth(-1, 30.f);
-							ImGui::Text("   %i", it.level == -1 ? 0 : it.level);
+							ImGui::Text("%i", it.level == -1 ? 0 : it.level);
 
 							ImGui::NextColumn();
 
 							ImGui::SetColumnWidth(-1, 30.f);
-							ImGui::Text("   %i", it.wins);
+							ImGui::Text("%i", it.wins);
 
 							ImGui::NextColumn();
 
@@ -305,6 +306,7 @@ namespace render
 				ImVec2 OldMinSize = ImGui::GetStyle().WindowMinSize;
 				ImGui::GetStyle().WindowMinSize = ImVec2(0.f, 0.f);
 				ImGui::SetNextWindowSize(ImVec2(145.f, 130.f)); //145.f
+				ImGui::SetNextWindowBgAlpha(settings::visuals::grief_box_alpha);
 
 				if (ImGui::Begin("Grief Box", &settings::visuals::grief_box, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar))
 				{

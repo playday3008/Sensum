@@ -160,6 +160,8 @@ namespace settings
 		bool b = false;
 		bool choke = false;
 		bool skeletons = false;
+		float player_info_box_alpha = 1.0f;
+		float grief_box_alpha = 1.0f;
 
 		ImVec4 sky = ImVec4(0.25, 0.25, 0.25, 1.0);
 		Color recoilcolor = Color(0, 0, 0);
@@ -263,6 +265,8 @@ namespace settings
 			Option::Load(root["esp.draw_aimbot_fov_color"], settings::visuals::drawfov_color);
 			Option::Load(root["esp.damage_indicator"], settings::misc::damage_indicator);
 			Option::Load(root["esp_weapon_mode"], settings::esp::weapon_mode);
+			Option::Load(root["esp.player_info_box_alpha"], settings::visuals::player_info_box_alpha);
+			Option::Load(root["esp.grief_box_alpha"], settings::visuals::grief_box_alpha);
 
 			Option::Load(root["esp.visible_color"], esp::visible_color, Color(0, 200, 80));
 			Option::Load(root["esp.occluded_color"], esp::occluded_color, Color::Black);
@@ -507,6 +511,8 @@ namespace settings
 			Option::Save(config["esp.draw_aimbot_fov_color"], settings::visuals::drawfov_color);
 			config["esp.damage_indicator"] = settings::misc::damage_indicator;
 			config["esp_weapon_mode"] = settings::esp::weapon_mode;
+			config["esp.player_info_box_alpha"] = settings::visuals::player_info_box_alpha;
+			config["esp.grief_box_alpha"] = settings::visuals::grief_box_alpha;
 
 			Option::Save(config["esp.visible_color"], esp::visible_color);
 			Option::Save(config["esp.occluded_color"], esp::occluded_color);

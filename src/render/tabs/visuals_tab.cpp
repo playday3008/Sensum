@@ -51,9 +51,31 @@ namespace render
 				}
 				ImGui::Columns(1);
 
+				columns(2);
+				{
+					checkbox("Player Info Box", &settings::visuals::player_info_box);
 
-				checkbox("Player Info Box", &settings::visuals::player_info_box);
-				checkbox("Grief Box", &settings::visuals::grief_box);
+					ImGui::NextColumn();
+					ImGui::PushItemWidth(-1);
+					{
+						ImGui::SliderFloatLeftAligned("Alpha##infobox", &settings::visuals::player_info_box_alpha, 0.0f, 1.0f, "%0.1f");
+					}
+					ImGui::PopItemWidth();
+				}
+				ImGui::Columns(1);
+
+				columns(2);
+				{
+					checkbox("Grief Box", &settings::visuals::grief_box);
+
+					ImGui::NextColumn();
+					ImGui::PushItemWidth(-1);
+					{
+						ImGui::SliderFloatLeftAligned("Alpha##griefbox", &settings::visuals::grief_box_alpha, 0.0f, 1.0f, "%0.1f");
+					}
+					ImGui::PopItemWidth();
+				}
+				ImGui::Columns(1);
 
 				columns(2);
 				{

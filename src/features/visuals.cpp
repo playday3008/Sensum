@@ -139,6 +139,9 @@ namespace visuals
 
 	void DrawDamageIndicator()
 	{
+		if (!g::local_player)
+			return;
+
 		float CurrentTime = g::local_player->m_nTickBase() * g::global_vars->interval_per_tick;
 
 		for (int i = 0; i < indicator.size(); i++)
@@ -168,7 +171,7 @@ namespace visuals
 			if (indicator[i].iDamage >= 100)
 				color = Color::Red;
 
-			if (indicator[i].iDamage > 50 && indicator[i].iDamage < 100)
+			if (indicator[i].iDamage >= 50 && indicator[i].iDamage < 100)
 				color = Color::Orange;
 
 			if (indicator[i].iDamage < 50)

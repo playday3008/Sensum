@@ -291,6 +291,8 @@ namespace settings
 		extern bool b;
 		extern bool choke;
 		extern bool skeletons;
+		extern float player_info_box_alpha;
+		extern float grief_box_alpha;
 
 		extern Color spread_cross_color;
 		extern Color recoilcolor;
