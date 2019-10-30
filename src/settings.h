@@ -362,6 +362,7 @@ namespace settings
 		extern bool fastpeek;
 		extern bool equip;
 		extern bool damage_indicator;
+		extern bool fast_stop;
 	}
 }
 

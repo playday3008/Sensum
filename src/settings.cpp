@@ -230,6 +230,7 @@ namespace settings
 		bool fastpeek = false;
 		bool equip = false;
 		bool damage_indicator = false;
+		bool fast_stop = false;
 	};
 
 	void load(std::string name)
@@ -371,6 +372,7 @@ namespace settings
 			Option::Load(root["misc.grief_box"], settings::visuals::grief_box);
 			Option::Load(root["misc.disable_3rd_person_on_weapon"], settings::misc::disable_on_weapon);
 			Option::Load(root["misc.left_hand_knife"], settings::misc::lefthandknife);
+			Option::Load(root["misc.fast_stop"], settings::misc::fast_stop);
 
 			Option::Load(root["glow.enemy"], glow::GlowEnemyEnabled);
 			Option::Load(root["glow.team"], glow::GlowTeamEnabled);
@@ -608,6 +610,7 @@ namespace settings
 			config["misc.grief_box"] = settings::visuals::grief_box;
 			config["misc.disable_3rd_person_on_weapon"] = settings::misc::disable_on_weapon;
 			config["misc.left_hand_knife"] = settings::misc::lefthandknife;
+			config["misc.fast_stop"] = settings::misc::fast_stop;
 
 			config["glow.enemy"] = glow::GlowEnemyEnabled;
 			config["glow.team"] = glow::GlowTeamEnabled;

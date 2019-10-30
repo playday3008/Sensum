@@ -203,6 +203,7 @@ namespace render
 				checkbox("Left Hand Knife", &settings::misc::lefthandknife);
 				checkbox("-98 Nade (?)", &settings::misc::selfnade);
 				tooltip("Look up, Hold mouse 2,When you're fully primed to throw with mouse 2 start holding mouse 1, crouch when released.");
+				checkbox("Fast Stop", &settings::misc::fast_stop);
 			});
 
 			ImGui::NextColumn();

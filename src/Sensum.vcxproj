@@ -121,6 +121,7 @@
     <ClCompile Include="config.cpp" />
     <ClCompile Include="deps\blackbone\LocalHook\LocalHookBase.cpp" />
     <ClCompile Include="deps\blackbone\LocalHook\TraceHook.cpp" />
+    <ClCompile Include="fast_stop.cpp" />
     <ClCompile Include="features\auto_strafe.cpp" />
     <ClCompile Include="features\bhop.cpp" />
     <ClCompile Include="features\clantag.cpp" />

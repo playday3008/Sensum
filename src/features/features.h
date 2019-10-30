@@ -14,6 +14,7 @@ namespace features
 	void human_bhop(CUserCmd* cmd);
 	void LegitPeek(CUserCmd* pCmd);
 	void SelfNade(CUserCmd *cmd);
+	void fastStop(CUserCmd* cmd);
 }
 
 namespace color_modulation

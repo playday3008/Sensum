@@ -287,7 +287,9 @@ namespace hooks
 			aimbot::OnMove(cmd);
 
 		visuals::runCM(cmd);
-
+	
+		if(settings::misc::fast_stop)
+			features::fastStop(cmd);
 		//if (a_settings->backtrack.time >= 0.01f) //NEW BACKTRACK, ENABLE ONLY IF YOU WANT FPS DROPS
 			//g_Backtrack.OnMove(cmd);
 
