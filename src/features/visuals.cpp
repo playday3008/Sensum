@@ -280,6 +280,12 @@ namespace visuals
 			float ratio = screenSize.x / screenSize.y;
 			float screenFov = atanf((ratio) * (0.75f) * tan(DEG2RAD(fov * 0.5f)));
 
+			if(g::local_player->m_hActiveWeapon()->m_zoomLevel() == 1) //Single Scoped
+				screenFov = atanf((ratio) * (0.75f) * tan(DEG2RAD(fov * 1.0f)));
+
+			if (g::local_player->m_hActiveWeapon()->m_zoomLevel() == 2) //Double Scoped
+				screenFov = atanf((ratio) * (0.75f) * tan(DEG2RAD(fov * 0.9f)));
+
 			float radiusFOV = tanf(DEG2RAD(aimbot::get_fov())) / tanf(screenFov) * center.x;
 
 			VGSHelper::Get().DrawCircle(center.x, center.y, radiusFOV, 32, settings::visuals::drawfov_color);
