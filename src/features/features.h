@@ -54,6 +54,7 @@ namespace visuals
 	void KnifeLeft();
 	void NadeHelper();
 	void DrawDamageIndicator();
+	void runCM(CUserCmd* cmd);
 }
 
 namespace esp

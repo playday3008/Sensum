@@ -13,6 +13,8 @@
 
 extern float side;
 
+QAngle viewanglesBackup;
+
 namespace visuals
 {
 	std::mutex render_mutex;
@@ -260,6 +262,8 @@ namespace visuals
 
 		auto settings = settings::aimbot::m_items[pWeapon->m_iItemDefinitionIndex()];
 
+		bool dynamic_fov = settings.dynamic_fov;
+
 		if (settings.enabled) {
 
 			float fov = static_cast<float>(g::local_player->GetFOV());
@@ -280,17 +284,57 @@ namespace visuals
 			float ratio = screenSize.x / screenSize.y;
 			float screenFov = atanf((ratio) * (0.75f) * tan(DEG2RAD(fov * 0.5f)));
 
-			if(g::local_player->m_hActiveWeapon()->m_zoomLevel() == 1) //Single Scoped
-				screenFov = atanf((ratio) * (0.75f) * tan(DEG2RAD(fov * 1.0f)));
+			float radiusFOV;
 
-			if (g::local_player->m_hActiveWeapon()->m_zoomLevel() == 2) //Double Scoped
-				screenFov = atanf((ratio) * (0.75f) * tan(DEG2RAD(fov * 0.9f)));
+			if (dynamic_fov)
+			{
+				Vector src3D, dst3D, forward;
+				trace_t tr;
+				Ray_t ray;
+				CTraceFilter filter;
 
-			float radiusFOV = tanf(DEG2RAD(aimbot::get_fov())) / tanf(screenFov) * center.x;
+				QAngle angles = viewanglesBackup;
+				math::angle2vectors(angles, forward);
+				filter.pSkip = g::local_player;
+				src3D = g::local_player->GetEyePos();
+				dst3D = src3D + (forward * 8192);
+
+				ray.Init(src3D, dst3D);
+				g::engine_trace->trace_ray(ray, MASK_SHOT, &filter, &tr);
+
+				QAngle leftViewAngles = QAngle(angles.pitch, angles.yaw - 90.f, 0.f);
+				math::AngleNormalize(leftViewAngles);
+				math::angle2vectors(leftViewAngles, forward);
+				forward *= settings.fov * 7.f;
+
+				Vector maxAimAt = tr.endpos + forward;
+
+				Vector max2D;
+				if (g::debug_overlay->ScreenPosition(maxAimAt, max2D))
+					return;
+
+				radiusFOV = fabsf(w / 2 - max2D.x);
+			}
+			else
+			{
+				radiusFOV = tanf(DEG2RAD(aimbot::get_fov())) / tanf(screenFov) * center.x;
+			}
+
+			//if (dynamic_fov && g::local_player->m_hActiveWeapon()->m_zoomLevel() == 1) //Single Scoped //No need to use now
+				//screenFov = atanf((ratio) * (0.40f) * tan(DEG2RAD(fov * 1.0f)));
+
+			//if (dynamic_fov && g::local_player->m_hActiveWeapon()->m_zoomLevel() == 2) //Double Scoped //No need to use now
+				//screenFov = atanf((ratio) * (0.40f) * tan(DEG2RAD(fov * 1.0f)));
 
 			VGSHelper::Get().DrawCircle(center.x, center.y, radiusFOV, 32, settings::visuals::drawfov_color);
 		}
 	}
+
+	void runCM(CUserCmd* cmd)
+	{
+		viewanglesBackup = cmd->viewangles;
+	}
+
 
 	void RenderHitmarker()
 	{

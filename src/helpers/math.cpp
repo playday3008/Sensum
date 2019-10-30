@@ -620,3 +620,15 @@ float math::AngleNormalize(float angle)
 
 	return angle;
 }
+
+QAngle math::AngleNormalize(QAngle angle)
+{
+	angle.yaw = fmodf(angle.yaw, 360.0f);
+	while (angle.yaw > 180)
+		angle.yaw -= 360;
+
+	while (angle.yaw < -180)
+		angle.yaw += 360;
+
+	return angle;
+}

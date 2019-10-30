@@ -49,4 +49,5 @@ namespace math
 	void angle2vectors(const QAngle &angles, Vector *forward, Vector *right, Vector *up);
 	void smooth(const float& amount, const QAngle& current_angles, const QAngle& aim_angles, QAngle& angle, const bool& humanize = false);
 	float AngleNormalize(float angle);
+	QAngle AngleNormalize(QAngle angle);
 }
