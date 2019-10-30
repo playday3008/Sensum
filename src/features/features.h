@@ -3,6 +3,7 @@
 #include "../settings.h"
 #include "../helpers/math.h"
 #include "../valve_sdk/csgostructs.hpp"
+#include <vector>
 
 namespace features
 {
@@ -28,6 +29,11 @@ namespace fake_lags
 	void handle(CUserCmd* cmd, bool& send_packet);
 }
 
+namespace esp
+{
+
+}
+
 namespace visuals
 {
 	void fetch_entities();
@@ -45,11 +51,9 @@ namespace visuals
 	void Choke();
 	void DesyncChams();
 	void AAIndicator();
-	void RenderBacktrack();
-	void RenderSkeleton(c_base_entity* ent);
 	void KnifeLeft();
-	void DrawCircleTest();
 	void NadeHelper();
+	void DrawDamageIndicator();
 }
 
 namespace esp

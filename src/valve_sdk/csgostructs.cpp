@@ -181,6 +181,19 @@ void c_base_player::InvalidateBoneCache()
 	}
 }
 
+char* c_base_player::GetArmorIcon()
+{
+	if (m_ArmorValue() > 0)
+	{
+		if (m_bHasHelmet())
+			return "q";
+		else
+			return "p";
+	}
+	else
+		return " ";
+}
+
 void c_base_player::UpdateClientSideAnimation()
 {
 	CallVFunction<void(__thiscall*)(void*)>(this, 223)(this);
@@ -216,6 +229,110 @@ CCSWeaponInfo* c_base_combat_weapon::get_weapon_data()
 bool c_base_combat_weapon::HasBullets()
 {
 	return !IsReloading() && m_iClip1() > 0;
+}
+
+char* c_base_combat_weapon::GetGunIcon()
+{
+	int WeaponId = this->m_iItemDefinitionIndex();
+	switch (WeaponId)
+	{
+	case WEAPON_KNIFE:
+	case 500:
+	case 505:
+	case 506:
+	case 507:
+	case 508:
+	case 509:
+	case 512:
+	case 514:
+	case 515:
+	case 516:
+		return "]";
+	case WEAPON_DEAGLE:
+		return "A";
+	case WEAPON_ELITE:
+		return "B";
+	case WEAPON_FIVESEVEN:
+		return "C";
+	case WEAPON_GLOCK:
+		return "D";
+	case WEAPON_HKP2000:
+		return "E";
+	case WEAPON_P250:
+		return "F";
+	case WEAPON_USP_SILENCER:
+		return "G";
+	case WEAPON_TEC9:
+		return "H";
+	case WEAPON_CZ75A:
+		return "I";
+	case WEAPON_REVOLVER:
+		return "J";
+	case WEAPON_MAC10:
+		return "K";
+	case WEAPON_UMP45:
+		return "L";
+	case WEAPON_BIZON:
+		return "M";
+	case WEAPON_MP7:
+		return "N";
+	case WEAPON_MP9:
+		return "O";
+	case WEAPON_P90:
+		return "P";
+	case WEAPON_GALILAR:
+		return "Q";
+	case WEAPON_FAMAS:
+		return "R";
+	case WEAPON_M4A1:
+		return "S";
+	case WEAPON_M4A1_SILENCER:
+		return "T";
+	case WEAPON_AUG:
+		return "U";
+	case WEAPON_SG556:
+		return "V";
+	case WEAPON_AK47:
+		return "W";
+	case WEAPON_G3SG1:
+		return "X";
+	case WEAPON_SCAR20:
+		return "Y";
+	case WEAPON_AWP:
+		return "Z";
+	case WEAPON_SSG08:
+		return "a";
+	case WEAPON_XM1014:
+		return "b";
+	case WEAPON_SAWEDOFF:
+		return "c";
+	case WEAPON_MAG7:
+		return "d";
+	case WEAPON_NOVA:
+		return "e";
+	case WEAPON_NEGEV:
+		return "f";
+	case WEAPON_M249:
+		return "g";
+	case WEAPON_TASER:
+		return "h";
+	case WEAPON_FLASHBANG:
+		return "i";
+	case WEAPON_HEGRENADE:
+		return "j";
+	case WEAPON_SMOKEGRENADE:
+		return "k";
+	case WEAPON_MOLOTOV:
+		return "l";
+	case WEAPON_DECOY:
+		return "m";
+	case WEAPON_INCGRENADE:
+		return "n";
+	case WEAPON_C4:
+		return "o";
+	default:
+		return " ";
+	}
 }
 
 bool c_base_combat_weapon::CanFire()
@@ -544,6 +661,11 @@ void c_base_attributable_item::SetModelIndex(int modelIndex)
 void c_base_view_model::SendViewModelMatchingSequence(int sequence)
 {
 	return CallVFunction<void(__thiscall*)(void*, int)>(this, 214)(this, sequence);
+}
+
+void c_base_view_model::SetModelIndex(int sequence)
+{
+	return CallVFunction<void(__thiscall*)(void*, int)>(this, 75)(this, sequence);
 }
 
 bool c_base_combat_weapon::is_grenade()

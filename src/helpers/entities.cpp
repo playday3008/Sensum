@@ -360,6 +360,8 @@ namespace entities
 			player_data.name = std::string(player->GetPlayerInfo().szName).substr(0, 12);
 
 			player_data.weapon = utils::get_weapon_name(player->m_hActiveWeapon());
+			player_data.icon = player->m_hActiveWeapon()->GetGunIcon();
+			player_data.kevlar_icon = player->GetArmorIcon();
 
 			player_data.is_dormant = false;
 			player_data.is_scoped = player->m_bIsScoped();
@@ -381,6 +383,10 @@ namespace entities
 			player_data.m_ArmorValue = player->m_ArmorValue();
 			player_data.m_flSimulationTime = player->m_flSimulationTime();
 			player_data.m_iAmmo = weapData.Get()->m_iClip1();
+
+			if (weapData->IsKnife())
+				player_data.m_iAmmo = 0; player_data.m_MaxAmmo = 0;
+
 			player_data.m_MaxAmmo = player->m_hActiveWeapon().Get()->m_iPrimaryReserveAmmoCount(); //player->m_hActiveWeapon().Get()->GetMaxAmmo();
 			const auto tick_offset = player->m_vecVelocity() * interfaces::global_vars->interval_per_tick;
 

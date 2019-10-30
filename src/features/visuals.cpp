@@ -137,6 +137,50 @@ namespace visuals
 			push_entity(entity, info.name, info.color);
 	}
 
+	void DrawDamageIndicator()
+	{
+		float CurrentTime = g::local_player->m_nTickBase() * g::global_vars->interval_per_tick;
+
+		for (int i = 0; i < indicator.size(); i++)
+		{
+			if (indicator[i].flEraseTime < CurrentTime)
+			{
+				indicator.erase(indicator.begin() + i);
+				continue;
+			}
+
+			if (!indicator[i].bInitialized)
+			{
+				indicator[i].Position = indicator[i].Player->get_bone_position(8); //HITBOX_HEAD is returning some hitbox in belly,wtf??? 
+				indicator[i].bInitialized = true;
+			}
+
+			if (CurrentTime - indicator[i].flLastUpdate > 0.001f) //was 0.0001f
+			{
+				indicator[i].Position.z -= (0.5f * (CurrentTime - indicator[i].flEraseTime)); //was 0.1f
+				indicator[i].flLastUpdate = CurrentTime;
+			}
+
+			Vector ScreenPosition;
+
+			Color color = Color::White;
+
+			if (indicator[i].iDamage >= 100)
+				color = Color::Red;
+
+			if (indicator[i].iDamage > 50 && indicator[i].iDamage < 100)
+				color = Color::Orange;
+
+			if (indicator[i].iDamage < 50)
+				color = Color::White;
+
+			if (math::world2screen(indicator[i].Position, ScreenPosition))
+			{
+				VGSHelper::Get().DrawTextW(std::to_string(indicator[i].iDamage).c_str(), ScreenPosition.x, ScreenPosition.y, color, 18);
+			}
+		}
+	}
+
 	void RenderPunchCross()
 	{
 
@@ -573,65 +617,6 @@ namespace visuals
 		float cx = x / 2.f;
 		float cy = y / 2.f;
 		VGSHelper::Get().DrawCircle(cx, cy, spread, 35, settings::visuals::spread_cross_color);
-	}
-
-	void DrawGrenade(c_base_entity* ent)
-	{
-		auto id = ent->GetClientClass()->m_ClassID;
-		Vector vGrenadePos2D;
-		Vector vGrenadePos3D = ent->m_vecOrigin();
-
-		auto bbox = GetBBox(ent);
-
-		if (bbox.right == 0 || bbox.bottom == 0)
-			return;
-
-		if (!math::world2screen(vGrenadePos3D, vGrenadePos2D))
-			return;
-
-		static const auto white_color = ImGui::GetColorU32(ImVec4::White);
-
-		switch (id)
-		{
-		case EClassId::CSmokeGrenadeProjectile:
-			VGSHelper::Get().DrawBox(bbox.left, bbox.top, bbox.right, bbox.bottom, Color::White);
-			break;
-
-		case EClassId::CBaseCSGrenadeProjectile:
-		{
-			model_t* model = (model_t*)ent->GetModel();
-
-			if (!model)
-			{
-				return;
-			}
-
-			studiohdr_t* hdr = g::mdl_info->GetStudiomodel(model);
-
-			if (!hdr)
-			{
-				return;
-			}
-
-			std::string name = hdr->szName;
-
-			if (name.find("incendiarygrenade") != std::string::npos || name.find("fraggrenade") != std::string::npos)
-			{
-				VGSHelper::Get().DrawBox(bbox.left, bbox.top, bbox.right, bbox.bottom, Color::Red);
-				return;
-			}
-			VGSHelper::Get().DrawBox(bbox.left, bbox.top, bbox.right, bbox.bottom, Color::Yellow);
-			break;
-		}
-
-		case EClassId::CMolotovProjectile:
-			VGSHelper::Get().DrawBox(bbox.left, bbox.top, bbox.right, bbox.bottom, Color::Red);
-			break;
-
-		case EClassId::CDecoyProjectile:
-			VGSHelper::Get().DrawBox(bbox.left, bbox.top, bbox.right, bbox.bottom, Color::Green);
-			break;
-		}
 	}
 
 	void glow() noexcept {

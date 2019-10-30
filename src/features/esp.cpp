@@ -7,6 +7,7 @@
 #include "../helpers/autowall.h"
 #include "../esp.hpp"
 #include "../valve_sdk/interfaces/ISurface.h"
+#include "../render/fonts/undefeated.hpp"
 
 ConVar* type = nullptr;
 ConVar* mode = nullptr;
@@ -301,7 +302,7 @@ namespace esp
 			if (settings::esp::weapons && !data.weapon.empty())
 			{
 				const auto weapon_size = ImGui::CalcTextSize(data.weapon.c_str());
-
+				
 				auto y_pos = box.bottom + 2.f;
 				if (settings::esp::health && settings::esp::health_position == 2)
 					y_pos += 7.f;
@@ -309,9 +310,19 @@ namespace esp
 				if (settings::esp::armour && settings::esp::armour_position == 2)
 					y_pos += 7.f;
 
-				imdraw::outlined_text(
-					data.weapon.c_str(), ImVec2(box.left + width / 2.f - weapon_size.x / 2.f, y_pos), data.is_dormant ? smoke_color : orange_color
-				);
+				switch (settings::esp::weapon_mode)
+				{
+				case 0:
+					imdraw::outlined_text(data.weapon.c_str(), ImVec2(box.left + width / 2.f - weapon_size.x / 2.f, y_pos), data.is_dormant ? smoke_color : orange_color);
+					break;
+				case 1:
+					ImGui::PushFont(render::fonts::weapon_icon);
+					imdraw::outlined_text(data.icon.c_str(), ImVec2(box.left + width / 2.f - 33 / 2.f, y_pos), white_color);
+					ImGui::PopFont();
+					break;
+				}
+
+
 			}
 
 			if (settings::esp::boxes)
@@ -343,10 +354,10 @@ namespace esp
 				}
 			}
 		}
-
 		ImGui::PopFont();
 	}
 }
+
 
 void VGSHelper::Init()
 {
@@ -354,6 +365,9 @@ void VGSHelper::Init()
 	{
 		fonts[size] = g::surface->CreateFont_();
 		g::surface->SetFontGlyphSet(fonts[size], "Sans-serif", size, 700, 0, 0, FONTFLAG_DROPSHADOW, FONTFLAG_ANTIALIAS);
+
+		icons[size] = g::surface->CreateFont_();
+		g::surface->SetFontGlyphSet(icons[size], (const char*)undefeated_compressed_data, undefeated_compressed_size, 700, 0, 0, FONTFLAG_DROPSHADOW, FONTFLAG_ANTIALIAS);
 	}
 
 	Inited = true;
@@ -376,6 +390,25 @@ void VGSHelper::DrawText(std::string text, float x, float y, Color color, int si
 		g::surface->DrawPrintText(buf, wcslen(buf));
 	}
 }
+
+void VGSHelper::DrawIcon(std::string text, float x, float y, Color color, int size)
+{
+	if (!Inited)
+		Init();
+
+	//int size = text.size() + 1;
+	g::surface->DrawClearApparentDepth();
+	wchar_t buf[256];
+	g::surface->DrawSetTextFont(icons[size]);
+	g::surface->DrawSetTextColor(color);
+
+	if (MultiByteToWideChar(CP_UTF8, 0, text.c_str(), -1, buf, 256))
+	{
+		g::surface->DrawSetTextPos(x, y);
+		g::surface->DrawPrintText(buf, wcslen(buf));
+	}
+}
+
 void VGSHelper::DrawLine(float x1, float y1, float x2, float y2, Color color, float size)
 {
 	/*

@@ -6,6 +6,19 @@
 #include "valve_sdk/misc/Color.hpp"
 #include "helpers/imdraw.h"
 
+struct dmg_indicator
+{
+		int iDamage;
+		bool bInitialized;
+		float flEraseTime;
+		float flLastUpdate;
+		c_base_player* Player;
+		Vector Position;
+};
+inline std::vector<dmg_indicator> indicator;
+
+
+
 
 
 class VGSHelper : public Singleton<VGSHelper>
@@ -13,6 +26,7 @@ class VGSHelper : public Singleton<VGSHelper>
 public:
 	void Init();
 	void DrawText(std::string text, float x, float y, Color color, int size = 15);
+	void DrawIcon(std::string text, float x, float y, Color color, int size);
 	void DrawLine(float x1, float y1, float x2, float y2, Color color, float size = 1.f);
 	void DrawBox(float x1, float y1, float x2, float y2, Color clr, float size = 1.f);
 	void DrawFilledBox(float x1, float y1, float x2, float y2, Color clr);
@@ -25,4 +39,5 @@ public:
 private:
 	bool Inited = false;
 	vgui::HFont fonts[128];
+	vgui::HFont icons[128];
 };

@@ -31,7 +31,27 @@ namespace render
 				checkbox("Visible Only", u8"Проверка видимости", &settings::esp::visible_only);
 
 				checkbox("Name", u8"Имя", &settings::esp::names);
-				checkbox("Weapon", u8"Оружие", &settings::esp::weapons);
+				
+				columns(2);
+				{
+					checkbox("Weapon", u8"Оружие", &settings::esp::weapons);
+
+					ImGui::NextColumn();
+
+					const char* weapon_modes[] = {
+					"Text",
+					"Icons"
+					};
+
+					ImGui::PushItemWidth(-1);
+					{
+						ImGui::Combo("Mode", &settings::esp::weapon_mode, weapon_modes, IM_ARRAYSIZE(weapon_modes));
+					}
+					ImGui::PopItemWidth();
+				}
+				ImGui::Columns(1);
+
+
 				checkbox("Player Info Box", &settings::visuals::player_info_box);
 				checkbox("Grief Box", &settings::visuals::grief_box);
 
@@ -240,6 +260,7 @@ namespace render
 				checkbox("World Grenades", u8"Подсветка гранат", &settings::visuals::world_grenades);
 				checkbox("Sniper Crosshair", u8"Снайперский прицел", &settings::visuals::sniper_crosshair);
 				checkbox("Grenade Prediction", u8"Прогноз полета гранат", &settings::visuals::grenade_prediction);
+				checkbox("Damage Indicator", &settings::misc::damage_indicator);
 				checkbox("Aimbot Fov", &settings::esp::drawFov);
 				checkbox("Spread Crosshair", &settings::visuals::spread_cross);
 				checkbox("Bullet Tracer", &settings::visuals::bullet_tracer);

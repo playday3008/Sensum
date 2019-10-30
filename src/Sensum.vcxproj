@@ -256,6 +256,7 @@
     <ClInclude Include="singleton.hpp" />
     <ClInclude Include="soundesp.h" />
     <ClInclude Include="Sounds.h" />
+    <ClInclude Include="undefeated.hpp" />
     <ClInclude Include="valve_sdk\csgostructs.hpp" />
     <ClInclude Include="valve_sdk\interfaces\CClientState.h" />
     <ClInclude Include="valve_sdk\interfaces\CGlobalVarsBase.h" />

@@ -6,6 +6,7 @@
 #include "../helpers/imdraw.h"
 
 #include "fonts/droidsans.hpp"
+#include "fonts/undefeated.hpp"
 
 namespace render
 {
@@ -32,6 +33,7 @@ namespace render
 		ImFont* notifies;
 		ImFont* spectators;
 		ImFont* configs_list;
+		ImFont* weapon_icon;
 
 		ImFont* header_title;
 		ImFont* header_buttons;
@@ -59,6 +61,7 @@ namespace render
 		fonts::notifies = io->Fonts->AddFontFromMemoryCompressedTTF(droidsans_compressed_data, droidsans_compressed_size, 13.f, &font_config, ranges);
 		fonts::spectators = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(droidsans_compressed_data, droidsans_compressed_size, 14.f, &font_config, ranges);
 		fonts::configs_list = io->Fonts->AddFontFromMemoryCompressedTTF(droidsans_compressed_data, droidsans_compressed_size, 16.f, &font_config, ranges);
+		fonts::weapon_icon = io->Fonts->AddFontFromMemoryCompressedTTF(undefeated_compressed_data, undefeated_compressed_size, 12.f, &font_config, ranges);
 
 		fonts::header_title = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(droidsans_compressed_data, droidsans_compressed_size, 24.f);
 		fonts::header_buttons = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(droidsans_compressed_data, droidsans_compressed_size, 17.f, &font_config, ranges);

@@ -666,6 +666,9 @@
     <ClInclude Include="nade_helper.h">
       <Filter>features\misc</Filter>
     </ClInclude>
+    <ClInclude Include="undefeated.hpp">
+      <Filter>render\fonts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

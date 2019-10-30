@@ -122,7 +122,7 @@ class CClientState {
 public:
 	void ForceFullUpdate() {
 		*reinterpret_cast<int*>(std::uintptr_t(this) + 0x174) = -1;
-	}
+	} 
 
 	char pad_0000[156];             //0x0000
 	INetChannel* m_NetChannel;      //0x009C

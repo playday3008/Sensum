@@ -201,17 +201,9 @@ namespace hooks
 		if (settings::esp::drawFov && g::engine_client->IsInGame() && g::engine_client->IsConnected())
 			visuals::DrawFov();
 
-		for (int i = 1; i < g::entity_list->GetHighestEntityIndex(); i++)
-		{
-			auto entity = reinterpret_cast<c_base_combat_weapon*>(interfaces::entity_list->GetClientEntity(i));
-
-			if (entity)
-			{
-				if (settings::visuals::world_grenades)
-					visuals::DrawGrenade(entity);
-			}
-		}
-
+		if (settings::misc::damage_indicator)
+			visuals::DrawDamageIndicator();
+			
 		for (int i = 1; i < interfaces::entity_list->GetHighestEntityIndex(); i++) {
 			auto entity = reinterpret_cast<c_planted_c4*>(interfaces::entity_list->GetClientEntity(i));
 

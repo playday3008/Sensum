@@ -150,6 +150,7 @@ namespace settings
 		extern bool armour;
 		extern int armour_position;
 		extern bool weapons;
+		extern int weapon_mode;
 		extern bool ammo;
 		extern bool offscreen;
 		extern bool sound;
@@ -174,7 +175,7 @@ namespace settings
 		extern bool antiobs;
 		extern bool soundesp;
 		extern bool mat_force_apply;
-
+		
 		extern Color visible_color;
 		extern Color occluded_color;
 
@@ -358,6 +359,7 @@ namespace settings
 		extern bool legitpeek;
 		extern bool fastpeek;
 		extern bool equip;
+		extern bool damage_indicator;
 	}
 }
 

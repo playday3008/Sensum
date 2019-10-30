@@ -49,6 +49,8 @@ namespace entities
 
 		std::string name;
 		std::string weapon;
+		std::string icon;
+		std::string kevlar_icon;
 
 
 		bool is_shooting = false;

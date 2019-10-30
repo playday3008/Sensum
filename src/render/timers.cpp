@@ -291,21 +291,6 @@ namespace render
 							ImGui::Text("%1.f", it.distance);
 						}
 						columns(1);
-
-						if (it.distance > 0 && it.distance <= 1000)
-						{
-							int x, y;
-							g::engine_client->GetScreenSize(x, y);
-
-							text_pos = ImVec2(x / 2, y / 2 - 50);
-							//imdraw::outlined_text("Enemy is close", text_pos, ImGui::GetColorU32(ImVec4::Red));
-
-							settings::visuals::recoilcolor = Color::Red;
-						}
-						else
-						{
-							settings::visuals::recoilcolor = Color::White;
-						}
 					}
 				}
 				pinfo.clear();

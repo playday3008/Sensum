@@ -245,6 +245,7 @@ public:
 
 	CCSWeaponInfo* get_weapon_data();
 	bool HasBullets();
+	char* GetGunIcon();
 	bool CanFire();
 	bool IsGrenade();
 	bool IsKnife();
@@ -391,6 +392,7 @@ public:
 	void SetAngle2(Vector wantedang);
 	void UpdateClientSideAnimation();
 	void InvalidateBoneCache();
+	char* GetArmorIcon();
 	void PVSFix();
 
 	CCSPlayerAnimState* GetPlayerAnimState();
@@ -423,6 +425,7 @@ public:
 	NETVAR(CHandle<c_base_player>, m_hOwner, "CBaseViewModel", "m_hOwner");
 	NETPROP(m_nSequence, "CBaseViewModel", "m_nSequence");
 
+	void SetModelIndex(int sequence);
 	void SendViewModelMatchingSequence(int sequence);
 };
 

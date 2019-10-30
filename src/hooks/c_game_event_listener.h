@@ -162,6 +162,20 @@ class c_game_event_listener final : public IGameEventListener2
 						return;  */
 			}
 
+			if (settings::misc::damage_indicator)
+			{
+				if (target != g::local_player && attacker == g::local_player)
+				{
+					dmg_indicator DmgIndicator;
+					DmgIndicator.iDamage = context->GetInt("dmg_health");
+					DmgIndicator.Player = target;
+					DmgIndicator.flEraseTime = g::local_player->m_nTickBase() * g::global_vars->interval_per_tick + 2.f; //was 3.f
+					DmgIndicator.bInitialized = false;
+
+					indicator.push_back(DmgIndicator);
+				}
+			}
+
 			if (settings::visuals::hitmarker)
 			{
 

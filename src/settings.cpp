@@ -23,6 +23,7 @@ namespace settings
 		bool armour = false;
 		int armour_position = 1;
 		bool weapons = false;
+		int weapon_mode = 0;
 		bool ammo = false;
 		bool offscreen = false;
 		bool sound = false;
@@ -46,7 +47,7 @@ namespace settings
 		bool antiobs = false;
 		bool soundesp = false;
 		bool mat_force_apply = false;
-
+		
 		Color visible_color = Color(0, 200, 80);
 		Color occluded_color = Color(0, 0, 0);
 		float soundesp_color[4]{ 0.603f, 0.f, 1.0f, 1.0f };
@@ -226,7 +227,7 @@ namespace settings
 		bool legitpeek = false;
 		bool fastpeek = false;
 		bool equip = false;
-
+		bool damage_indicator = false;
 	};
 
 	void load(std::string name)
@@ -259,6 +260,9 @@ namespace settings
 			Option::Load(root["esp.draw_aimbot_fov"], esp::drawFov);
 			Option::Load(root["esp.chance_value"], settings::esp::esp_chance);
 			Option::Load(root["esp.sound_esp"], settings::esp::soundesp);
+			Option::Load(root["esp.draw_aimbot_fov_color"], settings::visuals::drawfov_color);
+			Option::Load(root["esp.damage_indicator"], settings::misc::damage_indicator);
+			Option::Load(root["esp_weapon_mode"], settings::esp::weapon_mode);
 
 			Option::Load(root["esp.visible_color"], esp::visible_color, Color(0, 200, 80));
 			Option::Load(root["esp.occluded_color"], esp::occluded_color, Color::Black);
@@ -500,6 +504,9 @@ namespace settings
 			config["esp.draw_aimbot_fov"] = esp::drawFov;
 			config["esp.chance_value"] = settings::esp::esp_chance;
 			config["esp.sound_esp"] = settings::esp::soundesp;
+			Option::Save(config["esp.draw_aimbot_fov_color"], settings::visuals::drawfov_color);
+			config["esp.damage_indicator"] = settings::misc::damage_indicator;
+			config["esp_weapon_mode"] = settings::esp::weapon_mode;
 
 			Option::Save(config["esp.visible_color"], esp::visible_color);
 			Option::Save(config["esp.occluded_color"], esp::occluded_color);

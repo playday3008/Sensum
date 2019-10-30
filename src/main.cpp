@@ -17,7 +17,7 @@
 #include "valve_sdk/sdk.hpp"
 #include "features/features.h"
 
-bool is_unhookable = false;
+bool is_unhookable = true;
 
 void wait_for_modules()
 {
@@ -45,14 +45,15 @@ void setup_hotkeys(LPVOID base)
 	});
 
 
-#ifdef _DEBUG
 	if (is_unhookable)
 	{
 		bool is_active = true;
 		input_system::register_hotkey(VK_DELETE, [&is_active]()
 		{
 			if (render::menu::is_visible())
-				render::switch_hwnd();
+				//render::switch_hwnd();
+
+				hooks::destroy();
 
 			is_active = false;
 		});
@@ -62,7 +63,6 @@ void setup_hotkeys(LPVOID base)
 
 		LI_FN(FreeLibraryAndExitThread)(static_cast<HMODULE>(base), 1);
 	}
-#endif 
 }
 
 DWORD __stdcall on_attach(LPVOID base)

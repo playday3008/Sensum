@@ -18,6 +18,7 @@ namespace render
 		extern ImFont* notifies;
 		extern ImFont* spectators;
 		extern ImFont* configs_list;
+		extern ImFont* weapon_icon;
 
 		extern ImFont* header_title;
 		extern ImFont* header_buttons;

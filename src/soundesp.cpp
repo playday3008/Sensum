@@ -73,7 +73,6 @@ void c_sound_esp::event_player_footstep(IGameEvent* event) noexcept {
 			sound_logs.push_back(c_sound_info(walker->GetAbsOrigin(), interfaces::global_vars->curtime, event->GetInt("userid"))); //victim->GetAbsOrigin()
 		}
 	}
-
 }
 
 void c_sound_esp::event_player_hurt(IGameEvent* event) noexcept {
