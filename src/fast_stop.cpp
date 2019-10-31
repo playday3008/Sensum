@@ -7,7 +7,7 @@ namespace features
 {
 	void fastStop(CUserCmd* cmd)
 	{
-		const auto velocity = g::local_player->m_vecVelocity();
+		Vector velocity = g::local_player->m_vecVelocity();
 		QAngle direction;
 		math::vector2angles(velocity, direction);
 		float speed = velocity.Length2D();
@@ -17,26 +17,30 @@ namespace features
 		Vector forward;
 		math::angle2vectors(direction, forward);
 
-		Vector source = forward * -speed;
+		Vector right = (forward + 0.217812) * -speed;
+		Vector left = (forward + -0.217812) * -speed;
+
+		Vector move_forward = (forward + 0.217812) * -speed;
+		Vector move_backward = (forward + -0.217812) * -speed;
 
 		if (!(cmd->buttons & IN_MOVELEFT))
 		{
-			cmd->sidemove += +source.y;
+			cmd->sidemove += +left.y;
 		}
 
 		if (!(cmd->buttons & IN_MOVERIGHT))
 		{
-			cmd->sidemove -= -source.y;
+			cmd->sidemove -= -right.y;
 		}
 
 		/*if (!(cmd->buttons & IN_FORWARD))
 		{
-			cmd->forwardmove += +source.x;
+			cmd->forwardmove += +move_forward.x;
 		} */
 
 		/*if (!(cmd->buttons & IN_BACK))
 		{
-			cmd->forwardmove -= -source.x;
+			cmd->forwardmove -= -move_backward.x;
 		}*/
 	}
 }
