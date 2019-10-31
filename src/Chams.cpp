@@ -67,6 +67,11 @@ Chams::Chams() {
 	materialRegularIgnoreZ = g::mat_system->FindMaterial("simple_ignorez", TEXTURE_GROUP_MODEL);
 	materialFlatIgnoreZ = g::mat_system->FindMaterial("simple_flat_ignorez", TEXTURE_GROUP_MODEL);
 	materialFlat = g::mat_system->FindMaterial("simple_flat", TEXTURE_GROUP_MODEL);
+
+	materialRegular->IncrementReferenceCount();
+	materialRegularIgnoreZ->IncrementReferenceCount();
+	materialFlatIgnoreZ->IncrementReferenceCount();
+	materialFlat->IncrementReferenceCount();
 }
 
 //"$basetexture" "vgui/white_additive"
@@ -223,4 +228,5 @@ void Chams::OverrideMaterial(bool ignoreZ, bool flat, bool wireframe, bool glass
 		rgba.b() / 255.0f);
 
 	g::mdl_render->ForcedMaterialOverride(material);
+	material->IncrementReferenceCount();
 }

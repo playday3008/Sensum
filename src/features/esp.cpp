@@ -317,7 +317,7 @@ namespace esp
 					break;
 				case 1:
 					ImGui::PushFont(render::fonts::weapon_icon);
-					imdraw::outlined_text(data.icon.c_str(), ImVec2(box.left + width / 2.f - 33 / 2.f, y_pos), white_color);
+					imdraw::outlined_text(data.icon.c_str(), ImVec2(box.left + width / 2.f - 28 / 2.f, y_pos), white_color); //was 33
 					ImGui::PopFont();
 					break;
 				}

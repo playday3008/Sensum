@@ -26,4 +26,9 @@ public:
 	{
 		return CallVFunction<bool(__thiscall*)(void*, EMaterialVarFlag)>(this, 30)(this, flag);
 	}
+
+	void IncrementReferenceCount()
+	{
+		CallVFunction<void(__thiscall*)(void*)>(this, 12)(this);
+	}
 };

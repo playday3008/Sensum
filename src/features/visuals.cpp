@@ -141,7 +141,11 @@ namespace visuals
 
 	void DrawDamageIndicator()
 	{
-		if (!g::local_player)
+		if (!g::engine_client->IsInGame() || !g::engine_client->IsConnected())
+			return;
+
+
+		if (!g::local_player && !g::local_player->IsAlive())
 			return;
 
 		float CurrentTime = g::local_player->m_nTickBase() * g::global_vars->interval_per_tick;
@@ -438,12 +442,14 @@ namespace visuals
 						interfaces::render_view->SetColorModulation(settings::chams::clr_plantedc4_chams_xqz);
 						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
 						interfaces::mdl_render->ForcedMaterialOverride(mat);
+						mat->IncrementReferenceCount();
 						entity->DrawModel(1, 255);
 					}
 					if (settings::chams::plantedc4_chams) {
 						interfaces::render_view->SetColorModulation(settings::chams::clr_plantedc4_chams);
 						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, false);
 						interfaces::mdl_render->ForcedMaterialOverride(mat);
+						mat->IncrementReferenceCount();
 						entity->DrawModel(1, 255);
 					}
 					break;
@@ -468,12 +474,14 @@ namespace visuals
 						interfaces::render_view->SetColorModulation(settings::chams::clr_nade_chams_xqz);
 						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
 						interfaces::mdl_render->ForcedMaterialOverride(mat);
+						mat->IncrementReferenceCount();
 						entity->DrawModel(1, 255);
 					}
 					if (settings::chams::nade_chams) {
 						interfaces::render_view->SetColorModulation(settings::chams::clr_nade_chams);
 						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
 						interfaces::mdl_render->ForcedMaterialOverride(mat);
+						mat->IncrementReferenceCount();
 						entity->DrawModel(1, 255);
 					}
 					break;
@@ -486,16 +494,19 @@ namespace visuals
 						interfaces::render_view->SetColorModulation(settings::chams::clr_weapon_dropped_chams_xqz);
 						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
 						interfaces::mdl_render->ForcedMaterialOverride(mat);
+						mat->IncrementReferenceCount();
 						entity->DrawModel(1, 255);
 					}
 					if (settings::chams::wep_droppedchams) {
 						interfaces::render_view->SetColorModulation(settings::chams::clr_weapon_dropped_chams);
 						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, false);
 						interfaces::mdl_render->ForcedMaterialOverride(mat);
+						mat->IncrementReferenceCount();
 						entity->DrawModel(1, 255);
 					}
 				}
 				interfaces::mdl_render->ForcedMaterialOverride(nullptr);
+				mat->IncrementReferenceCount();
 			}
 		}
 	}
@@ -528,10 +539,16 @@ namespace visuals
 			return;
 
 		Vector OrigAng;
-		IMaterial* Dagtag = g::mat_system->FindMaterial("models/inventory_items/dogtags/dogtags_outline", "Other textures");
-		IMaterial* flat = g::mat_system->FindMaterial("debug/debugdrawflat", "Other textures");
-		IMaterial* regular = g::mat_system->FindMaterial("simple_regular", TEXTURE_GROUP_MODEL);
-		IMaterial* Metallic = g::mat_system->FindMaterial("simple_reflective", TEXTURE_GROUP_MODEL);
+		static IMaterial* Dagtag = g::mat_system->FindMaterial("models/inventory_items/dogtags/dogtags_outline", "Other textures");
+		static IMaterial* flat = g::mat_system->FindMaterial("debug/debugdrawflat", "Other textures");
+		static IMaterial* regular = g::mat_system->FindMaterial("simple_regular", TEXTURE_GROUP_MODEL);
+		static IMaterial* Metallic = g::mat_system->FindMaterial("simple_reflective", TEXTURE_GROUP_MODEL);
+
+		Dagtag->IncrementReferenceCount();
+		flat->IncrementReferenceCount();
+		regular->IncrementReferenceCount();
+		Metallic->IncrementReferenceCount();
+
 		OrigAng = g::local_player->GetAbsAngles2();
 		g::local_player->SetAngle2(Vector(0, g::local_player->GetPlayerAnimState2()->m_flEyeYaw, 0)); //around 90% accurate
 		if (g::Input->m_fCameraInThirdPerson)
