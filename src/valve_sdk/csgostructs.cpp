@@ -233,8 +233,11 @@ bool c_base_combat_weapon::HasBullets()
 
 char* c_base_combat_weapon::GetGunIcon()
 {
-	int WeaponId = this->m_iItemDefinitionIndex();
-	switch (WeaponId)
+	if (!this)
+		return " ";
+
+
+	switch (this->m_iItemDefinitionIndex())
 	{
 	case WEAPON_KNIFE:
 	case 500:

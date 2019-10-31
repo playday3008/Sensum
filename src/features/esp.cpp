@@ -302,6 +302,9 @@ namespace esp
 			if (settings::esp::weapons && !data.weapon.empty())
 			{
 				const auto weapon_size = ImGui::CalcTextSize(data.weapon.c_str());
+
+				if (!render::fonts::weapon_icon)
+					return;
 				
 				auto y_pos = box.bottom + 2.f;
 				if (settings::esp::health && settings::esp::health_position == 2)

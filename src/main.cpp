@@ -59,7 +59,7 @@ void setup_hotkeys(LPVOID base)
 		});
 
 		while (is_active)
-			Sleep(500);
+			Sleep(5000);
 
 		LI_FN(FreeLibraryAndExitThread)(static_cast<HMODULE>(base), 1);
 	}

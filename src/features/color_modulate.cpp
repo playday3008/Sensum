@@ -12,6 +12,7 @@ namespace color_modulation
 	auto arms_state = false;
 	auto post_processing = false;
 	auto night_mode_state = false;
+	auto night_mode_first = false;
 	auto arms_wireframe_state = true;
 
 	ImVec4 last_sky;
@@ -32,10 +33,15 @@ namespace color_modulation
 	const uint32_t particle_textures = FNV("Particle textures");
 
 
+
 	uint8_t* sky_fn_offset = nullptr;
 
 	void event()
 	{
+		if (!night_mode_first)
+			if (settings::visuals::night_mode) night_mode_first = true;
+			else return;
+
 		if (!sky_fn_offset)
 			sky_fn_offset = utils::pattern_scan(SET_SKY);
 
@@ -206,11 +212,6 @@ namespace color_modulation
 		//debug_fov->SetValue(settings::misc::debug_fov);
 		mat_postprocess_enable->SetValue(post_processing ? 1 : 0);
 
-		auto engine_focus = g::cvar->find("engine_no_focus_sleep"); //This command makes csgo not go into low fps mode while alt tabbed.
-		engine_focus->SetValue(0); //This is an anti untrusted measurement while being in windowed & alt tabbed.
-		//(Because sometimes clamping fails because of low fps while alt tabbed.)
-
-
 	}
 
 	void SetMatForce()
@@ -283,6 +284,7 @@ namespace color_modulation
 
 
 		static auto sv_skyname = interfaces::cvar->find(xorstr_("sv_skyname"));
+		static auto sv_skyname_backup = interfaces::cvar->find(xorstr_("sv_skyname"))->GetString();
 
 
 		for (auto i = interfaces::mat_system->FirstMaterial(); i != interfaces::mat_system->InvalidMaterial(); i = interfaces::mat_system->NextMaterial(i))
@@ -296,10 +298,6 @@ namespace color_modulation
 
 			const auto _name = fnv::hash_runtime(name);
 			const auto _group = fnv::hash_runtime(group);
-
-
-			//if (_group == skybox_textures)
-				//material->ColorModulate(last_sky.x, last_sky.y, last_sky.z); 
 
 			if (_group == model_textures)
 			{
@@ -320,13 +318,29 @@ namespace color_modulation
 				material->SetMaterialVarFlag(MATERIAL_VAR_WIREFRAME, settings::chams::arms::enabled && settings::chams::arms::wireframe);
 			}
 
+			if (_group == static_prop_textures) //Static props, aka Ticket box on A Mirage or boxes.
+			{
+				material->ColorModulate(0.5f, 0.5f, 0.5f); //was 0.5
+			} 
+
+			if (!night_mode_first)
+				if (settings::visuals::night_mode) night_mode_first = true; //Thanks, Credits to Klavaro - MartiNJ409
+				else continue;
+
 			if (settings::visuals::night_mode)
 				sv_skyname->SetValue("sky_csgo_night02");
 
 			if (!settings::visuals::night_mode)
 			{
 				static auto mat_force_tonemap_scale = interfaces::cvar->find(xorstr_("mat_force_tonemap_scale"));
+
 				mat_force_tonemap_scale->SetValue(1.0f);
+				sv_skyname->SetValue(sv_skyname_backup);
+
+				if (_group == static_prop_textures) //Static props, aka Ticket box on A Mirage or boxes.
+				{
+					material->ColorModulate(1.f, 1.f, 1.f); //was 0.5
+				}
 			}
 		}
 	}
