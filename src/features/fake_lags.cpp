@@ -152,8 +152,7 @@ namespace fake_lags
 		auto velocity = local_player->m_vecVelocity();
 		velocity.z = 0.f;
 		auto speed = velocity.Length2D();  //EDIT
-		auto distance_per_tick = speed *
-			interfaces::global_vars->interval_per_tick;
+		auto distance_per_tick = speed * interfaces::global_vars->interval_per_tick;
 		int choked_ticks = std::ceilf(TELEPORT_DISTANCE / distance_per_tick);
 
 		return std::min<int>(choked_ticks, MAX_CHOKE);
@@ -169,6 +168,9 @@ namespace fake_lags
 			return false;
 
 		if (!utils::can_lag() || cmd->buttons & IN_USE)
+			return false;
+
+		if (g::engine_client->IsVoiceRecording())
 			return false;
 
 		auto weapon = interfaces::local_player->m_hActiveWeapon();

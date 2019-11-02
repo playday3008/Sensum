@@ -8,6 +8,7 @@
 #include "..//runtime_saver.h"
 #include "..//render/render.h"
 #include "..//Backtrack_new.h"
+#include "..//helpers/autowall.h"
 
 #include <mutex>
 
@@ -397,36 +398,14 @@ namespace visuals
 		}
 	}
 
-	void chams_misc(const ModelRenderInfo_t& info) noexcept {
-
-		auto model_name = interfaces::mdl_info->GetModelName((model_t*)info.pModel);
-
-		if (!model_name)
-			return;
-
-		static IMaterial* mat = nullptr;
-
-		auto flat = interfaces::mat_system->FindMaterial("debug/debugdrawflat", TEXTURE_GROUP_MODEL, true, nullptr);
-
-		mat = flat;
-
-		if (settings::chams::wepchams && strstr(model_name, "models/weapons/v_")
-			&& !strstr(model_name, "arms") && !strstr(model_name, "sleeve")) {
-
-			interfaces::render_view->SetColorModulation(settings::chams::clr_weapon_chams);
-			mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, false);
-			interfaces::mdl_render->ForcedMaterialOverride(mat);
-		}
-	}
-
 	void more_chams() noexcept
 	{
 
 		static IMaterial* mat = nullptr;
 
-		auto flat = interfaces::mat_system->FindMaterial("debug/debugdrawflat", TEXTURE_GROUP_MODEL, true, nullptr);
+		static IMaterial* Metallic = g::mat_system->FindMaterial("simple_reflective", TEXTURE_GROUP_MODEL);
 
-		mat = flat;
+		mat = Metallic;
 
 		for (int i = 0; i < interfaces::entity_list->GetHighestEntityIndex(); i++) {
 			auto entity = reinterpret_cast<c_base_player*>(interfaces::entity_list->GetClientEntity(i));
@@ -438,22 +417,14 @@ namespace visuals
 				switch (client_class->m_ClassID) {
 				case EClassId::CPlantedC4:
 				case EClassId::CBaseAnimating:
-					if (settings::chams::plantedc4_chams_xqz) {
-						interfaces::render_view->SetColorModulation(settings::chams::clr_plantedc4_chams_xqz);
+					if (settings::chams::plantedc4_chams) {
+						g::render_view->SetColorModulation(settings::chams::colorPlantedC4Chams.r() / 255.f, settings::chams::colorPlantedC4Chams.g() / 255.f, settings::chams::colorPlantedC4Chams.b() / 255.f);
 						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
 						interfaces::mdl_render->ForcedMaterialOverride(mat);
 						mat->IncrementReferenceCount();
 						entity->DrawModel(1, 255);
 					}
-					if (settings::chams::plantedc4_chams) {
-						interfaces::render_view->SetColorModulation(settings::chams::clr_plantedc4_chams);
-						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, false);
-						interfaces::mdl_render->ForcedMaterialOverride(mat);
-						mat->IncrementReferenceCount();
-						entity->DrawModel(1, 255);
-					}
 					break;
-					//	grenedes
 				case EClassId::CHEGrenade:
 				case EClassId::CFlashbang:
 				case EClassId::CMolotovGrenade:
@@ -470,15 +441,8 @@ namespace visuals
 				case EClassId::CBaseParticleEntity:
 				case EClassId::CSensorGrenade:
 				case EClassId::CSensorGrenadeProjectile:
-					if (settings::chams::nade_chams_xqz) {
-						interfaces::render_view->SetColorModulation(settings::chams::clr_nade_chams_xqz);
-						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
-						interfaces::mdl_render->ForcedMaterialOverride(mat);
-						mat->IncrementReferenceCount();
-						entity->DrawModel(1, 255);
-					}
 					if (settings::chams::nade_chams) {
-						interfaces::render_view->SetColorModulation(settings::chams::clr_nade_chams);
+						interfaces::render_view->SetColorModulation(settings::chams::colorNadeChams.r() / 255.f, settings::chams::colorNadeChams.g() / 255.f, settings::chams::colorNadeChams.b() / 255.f);
 						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
 						interfaces::mdl_render->ForcedMaterialOverride(mat);
 						mat->IncrementReferenceCount();
@@ -490,18 +454,10 @@ namespace visuals
 
 				if (client_class->m_ClassID == CAK47 || client_class->m_ClassID == CDEagle || client_class->m_ClassID == CC4 ||
 					client_class->m_ClassID >= CWeaponAug && client_class->m_ClassID <= CWeaponXM1014) {
-					if (settings::chams::wep_droppedchams_xqz) {
-						interfaces::render_view->SetColorModulation(settings::chams::clr_weapon_dropped_chams_xqz);
+					if (settings::chams::wep_droppedchams) {
+						interfaces::render_view->SetColorModulation(settings::chams::ColorWeaponDroppedChams.r() / 255.f, settings::chams::ColorWeaponDroppedChams.g() / 255.f, settings::chams::ColorWeaponDroppedChams.b() / 255.f);
 						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
 						interfaces::mdl_render->ForcedMaterialOverride(mat);
-						mat->IncrementReferenceCount();
-						entity->DrawModel(1, 255);
-					}
-					if (settings::chams::wep_droppedchams) {
-						interfaces::render_view->SetColorModulation(settings::chams::clr_weapon_dropped_chams);
-						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, false);
-						interfaces::mdl_render->ForcedMaterialOverride(mat);
-						mat->IncrementReferenceCount();
 						entity->DrawModel(1, 255);
 					}
 				}
@@ -518,6 +474,9 @@ namespace visuals
 		g::engine_client->GetScreenSize(x, y);
 
 		if (!g::local_player || !g::local_player->IsAlive())
+			return;
+
+		if (!utils::IsPlayingMM() && utils::IsValveDS())
 			return;
 
 		if (!g::engine_client->IsInGame() || !g::engine_client->IsConnected())
@@ -538,22 +497,69 @@ namespace visuals
 		if (interfaces::local_player->m_bGunGameImmunity() || interfaces::local_player->m_fFlags() & FL_FROZEN)
 			return;
 
+		if (!utils::IsPlayingMM() && utils::IsValveDS())
+			return;
+	
 		Vector OrigAng;
-		static IMaterial* Dagtag = g::mat_system->FindMaterial("models/inventory_items/dogtags/dogtags_outline", "Other textures");
-		static IMaterial* flat = g::mat_system->FindMaterial("debug/debugdrawflat", "Other textures");
-		static IMaterial* regular = g::mat_system->FindMaterial("simple_regular", TEXTURE_GROUP_MODEL);
-		static IMaterial* Metallic = g::mat_system->FindMaterial("simple_reflective", TEXTURE_GROUP_MODEL);
 
-		Dagtag->IncrementReferenceCount();
-		flat->IncrementReferenceCount();
-		regular->IncrementReferenceCount();
+		static IMaterial* material = nullptr;
+
+		static IMaterial* Normal = g::mat_system->FindMaterial("simple_regular", TEXTURE_GROUP_MODEL);
+		static IMaterial* Dogtags = g::mat_system->FindMaterial("models/inventory_items/dogtags/dogtags_outline", TEXTURE_GROUP_MODEL);
+		static IMaterial* Flat = g::mat_system->FindMaterial("debug/debugdrawflat", TEXTURE_GROUP_MODEL);
+		static IMaterial* Metallic = g::mat_system->FindMaterial("simple_reflective", TEXTURE_GROUP_MODEL);
+		static IMaterial* Platinum = g::mat_system->FindMaterial("models/player/ct_fbi/ct_fbi_glass", TEXTURE_GROUP_MODEL);
+		static IMaterial* Glass = g::mat_system->FindMaterial("models/inventory_items/cologne_prediction/cologne_prediction_glass", TEXTURE_GROUP_MODEL);
+		static IMaterial* Crystal = g::mat_system->FindMaterial("models/inventory_items/trophy_majors/crystal_clear", TEXTURE_GROUP_MODEL);
+		static IMaterial* Gold = g::mat_system->FindMaterial("models/inventory_items/trophy_majors/gold", TEXTURE_GROUP_MODEL);
+		static IMaterial* DarkChrome = g::mat_system->FindMaterial("models/gibs/glass/glass", TEXTURE_GROUP_MODEL);
+		static IMaterial* PlasticGloss = g::mat_system->FindMaterial("models/inventory_items/trophy_majors/gloss", TEXTURE_GROUP_MODEL);
+		static IMaterial* Glow = g::mat_system->FindMaterial("vgui/achievements/glow", TEXTURE_GROUP_MODEL);
+
+		Normal->IncrementReferenceCount();
+		Dogtags->IncrementReferenceCount();
+		Flat->IncrementReferenceCount();
 		Metallic->IncrementReferenceCount();
+		Platinum->IncrementReferenceCount();
+		Glass->IncrementReferenceCount();
+		Crystal->IncrementReferenceCount();
+		Gold->IncrementReferenceCount();
+		DarkChrome->IncrementReferenceCount();
+		PlasticGloss->IncrementReferenceCount();
+		Glow->IncrementReferenceCount();
+
+		
+		switch (settings::chams::desyncChamsMode)
+		{
+		case 0: material = Normal; 
+			break;
+		case 1: material = Dogtags; 
+			break;
+		case 2: material = Flat; 
+			break;
+		case 3: material = Metallic; 
+			break;
+		case 4: material = Platinum; 
+			break;
+		case 5: material = Glass; 
+			break;
+		case 6: material = Crystal;
+			break;
+		case 7: material = Gold;
+			break;
+		case 8: material = DarkChrome; 
+			break;
+		case 9: material = PlasticGloss; 
+			break;
+		case 10: material = Glow; 
+			break;
+		}
 
 		OrigAng = g::local_player->GetAbsAngles2();
 		g::local_player->SetAngle2(Vector(0, g::local_player->GetPlayerAnimState2()->m_flEyeYaw, 0)); //around 90% accurate
 		if (g::Input->m_fCameraInThirdPerson)
 		{
-			g::mdl_render->ForcedMaterialOverride(Metallic);
+			g::mdl_render->ForcedMaterialOverride(material);
 			g::render_view->SetColorModulation(1.0f, 1.0f, 1.0f);
 		}
 		g::local_player->GetClientRenderable()->DrawModel(0x1, 255);
@@ -708,23 +714,21 @@ namespace visuals
 			auto is_enemy = glow_entity->m_iTeamNum() != local_player->m_iTeamNum();
 			auto is_teammate = glow_entity->m_iTeamNum() == local_player->m_iTeamNum();
 
-
 			switch (client_class->m_ClassID) {
 			case EClassId::CCSPlayer:
-				if (is_enemy && settings::glow::GlowEnemyEnabled) {
-					glow.set(settings::glow::GlowEnemy[0], settings::glow::GlowEnemy[1], settings::glow::GlowEnemy[2], settings::glow::GlowEnemy[3]);
+				if (is_enemy && settings::glow::glowEnemyEnabled) {
+					glow.set(settings::glow::glowEnemyColor.r() / 255.f, settings::glow::glowEnemyColor.g() / 255.f, settings::glow::glowEnemyColor.b() / 255.f, settings::glow::glowEnemyColor.a() / 255.f);
 				}
-				else if (is_teammate && settings::glow::GlowTeamEnabled) {
-					glow.set(settings::glow::GlowTeam[0], settings::glow::GlowTeam[1], settings::glow::GlowTeam[2], settings::glow::GlowTeam[3]);
+				else if (is_teammate && settings::glow::glowTeamEnabled) {
+					glow.set(settings::glow::glowTeamColor.r() / 255.f, settings::glow::glowTeamColor.g() / 255.f, settings::glow::glowTeamColor.b() / 255.f, settings::glow::glowTeamColor.a() / 255.f);
 				}
 				break;
 			case EClassId::CPlantedC4:
 			case EClassId::CBaseAnimating:
-				if (settings::glow::GlowC4PlantedEnabled) {
-					glow.set(settings::glow::GlowC4Planted[0], settings::glow::GlowC4Planted[1], settings::glow::GlowC4Planted[2], settings::glow::GlowC4Planted[3]);
+				if (settings::glow::glowC4PlantedEnabled) {
+					glow.set(settings::glow::glowC4PlantedColor.r() / 255.f, settings::glow::glowC4PlantedColor.g() / 255.f, settings::glow::glowC4PlantedColor.b() / 255.f, settings::glow::glowC4PlantedColor.a() / 255.f);
 				}
 				break;
-				//	grenedes
 			case EClassId::CHEGrenade:
 			case EClassId::CFlashbang:
 			case EClassId::CMolotovGrenade:
@@ -741,16 +745,95 @@ namespace visuals
 			case EClassId::CBaseParticleEntity:
 			case EClassId::CSensorGrenade:
 			case EClassId::CSensorGrenadeProjectile:
-				if (settings::glow::GlowNadesEnabled) {
-					glow.set(settings::glow::GlowNades[0], settings::glow::GlowNades[1], settings::glow::GlowNades[2], settings::glow::GlowNades[3]);
+				if (settings::glow::glowNadesEnabled && !settings::glow::glowOverride) {
+					glow.set(settings::glow::glowNadesColor.r() / 255.f, settings::glow::glowNadesColor.g() / 255.f, settings::glow::glowNadesColor.b() / 255.f, settings::glow::glowNadesColor.a() / 255.f);
 				}
 				break;
 			}
 
 			if (client_class->m_ClassID == CAK47 || client_class->m_ClassID == CDEagle || client_class->m_ClassID == CC4 ||
 				client_class->m_ClassID >= CWeaponAug && client_class->m_ClassID <= CWeaponXM1014) {
-				if (settings::glow::GlowDroppedWeaponsEnabled) {
-					glow.set(settings::glow::GlowDroppedWeapons[0], settings::glow::GlowDroppedWeapons[1], settings::glow::GlowDroppedWeapons[2], settings::glow::GlowDroppedWeapons[3]);
+				if (settings::glow::glowDroppedWeaponsEnabled) {
+					glow.set(settings::glow::glowDroppedWeaponsColor.r() / 255.f, settings::glow::glowDroppedWeaponsColor.g() / 255.f, settings::glow::glowDroppedWeaponsColor.b() / 255.f, settings::glow::glowDroppedWeaponsColor.a() / 255.f);
+				}
+			}
+		}
+	}
+
+	void glow_override() noexcept {
+
+		auto local_player = reinterpret_cast<c_base_player*>(interfaces::entity_list->GetClientEntity(interfaces::engine_client->GetLocalPlayer()));
+		if (!local_player)
+			return;
+
+		for (size_t i = 0; i < interfaces::glow_manager->size; i++) {
+			auto& glow = interfaces::glow_manager->objects[i];
+			if (glow.unused())
+				continue;
+
+			auto glow_entity = reinterpret_cast<c_base_player*>(glow.entity);
+			auto client_class = glow_entity->GetClientClass();
+			if (!glow_entity || glow_entity->IsDormant())
+				continue;
+
+			auto is_enemy = glow_entity->m_iTeamNum() != local_player->m_iTeamNum();
+			auto is_teammate = glow_entity->m_iTeamNum() == local_player->m_iTeamNum();
+
+
+			switch (client_class->m_ClassID) {
+			
+			case EClassId::CHEGrenade:
+				if (settings::glow::glowOverride) {
+					glow.set(settings::glow::glowHE.r() / 255.f, settings::glow::glowHE.g() / 255.f, settings::glow::glowHE.b() / 255.f, settings::glow::glowHE.a() / 255.f);
+				}
+				break;
+			case EClassId::CFlashbang:
+				if (settings::glow::glowOverride) {
+					glow.set(settings::glow::glowFlashbang.r() / 255.f, settings::glow::glowFlashbang.g() / 255.f, settings::glow::glowFlashbang.b() / 255.f, settings::glow::glowFlashbang.a() / 255.f);
+				}
+				break;
+			case EClassId::CMolotovGrenade:
+				if (settings::glow::glowOverride) {
+					glow.set(settings::glow::glowMolotovIncendiary.r() / 255.f, settings::glow::glowMolotovIncendiary.g() / 255.f, settings::glow::glowMolotovIncendiary.b() / 255.f, settings::glow::glowMolotovIncendiary.a() / 255.f);
+				}
+				break;
+			case EClassId::CMolotovProjectile:
+				if (settings::glow::glowOverride) {
+					glow.set(settings::glow::glowMolotovIncendiary.r() / 255.f, settings::glow::glowMolotovIncendiary.g() / 255.f, settings::glow::glowMolotovIncendiary.b() / 255.f, settings::glow::glowMolotovIncendiary.a() / 255.f);
+				}
+				break;
+			case EClassId::CIncendiaryGrenade:
+				if (settings::glow::glowOverride) {
+					glow.set(settings::glow::glowMolotovIncendiary.r() / 255.f, settings::glow::glowMolotovIncendiary.g() / 255.f, settings::glow::glowMolotovIncendiary.b() / 255.f, settings::glow::glowMolotovIncendiary.a() / 255.f);
+				}
+				break;
+			case EClassId::CDecoyGrenade:
+				if (settings::glow::glowOverride) {
+					glow.set(settings::glow::glowDecoy.r() / 255.f, settings::glow::glowDecoy.g() / 255.f, settings::glow::glowDecoy.b() / 255.f, settings::glow::glowDecoy.a() / 255.f);
+				}
+				break;
+			case EClassId::CDecoyProjectile:
+				if (settings::glow::glowOverride) {
+					glow.set(settings::glow::glowDecoy.r() / 255.f, settings::glow::glowDecoy.g() / 255.f, settings::glow::glowDecoy.b() / 255.f, settings::glow::glowDecoy.a() / 255.f);
+				}
+				break;
+			case EClassId::CSmokeGrenade:
+				if (settings::glow::glowOverride) {
+					glow.set(settings::glow::glowSmoke.r() / 255.f, settings::glow::glowSmoke.g() / 255.f, settings::glow::glowSmoke.b() / 255.f, settings::glow::glowSmoke.a() / 255.f);
+				}
+				break;
+			case EClassId::CSmokeGrenadeProjectile:
+				if (settings::glow::glowOverride) {
+					glow.set(settings::glow::glowSmoke.r() / 255.f, settings::glow::glowSmoke.g() / 255.f, settings::glow::glowSmoke.b() / 255.f, settings::glow::glowSmoke.a() / 255.f);
+				}
+				break;
+			}
+
+			if (settings::glow::glowOverride) 
+			{
+				if (client_class->m_ClassID == CC4)
+				{
+					glow.set(settings::glow::glowDroppedC4Color.r() / 255.f, settings::glow::glowDroppedC4Color.g() / 255.f, settings::glow::glowDroppedC4Color.b() / 255.f, settings::glow::glowDroppedC4Color.a() / 255.f);
 				}
 			}
 		}

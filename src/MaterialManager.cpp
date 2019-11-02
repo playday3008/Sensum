@@ -105,6 +105,13 @@ MaterialManager::MaterialManager()
 	materialFlat = g::mat_system->FindMaterial("simple_flat", TEXTURE_GROUP_MODEL);
 	materialReflective = g::mat_system->FindMaterial("simple_reflective", TEXTURE_GROUP_MODEL);
 	materialReflectiveIgnoreZ = g::mat_system->FindMaterial("simple_reflectiveignorez", TEXTURE_GROUP_MODEL);
+
+	materialRegular->IncrementReferenceCount();
+	materialRegularIgnoreZ->IncrementReferenceCount();
+	materialFlatIgnoreZ->IncrementReferenceCount();
+	materialFlat->IncrementReferenceCount();
+	materialReflective->IncrementReferenceCount();
+	materialReflectiveIgnoreZ->IncrementReferenceCount();
 }
 
 MaterialManager::~MaterialManager()
@@ -170,6 +177,7 @@ void MaterialManager::OverrideMaterial(bool ignoreZ, bool flat, bool wireframe, 
 		rgba.b() / 255.0f);
 
 	g::mdl_render->ForcedMaterialOverride(material);
+	material->IncrementReferenceCount();
 }
 
 void MaterialManager::OverrideMaterial(bool ignoreZ, bool flat, bool wireframe, bool glass, bool metallic)
@@ -207,7 +215,6 @@ void MaterialManager::OverrideMaterial(bool ignoreZ, bool flat, bool wireframe, 
 		}
 	}
 
-
 	if (glass)
 	{
 		material = materialFlat;
@@ -217,4 +224,5 @@ void MaterialManager::OverrideMaterial(bool ignoreZ, bool flat, bool wireframe, 
 	material->SetMaterialVarFlag(MATERIAL_VAR_WIREFRAME, wireframe);
 
 	g::mdl_render->ForcedMaterialOverride(material);
+	material->IncrementReferenceCount();
 }

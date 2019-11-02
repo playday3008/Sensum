@@ -50,6 +50,7 @@ struct weapon_setting
 	bool check_air = true;
 	bool by_damage = false;
 	bool back_shot = false;
+	bool rcs_override_hitbox = false;
 
 	int min_damage = 0;
 	int min_hitchanse = 0;
@@ -176,27 +177,33 @@ namespace settings
 		extern bool soundesp;
 		extern bool mat_force_apply;
 		
-		extern Color visible_color;
-		extern Color occluded_color;
+		extern Color visibleColor;
+		extern Color occludedColor;
 
-		extern float soundesp_color[4];
+		extern Color colorSoundEsp;
 	}
 
 	namespace glow
 	{
 
-		extern bool GlowEnemyEnabled;
-		extern bool GlowTeamEnabled;
-		extern bool GlowC4PlantedEnabled;
-		extern bool GlowDroppedWeaponsEnabled;
-		extern bool GlowNadesEnabled;
+		extern bool glowEnemyEnabled;
+		extern bool glowTeamEnabled;
+		extern bool glowC4PlantedEnabled;
+		extern bool glowDroppedWeaponsEnabled;
+		extern bool glowNadesEnabled;
+		extern bool glowOverride;
 
-		extern float GlowEnemy[4];
-		extern float GlowTeam[4];
-
-		extern float GlowC4Planted[4];
-		extern float GlowDroppedWeapons[4];
-		extern float GlowNades[4];
+		extern Color glowEnemyColor;
+		extern Color glowTeamColor;
+		extern Color glowC4PlantedColor;
+		extern Color glowDroppedWeaponsColor;
+		extern Color glowNadesColor;
+		extern Color glowHE;
+		extern Color glowMolotovIncendiary;
+		extern Color glowFlashbang;
+		extern Color glowDecoy;
+		extern Color glowSmoke;
+		extern Color glowDroppedC4Color;
 	}
 
 	namespace chams
@@ -213,46 +220,33 @@ namespace settings
 		extern bool xqz;
 		extern int bttype;
 		extern bool btflat;
-		extern Color btcolor;
-
-		extern float clr_weapon_chams[4];
-		extern float clr_weapon_dropped_chams[4];
-		extern float clr_weapon_dropped_chams_xqz[4];
-
-		extern Color wepcolor;
-		extern bool wepchams;
-		extern bool wep_droppedchams;
-		extern bool wep_droppedchams_xqz;
-
 		extern bool nade_chams;
-		extern bool nade_chams_xqz;
-		extern float clr_nade_chams_xqz[4];
-		extern float clr_nade_chams[4];
-
+		extern bool wep_droppedchams;
 		extern bool plantedc4_chams;
-		extern bool plantedc4_chams_xqz;
-		extern float clr_plantedc4_chams[4];
-		extern float clr_plantedc4_chams_xqz[4];
-
 		extern int localmodenew;
 		extern int teammodenew;
 		extern int enemymodenew;
+		extern int desyncChamsMode;
 
+		extern Color btColorChams;
+		extern Color ColorWeaponDroppedChams;
+		extern Color colorNadeChams;
+		extern Color colorPlantedC4Chams;
 		extern Color visible_color;
 		extern Color occluded_color;
-
 		extern Color LocalColor_vis;
-		extern Color LocalColor_invis;
-
 		extern Color TeamColor_vis;
-		extern Color TeamColor_invis;
-
 		extern Color EnemyColor_vis;
-		extern Color EnemyColor_invis;
-
 		extern Color LocalColor_XQZ;
 		extern Color TeamColor_XQZ;
 		extern Color EnemyColor_XQZ;
+		extern Color ChamsPlantedC4XQZ;
+		extern Color ChamsHEXQZ;
+		extern Color ChamsMolotovIncendiaryXQZ;
+		extern Color ChamsFlashbangXQZ;
+		extern Color ChamsDecoyXQZ;
+		extern Color ChamsSmokeXQZ;
+		extern Color ChamsC4Dropped;
 
 		extern int matmode;
 
@@ -293,10 +287,11 @@ namespace settings
 		extern bool skeletons;
 		extern float player_info_box_alpha;
 		extern float grief_box_alpha;
+		extern int viewmodel_mode;
 
 		extern Color spread_cross_color;
 		extern Color recoilcolor;
-		extern Color clr_bullet_tracer;
+		extern Color colorBulletTracer;
 		extern Color floatc;
 		extern Color skeletoncolor;
 		extern Color drawfov_color;
@@ -363,6 +358,11 @@ namespace settings
 		extern bool equip;
 		extern bool damage_indicator;
 		extern bool fast_stop;
+		extern bool override_viewmodel;
+
+		extern float viewmodel_offset_x;
+		extern float viewmodel_offset_y;
+		extern float viewmodel_offset_z;
 	}
 }
 

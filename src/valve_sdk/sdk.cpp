@@ -52,7 +52,7 @@ namespace interfaces
 	IViewRenderBeams* view_render_beams = nullptr;
 	glow_manager_t* glow_manager = nullptr;
 	uintptr_t* g_SpatialPartition = nullptr;
-	IStudioRender* g_studiorender;
+	IStudioRender* g_studiorender = nullptr;
 
 	ISteamUser* steam_user = nullptr;
 	ISteamHTTP* steam_http = nullptr;

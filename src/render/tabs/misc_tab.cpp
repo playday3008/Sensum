@@ -96,8 +96,6 @@ namespace render
 				}
 				columns(1);
 
-				separator(___("Fake Lags", u8"Фейк лаги"));
-
 				ImGui::PushID("fakelags");
 				{
 					columns(2);
@@ -171,6 +169,36 @@ namespace render
 					color_modulation::SkyChanger();
 				}
 
+				static const char* viewList[] = {
+					"X",
+					"Y",
+					"Z"
+				};
+
+				separator("Viewmodel Override");
+
+				columns(2);
+				{
+					checkbox("Enabled##viewmodel_changer", &settings::misc::override_viewmodel);
+
+					ImGui::NextColumn();
+					ImGui::Combo("List##viewmodel_changer", &settings::visuals::viewmodel_mode, viewList, IM_ARRAYSIZE(viewList));
+				}
+				columns(1);
+
+				switch (settings::visuals::viewmodel_mode)
+				{
+				case 0:
+					ImGui::SliderFloatLeftAligned("Offset X:", &settings::misc::viewmodel_offset_x, -21.f, 21.f, "%.0f");
+					break;
+				case 1:
+					ImGui::SliderFloatLeftAligned("Offset Y:", &settings::misc::viewmodel_offset_y, 0.f, 50.f, "%.0f");
+					break;
+				case 2:
+					ImGui::SliderFloatLeftAligned("Offset Z:", &settings::misc::viewmodel_offset_z, -30.f, 30.f, "%.0f");
+					break;
+				}
+				
 				/*if (ImGui::Button("Apply", ImVec2(ImGui::GetContentRegionAvailWidth(), 0.f)))
 				  {
 						color_modulation::SkyChanger();
@@ -216,14 +244,17 @@ namespace render
 				bind_button("Third Person", "Third Person", globals::binds::thirdperson::key);
 				bind_button("Lightning Shot", "Lightning Shot", globals::binds::lightning_shot);
 
-				separator(___("Humanised Bhop Settings", u8"Фейк лаги"));
+				if (settings::misc::human_bhop)
+				{
+					separator(___("Humanised Bhop Settings", u8"Фейк лаги"));
 
-				ImGui::SliderIntLeftAligned("Bhop Hit Chance", &settings::misc::bhop_hit_chance, 0, 100, "%.0f %%");
-				tooltip("The chance of second hop, first hop is always at 100%");
-				ImGui::SliderIntLeftAligned("Hops Limit", &settings::misc::hops_restricted_limit, 0, 12);
-				tooltip("Will fuckup the bhop after certain amount of hops to look legit.");
-				ImGui::SliderIntLeftAligned("Max Hops Limit", &settings::misc::max_hops_hit, 0, 12);
-				tooltip("Will fuckup the bhop after certain amount of hops to look legit.");
+					ImGui::SliderIntLeftAligned("Bhop Hit Chance", &settings::misc::bhop_hit_chance, 0, 100, "%.0f %%");
+					tooltip("The chance of second hop, first hop is always at 100%");
+					ImGui::SliderIntLeftAligned("Hops Limit", &settings::misc::hops_restricted_limit, 0, 12);
+					tooltip("Will fuckup the bhop after certain amount of hops to look legit.");
+					ImGui::SliderIntLeftAligned("Max Hops Limit", &settings::misc::max_hops_hit, 0, 12);
+					tooltip("Will fuckup the bhop after certain amount of hops to look legit.");
+				}
 
 				/*if (!interfaces::local_player)
 				{

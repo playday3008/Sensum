@@ -15,6 +15,10 @@ namespace color_modulation
 	auto night_mode_first = false;
 	auto arms_wireframe_state = true;
 
+	auto flViewmodel_offset_x = -1.f;
+	auto flViewmodel_offset_y = -1.f;
+	auto flViewmodel_offset_z = -1.f;
+
 	ImVec4 last_sky;
 	ImVec4 arms_color;
 
@@ -25,6 +29,10 @@ namespace color_modulation
 	ConVar* pitchdown = nullptr;
 	ConVar* noclip = nullptr;
 	ConVar* r_DrawSpecificStaticProp = nullptr;
+
+	ConVar* viewmodel_offset_x = nullptr;
+	ConVar* viewmodel_offset_y = nullptr;
+	ConVar* viewmodel_offset_z = nullptr;
 
 	const uint32_t model_textures = FNV("Model textures");
 	const uint32_t skybox_textures = FNV("SkyBox textures");
@@ -97,16 +105,26 @@ namespace color_modulation
 		if (debug_model_fov != settings::misc::debug_fov)
 			return true;
 
+		if (flViewmodel_offset_x != settings::misc::viewmodel_offset_x)
+			return true;
+
+		if (flViewmodel_offset_y != settings::misc::viewmodel_offset_y)
+			return true;
+
+		if (flViewmodel_offset_z != settings::misc::viewmodel_offset_z)
+			return true;
+
 		return false;
 	}
 
 	void SkyChanger()
 	{
-
 		static auto sv_skyname = interfaces::cvar->find(xorstr_("sv_skyname"));
 
+		auto sv_skyname_backup = g::cvar->find("sv_skyname")->GetString();
+
 		if (!settings::visuals::skychanger)
-			return;
+			sv_skyname->SetValue(sv_skyname_backup);
 
 		switch (settings::visuals::skychanger_mode)
 		{
@@ -182,9 +200,6 @@ namespace color_modulation
 		default:
 			break;
 		}
-
-
-
 	}
 
 	void set_convars()
@@ -205,16 +220,46 @@ namespace color_modulation
 			debug_fov->m_fnChangeCallbacks.m_Size = 0;
 		}
 
+		if (!viewmodel_offset_x)
+		{
+			viewmodel_offset_x = interfaces::cvar->find(xorstr_("viewmodel_offset_x"));
+			viewmodel_offset_x->m_fnChangeCallbacks.m_Size = 0;
+		}
+
+		if (!viewmodel_offset_y)
+		{
+			viewmodel_offset_y = interfaces::cvar->find(xorstr_("viewmodel_offset_y"));
+			viewmodel_offset_y->m_fnChangeCallbacks.m_Size = 0;
+		}
+
+		if (!viewmodel_offset_z)
+		{
+			viewmodel_offset_z = interfaces::cvar->find(xorstr_("viewmodel_offset_z"));
+			viewmodel_offset_z->m_fnChangeCallbacks.m_Size = 0;
+		}
+
 		r_modelAmbientMin->SetValue(settings::visuals::night_mode ? 1.f : 0.f);
 		mat_force_tonemap_scale->SetValue(settings::visuals::night_mode ? 0.2f : 1.f);
 
 		viewmodel_fov->SetValue(settings::misc::viewmodel_fov);
-		//debug_fov->SetValue(settings::misc::debug_fov);
 		mat_postprocess_enable->SetValue(post_processing ? 1 : 0);
 
-		auto engine_focus = g::cvar->find("engine_no_focus_sleep"); //This command makes csgo not go into low fps mode while alt tabbed.
-		engine_focus->SetValue(0); //This is an anti untrusted measurement while being in windowed & alt tabbed.
-		//(Because sometimes clamping fails because of low fps while alt tabbed.)
+		static auto backup_viewmodel_x = g::cvar->find("viewmodel_offset_x")->GetFloat();
+		static auto backup_viewmodel_y = g::cvar->find("viewmodel_offset_y")->GetFloat();
+		static auto backup_viewmodel_z = g::cvar->find("viewmodel_offset_z")->GetFloat();
+
+		if (settings::misc::override_viewmodel)
+		{
+			viewmodel_offset_x->SetValue(settings::misc::viewmodel_offset_x);
+			viewmodel_offset_y->SetValue(settings::misc::viewmodel_offset_y);
+			viewmodel_offset_z->SetValue(settings::misc::viewmodel_offset_z);
+		}
+		else
+		{
+			viewmodel_offset_x->SetValue(backup_viewmodel_x);
+			viewmodel_offset_y->SetValue(backup_viewmodel_y);
+			viewmodel_offset_z->SetValue(backup_viewmodel_z);
+		}
 
 	}
 
@@ -286,9 +331,8 @@ namespace color_modulation
 		set_convars();
 		SetMatForce();
 
-
+		static auto sv_skyname_backup = g::cvar->find("sv_skyname")->GetString();
 		static auto sv_skyname = interfaces::cvar->find(xorstr_("sv_skyname"));
-		static auto sv_skyname_backup = interfaces::cvar->find(xorstr_("sv_skyname"))->GetString();
 
 
 		for (auto i = interfaces::mat_system->FirstMaterial(); i != interfaces::mat_system->InvalidMaterial(); i = interfaces::mat_system->NextMaterial(i))
@@ -331,16 +375,14 @@ namespace color_modulation
 				if (settings::visuals::night_mode) night_mode_first = true; //Thanks, Credits to Klavaro - MartiNJ409
 				else continue;
 
-			if (settings::visuals::night_mode)
-				sv_skyname->SetValue("sky_csgo_night02");
+				sv_skyname->SetValue(settings::visuals::night_mode ? "sky_csgo_night02" : sv_skyname_backup);
 
 			if (!settings::visuals::night_mode)
 			{
 				static auto mat_force_tonemap_scale = interfaces::cvar->find(xorstr_("mat_force_tonemap_scale"));
 
 				mat_force_tonemap_scale->SetValue(1.0f);
-				sv_skyname->SetValue(sv_skyname_backup);
-
+				
 				if (_group == static_prop_textures) //Static props, aka Ticket box on A Mirage or boxes.
 				{
 					material->ColorModulate(1.f, 1.f, 1.f); //was 0.5

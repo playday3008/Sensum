@@ -124,8 +124,8 @@ namespace esp
 					continue;
 			}
 
-			const auto visible_color = utils::to_im32(settings::esp::visible_color);
-			const auto occluded_color = utils::to_im32(settings::esp::occluded_color);
+			const auto visible_color = utils::to_im32(settings::esp::visibleColor);
+			const auto occluded_color = utils::to_im32(settings::esp::occludedColor);
 
 			const auto width = box.right - box.left;
 			const auto height = box.bottom - box.top;

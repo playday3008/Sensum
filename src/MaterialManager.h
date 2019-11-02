@@ -19,8 +19,8 @@ public:
 private:
 	IMaterial* materialRegular = nullptr;
 	IMaterial* materialRegularIgnoreZ = nullptr;
-	IMaterial* materialFlatIgnoreZ = nullptr;
 	IMaterial* materialFlat = nullptr;
+	IMaterial* materialFlatIgnoreZ = nullptr;
 	IMaterial* materialReflective = nullptr;
 	IMaterial* materialReflectiveIgnoreZ = nullptr;
 };

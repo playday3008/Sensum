@@ -122,8 +122,9 @@ namespace render
 						else
 							continue; */
 
-						color = ImVec4(0.f, 0.f, 0.f, 1.f);
+						color = ImVec4(0.29f, 0.41f, 1.f, 1.f);
 						ImGui::PushStyleColor(ImGuiCol_Text, color);
+
 
 						char buf_name[256];
 						sprintf_s(buf_name, sizeof(buf_name), "%s##%d", name.c_str(), skins::skin_kits[k].id);

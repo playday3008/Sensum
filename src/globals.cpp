@@ -26,6 +26,8 @@ namespace globals
 	int yaw_offset = 90; //90
 	float last_yaw_offset = 90.f; //90
 
+	float window_alpha = 1.f;
+
 	int teamkills = 0;
 
 	std::string settings;

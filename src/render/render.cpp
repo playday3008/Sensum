@@ -166,6 +166,23 @@ namespace render
 		return false;
 	}
 
+	bool ColorEdit4(const char* label, Color* v, ImGuiColorEditFlags flag)
+	{
+		auto clr = ImVec4{
+			v->r() / 255.0f,
+			v->g() / 255.0f,
+			v->b() / 255.0f,
+			v->a() / 255.0f
+		};
+
+		if (ImGui::ColorEdit4(label, &clr.x, flag)) {
+			v->SetColor(clr.x, clr.y, clr.z, clr.w);
+			return true;
+		}
+
+		return false;
+	}
+
 	bool ColorEdit3(const char* label, Color* v)
 	{
 		return ColorEdit4(label, v);

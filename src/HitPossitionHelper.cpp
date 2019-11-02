@@ -104,7 +104,7 @@ void HitPossitionHelper::ShotTracer(Vector shot_pos, Vector hit_pos)
 		return;
 	}
 
-	Color clr = settings::visuals::clr_bullet_tracer;
+	Color clr = settings::visuals::colorBulletTracer;
 
 	BeamInfo_t beamInfo;
 	beamInfo.m_nType = TE_BEAMPOINTS;
@@ -116,13 +116,13 @@ void HitPossitionHelper::ShotTracer(Vector shot_pos, Vector hit_pos)
 	beamInfo.m_flEndWidth = 0.5f;
 	beamInfo.m_flFadeLength = 0.0f;
 	beamInfo.m_flAmplitude = 2.3f; // 3.0f
-	beamInfo.m_flBrightness = clr.a();
+	beamInfo.m_flBrightness = settings::visuals::colorBulletTracer.a();
 	beamInfo.m_flSpeed = 0.3f;
 	beamInfo.m_nStartFrame = 0;
 	beamInfo.m_flFrameRate = 0.f;
-	beamInfo.m_flRed = clr.r();
-	beamInfo.m_flGreen = clr.g();
-	beamInfo.m_flBlue = clr.b();
+	beamInfo.m_flRed = settings::visuals::colorBulletTracer.r();
+	beamInfo.m_flGreen = settings::visuals::colorBulletTracer.g();
+	beamInfo.m_flBlue = settings::visuals::colorBulletTracer.b();
 	beamInfo.m_nSegments = 2;
 	beamInfo.m_bRenderable = true;
 	beamInfo.m_nFlags = FBEAM_ONLYNOISEONCE | FBEAM_NOTILE | FBEAM_HALOBEAM;

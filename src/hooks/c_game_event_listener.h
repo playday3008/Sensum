@@ -250,14 +250,14 @@ class c_game_event_listener final : public IGameEventListener2
 		else if (name == FNV("round_start") && settings::misc::esp_random)
 		{
 			int chance;
-		
+
 			chance = rand() % 100 + 1;
 
 			char number[256];
 
 			sprintf_s(number, "Chance: %i%%", chance);
 
-			//notifies::push(number, notify_state_s::debug_state);
+			notifies::push(number, notify_state_s::debug_state);
 
 			auto filter = CHudChat::ChatFilters::CHAT_FILTER_NONE;
 			static int green = 3;

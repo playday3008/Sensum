@@ -149,7 +149,7 @@ namespace hooks
 		entities::fetch_targets(cmd);
 
 		static int latency_ticks = 0;
-		float fl_latency = g::engine_client->GetNetChannelInfo()->GetLatency(FLOW_OUTGOING);
+		float fl_latency = g::engine_client->GetNetChannelInfo()->GetLatency(FLOW_INCOMING);
 		int latency = TIME_TO_TICKS(fl_latency);
 		if (g::client_state->chokedcommands <= 0) {
 			latency_ticks = latency;
@@ -186,13 +186,11 @@ namespace hooks
 				|| !g::local_player->IsAlive())
 				return;
 
-			auto* channel_info = interfaces::engine_client->GetNetChannelInfo();
-			if (channel_info && (channel_info->GetAvgLoss(1) > 0.f || channel_info->GetAvgLoss(0) > 0.f))
-				return;
-
 			if (interfaces::local_player->m_bGunGameImmunity() || interfaces::local_player->m_fFlags() & FL_FROZEN)
 				return;
 
+			if (!utils::IsPlayingMM() && utils::IsValveDS())
+				return;
 
 			auto weapon = g::local_player->m_hActiveWeapon().Get();
 			if (!weapon)

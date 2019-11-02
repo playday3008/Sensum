@@ -12,7 +12,6 @@ namespace features
 	void auto_strafe(CUserCmd* cmd);
 	void thirdperson();
 	void human_bhop(CUserCmd* cmd);
-	void LegitPeek(CUserCmd* pCmd);
 	void SelfNade(CUserCmd *cmd);
 	void fastStop(CUserCmd* cmd);
 }
@@ -30,11 +29,6 @@ namespace fake_lags
 	void handle(CUserCmd* cmd, bool& send_packet);
 }
 
-namespace esp
-{
-
-}
-
 namespace visuals
 {
 	void fetch_entities();
@@ -42,10 +36,10 @@ namespace visuals
 	void chams_misc(const ModelRenderInfo_t& info) noexcept;
 	void more_chams() noexcept;
 	void glow() noexcept;
+	void glow_override() noexcept;
 	void RenderPunchCross();
 	void RenderHitmarker();
 	void RenderNoScopeOverlay();
-	void DrawGrenade(c_base_entity* ent);
 	void SpreadCircle();
 	void bomb_esp(c_planted_c4* entity) noexcept;
 	void DrawFov(); //todo

@@ -13,49 +13,62 @@ namespace render
 	{
 		void colors_tab()
 		{
-			separator("Colors - Chams");
-			ColorEdit4("Enemy Visible", &settings::chams::EnemyColor_vis);
+			separator("Chams");
+			ColorEdit4("Enemy Visible", &settings::chams::EnemyColor_vis, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 			ImGui::SameLine();
-			ColorEdit4("Enemy XQZ", &settings::chams::EnemyColor_XQZ);
+			ColorEdit4("Enemy XQZ", &settings::chams::EnemyColor_XQZ, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 
-			ColorEdit4("Team Visible  ", &settings::chams::TeamColor_vis);
+			ColorEdit4("Team Visible  ", &settings::chams::TeamColor_vis, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 			ImGui::SameLine();
-			ColorEdit4("Team XQZ", &settings::chams::TeamColor_XQZ);
+			ColorEdit4("Team XQZ", &settings::chams::TeamColor_XQZ, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 
-			ColorEdit4("Local Visible   ", &settings::chams::LocalColor_vis);
+			ColorEdit4("Local Visible   ", &settings::chams::LocalColor_vis, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 			ImGui::SameLine();
-			ColorEdit4("Local XQZ", &settings::chams::LocalColor_XQZ);
-
-			separator("Colors - Chams Misc");
-
-			ImGui::ColorEdit4("Viewmodel Weapons", settings::chams::clr_weapon_chams);
-			ImGui::ColorEdit4("Planted C4##chams", settings::chams::clr_plantedc4_chams);
-			ImGui::ColorEdit4("Dropped Weapons##chams", settings::chams::clr_weapon_dropped_chams);
-			ImGui::ColorEdit4("Grenades##chams", settings::chams::clr_nade_chams);
-
-			separator("Colors - ESP");
-			ColorEdit4("ESP Visible", &settings::esp::visible_color);
+			ColorEdit4("Local XQZ", &settings::chams::LocalColor_XQZ, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
+			ColorEdit4("Planted C4     ##chams", &settings::chams::colorPlantedC4Chams, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 			ImGui::SameLine();
-			ColorEdit4("ESP Invisible", &settings::esp::occluded_color);
+			ColorEdit4("Weapons (?)##chams", &settings::chams::ColorWeaponDroppedChams, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
+			tooltip("Dropped Weapons");
+			ColorEdit4("Grenades##chams", &settings::chams::colorNadeChams, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
+		
+			separator("ESP");
+			ColorEdit4("ESP Visible ", &settings::esp::visibleColor, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
+			ImGui::SameLine();
+			ColorEdit4("ESP Invisible", &settings::esp::occludedColor, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 
-			ColorEdit4("RCS Cross ", &settings::visuals::recoilcolor);
+			ColorEdit4("RCS Cross  ", &settings::visuals::recoilcolor, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 			ImGui::SameLine();
-			ColorEdit4("Spread Cross", &settings::visuals::spread_cross_color);
-			ColorEdit4("Aimbot Fov", &settings::visuals::drawfov_color);
+			ColorEdit4("Spread Cross", &settings::visuals::spread_cross_color, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
+			ColorEdit4("Aimbot Fov", &settings::visuals::drawfov_color, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 			ImGui::SameLine();
-			ColorEdit4("Bullet Tracer (?)", &settings::visuals::clr_bullet_tracer);
+			ColorEdit4("Bullet Tracer (?)", &settings::visuals::colorBulletTracer, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 			tooltip("Disabled saving of Bullet Tracer - Causes bug that will make beams not render :(. Default color is purple.");
 
-			separator("Colors - Glow Players", u8"Руки");
+			separator("Glow", u8"Руки");
 
-			ImGui::ColorEdit4("Enemy", settings::glow::GlowEnemy);
-			ImGui::ColorEdit4("Teammate", settings::glow::GlowTeam);
+			ColorEdit4("Enemy", &settings::glow::glowEnemyColor, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
+			ImGui::SameLine();
+			ColorEdit4("Planted C4##glow", &settings::glow::glowC4PlantedColor, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
+			ImGui::SameLine();
+			ColorEdit4("Weapons##glow", &settings::glow::glowDroppedWeaponsColor, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
+			tooltip("Dropped Weapons");
+			ColorEdit4("Team  ", &settings::glow::glowTeamColor, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
+			ImGui::SameLine();
+			ColorEdit4("Grenades##glow", &settings::glow::glowNadesColor, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 
-			separator("Colors - Glow Misc", u8"Руки");
+			ImGui::NextColumn();
 
-			ImGui::ColorEdit4("Planted C4##glow", settings::glow::GlowC4Planted);
-			ImGui::ColorEdit4("Grenades##glow", settings::glow::GlowNades);
-			ImGui::ColorEdit4("Dropped Weapons##glow", settings::glow::GlowDroppedWeapons);
+			separator("Glow Override");
+
+			checkbox("Glow Grenade & C4 Override", &settings::glow::glowOverride);
+			if (settings::glow::glowOverride)
+			{
+				ColorEdit4("Smoke##glow", &settings::glow::glowSmoke, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
+				ColorEdit4("Molotov & Inc##glow", &settings::glow::glowMolotovIncendiary, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
+				ColorEdit4("Flash##glow", &settings::glow::glowFlashbang, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
+				ColorEdit4("HE##glow", &settings::glow::glowHE, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
+				ColorEdit4("Dropped C4##glow", &settings::glow::glowDroppedC4Color, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
+			}
 		}
 	}
 }

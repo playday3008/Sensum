@@ -159,13 +159,6 @@ namespace render
 
 			child(___("Chams", u8"Цветные Модели"), []()
 			{
-				/* //Old chams
-					checkbox("Enabled", u8"Включено", &settings::chams::enabled);
-					checkbox("Visible Only", u8"Проверка видимости", &settings::chams::visible_only);
-					checkbox("Wireframe", u8"Сетка", &settings::chams::wireframe);
-					checkbox("Flat", &settings::chams::flat);
-				*/
-
 				static const char* ChamsTypes[] = {
 				"Visible - Normal",
 				"Visible - Flat",
@@ -181,6 +174,20 @@ namespace render
 				"Off",
 				"Last Tick",
 				"All Ticks"
+				};
+
+				static const char* chamsMaterials[] = {
+				"Normal",
+				"Dogtags",
+				"Flat",
+				"Metallic",
+				"Platinum",
+				"Glass",
+				"Crystal",
+				"Gold",
+				"Dark Chrome",
+				"Plastic/Gloss",
+				"Glow"
 				};
 
 				columns(2);
@@ -219,10 +226,22 @@ namespace render
 				}
 				columns(1);
 
-				checkbox("Real Angle   ", &settings::chams::desync);		//checkbox("Viewmodel Weapons", &settings::chams::wepchams);
+				columns(2);
+				{
+					checkbox("Real Angle   ", &settings::chams::desync);
+
+					ImGui::NextColumn();
+
+					ImGui::PushItemWidth(-1);
+					ImGui::Combo("Material", &settings::chams::desyncChamsMode, chamsMaterials, IM_ARRAYSIZE(chamsMaterials));
+					ImGui::PopItemWidth();
+				}
+				columns(1);
+
+				//checkbox("Viewmodel Weapons", &settings::chams::wepchams);
 				ImGui::SameLine();
 				checkbox("Planted C4", &settings::chams::plantedc4_chams);
-				checkbox("Weapons (?)", &settings::chams::wep_droppedchams);
+				checkbox("Weapons (?)       ", &settings::chams::wep_droppedchams);
 				tooltip("Dropped Weapons Chams");
 				ImGui::SameLine();
 				checkbox("Nades", &settings::chams::nade_chams);
@@ -246,14 +265,14 @@ namespace render
 
 				child(___("Glow", u8"Цветные Модели"), []()
 				{
-					checkbox("Enemy", &settings::glow::GlowEnemyEnabled);
+					checkbox("Enemy", &settings::glow::glowEnemyEnabled);
 					ImGui::SameLine();
-					checkbox("Planted C4", &settings::glow::GlowC4PlantedEnabled);
+					checkbox("Planted C4", &settings::glow::glowC4PlantedEnabled);
 					ImGui::SameLine();
-					checkbox("Nades", &settings::glow::GlowNadesEnabled);
-					checkbox("Team  ", &settings::glow::GlowTeamEnabled);
+					checkbox("Nades", &settings::glow::glowNadesEnabled);
+					checkbox("Team  ", &settings::glow::glowTeamEnabled);
 					ImGui::SameLine();
-					checkbox("Weapons (?)", &settings::glow::GlowDroppedWeaponsEnabled);
+					checkbox("Weapons (?)", &settings::glow::glowDroppedWeaponsEnabled);
 					tooltip("Dropped Weapons Glow");
 				});
 

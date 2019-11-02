@@ -690,6 +690,11 @@ namespace aimbot
 		correct_nexttime = TICKS_TO_TIME(tick_count + 1) + network_delay;
 	}
 	//--------------------------------------------------------------------------------
+	void RCSHitboxOverride()
+	{
+	}
+
+
 	void handle(CUserCmd* cmd)
 	{
 		if (!interfaces::local_player || !interfaces::local_player->IsAlive())
@@ -701,6 +706,54 @@ namespace aimbot
 			return;
 		}
 
+
+
+		auto active = g::local_player->m_hActiveWeapon();
+		auto aa_settings = settings::aimbot::m_items[active->m_iItemDefinitionIndex()];
+
+		if (aa_settings.rcs_override_hitbox)
+		{
+			static auto hitbox_head_backup = aa_settings.hitboxes.head;
+			static auto hitbox_body_backup = aa_settings.hitboxes.body;
+			static auto hitbox_legs_backup = aa_settings.hitboxes.legs;
+			static auto hitbox_hands_backup = aa_settings.hitboxes.hands;
+			static auto hitbox_neck_backup = aa_settings.hitboxes.neck;
+
+			if (g::local_player->m_iShotsFired() >= 3)
+			{
+				if (aa_settings.hitboxes.head == true)
+					aa_settings.hitboxes.head = !hitbox_head_backup;
+
+				if (aa_settings.hitboxes.neck == true)
+					aa_settings.hitboxes.neck = !hitbox_neck_backup;
+
+				if (aa_settings.hitboxes.body == false)
+					aa_settings.hitboxes.body = !hitbox_body_backup;
+
+				if (aa_settings.hitboxes.legs == true)
+					aa_settings.hitboxes.legs = !hitbox_legs_backup;
+
+				if (aa_settings.hitboxes.hands == true)
+					aa_settings.hitboxes.hands = !hitbox_hands_backup;
+			}
+			else if (g::local_player->m_iShotsFired() < 3)
+			{
+				if (aa_settings.hitboxes.head == false)
+					aa_settings.hitboxes.head = hitbox_head_backup;
+
+				if (aa_settings.hitboxes.neck == false)
+					aa_settings.hitboxes.neck = hitbox_neck_backup;
+
+				if (aa_settings.hitboxes.body == true)
+					aa_settings.hitboxes.body = hitbox_body_backup;
+
+				if (aa_settings.hitboxes.legs == false)
+					aa_settings.hitboxes.legs = hitbox_legs_backup;
+
+				if (aa_settings.hitboxes.hands == false)
+					aa_settings.hitboxes.hands = hitbox_hands_backup;
+			}
+		}
 
 		weapon_data = weapon->get_weapon_data();
 

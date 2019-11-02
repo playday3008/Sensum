@@ -44,6 +44,7 @@ namespace render
 
 	bool ColorEdit4(const char* label, ImVec4* v);
 	bool ColorEdit4(const char* label, Color* v);
+	bool ColorEdit4(const char* label, Color* v, ImGuiColorEditFlags flag);
 	bool ColorEdit3(const char* label, Color* v);
 
 	void columns(int count);

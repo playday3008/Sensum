@@ -5,84 +5,6 @@
 #include "Backtrack_new.h"
 #include <fstream>
 
-Chams::Chams() {
-	std::ofstream("csgo\\materials\\simple_regular.vmt") << R"#("VertexLitGeneric"
-{
-  "$basetexture" "vgui/white"
-  "$ignorez"      "0"
-  "$envmap"       ""
-  "$nofog"        "1"
-  "$model"        "1"
-  "$nocull"       "0"
-  "$selfillum"    "1"
-  "$halflambert"  "1"
-  "$znearer"      "0"
-  "$flat"         "1"
-}
-)#";
-	std::ofstream("csgo\\materials\\simple_ignorez.vmt") << R"#("VertexLitGeneric"
-{
-  "$basetexture" "vgui/white"
-  "$ignorez"      "1"
-  "$envmap"       ""
-  "$nofog"        "1"
-  "$model"        "1"
-  "$nocull"       "0"
-  "$selfillum"    "1"
-  "$halflambert"  "1"
-  "$znearer"      "0"
-  "$flat"         "1"
-}
-)#";
-	std::ofstream("csgo\\materials\\simple_flat.vmt") << R"#("UnlitGeneric"
-{
-  "$basetexture" "vgui/white"
-  "$ignorez"      "0"
-  "$envmap"       ""
-  "$nofog"        "1"
-  "$model"        "1"
-  "$nocull"       "0"
-  "$selfillum"    "1"
-  "$halflambert"  "1"
-  "$znearer"      "0"
-  "$flat"         "1"
-}
-)#";
-	std::ofstream("csgo\\materials\\simple_flat_ignorez.vmt") << R"#("UnlitGeneric"
-{
-  "$basetexture" "vgui/white"
-  "$ignorez"      "1"
-  "$envmap"       ""
-  "$nofog"        "1"
-  "$model"        "1"
-  "$nocull"       "0"
-  "$selfillum"    "1"
-  "$halflambert"  "1"
-  "$znearer"      "0"
-  "$flat"         "1"
-}
-)#";
-
-	materialRegular = g::mat_system->FindMaterial("simple_regular", TEXTURE_GROUP_MODEL);
-	materialRegularIgnoreZ = g::mat_system->FindMaterial("simple_ignorez", TEXTURE_GROUP_MODEL);
-	materialFlatIgnoreZ = g::mat_system->FindMaterial("simple_flat_ignorez", TEXTURE_GROUP_MODEL);
-	materialFlat = g::mat_system->FindMaterial("simple_flat", TEXTURE_GROUP_MODEL);
-
-	materialRegular->IncrementReferenceCount();
-	materialRegularIgnoreZ->IncrementReferenceCount();
-	materialFlatIgnoreZ->IncrementReferenceCount();
-	materialFlat->IncrementReferenceCount();
-}
-
-//"$basetexture" "vgui/white_additive"
-
-Chams::~Chams() {
-	std::remove("csgo\\materials\\simple_regular.vmt");
-	std::remove("csgo\\materials\\simple_ignorez.vmt");
-	std::remove("csgo\\materials\\simple_flat.vmt");
-	std::remove("csgo\\materials\\simple_flat_ignorez.vmt");
-}
-
 void Chams::OnSceneEnd()
 {
 	if (!g::engine_client->IsInGame() || !g::engine_client->IsConnected() || !g::local_player)
@@ -113,11 +35,6 @@ void Chams::OnSceneEnd()
 		if (utils::is_line_goes_through_smoke(interfaces::local_player->GetEyePos(), entity->get_hitbox_position(entity, HITBOX_HEAD))) //GetRenderOrigin()
 			continue;
 
-		/*
-		if (utilities::is_behind_smoke(local_player->get_eye_pos(), entity->get_hitbox_position(entity, hitbox_head)) && config_system.item.vis_chams_smoke_check)
-					continue;
-		*/
-
 		bool IsLocal = entity == g::local_player;
 		bool IsTeam = !entity->IsEnemy();
 
@@ -129,6 +46,8 @@ void Chams::OnSceneEnd()
 		bool xqz = false;
 		bool metallic_xqz = false;
 		bool flat_xqz = false;
+		bool glow = false;
+		bool glow_xqz = false;
 
 		ChamsModes mode = IsLocal ? LocalChamsMode : (IsTeam ? TeamChamsMode : EnemyChamsMode);
 
@@ -181,52 +100,15 @@ void Chams::OnSceneEnd()
 		}
 
 		MaterialManager::Get().OverrideMaterial(xqz || metallic_xqz || flat_xqz, flat, wireframe, glass, metallic);
-		g::render_view->SetColorModulation(clr.r() / 255.f, clr.g() / 255.f, clr.b() / 255.f);
+		g::render_view->SetColorModulation(clr2.r() / 255.f, clr2.g() / 255.f, clr2.b() / 255.f);
 		entity->GetClientRenderable()->DrawModel(0x1, 255);
-		if (xqz || metallic_xqz || flat_xqz)
+		if (xqz || metallic_xqz || flat_xqz || glow_xqz)
 		{
 			MaterialManager::Get().OverrideMaterial(false, flat, wireframe, glass, metallic);
-			g::render_view->SetColorModulation(clr2.r() / 255.f, clr2.g() / 255.f, clr2.b() / 255.f);
+			g::render_view->SetColorModulation(clr.r() / 255.f, clr.g() / 255.f, clr.b() / 255.f);
 			entity->GetClientRenderable()->DrawModel(0x1, 255);
 		}
 		g::mdl_render->ForcedMaterialOverride(nullptr);
 	}
-
 	g::mdl_render->ForcedMaterialOverride(nullptr);
-}
-
-void Chams::OverrideMaterial(bool ignoreZ, bool flat, bool wireframe, bool glass, const Color& rgba) {
-	IMaterial* material = nullptr;
-
-	if (flat) {
-		if (ignoreZ)
-			material = materialFlatIgnoreZ;
-		else
-			material = materialFlat;
-	}
-	else {
-		if (ignoreZ)
-			material = materialRegularIgnoreZ;
-		else
-			material = materialRegular;
-	}
-
-
-	if (glass) {
-		material = materialFlat;
-		material->AlphaModulate(0.45f);
-	}
-	else {
-		material->AlphaModulate(
-			rgba.a() / 255.0f);
-	}
-
-	material->SetMaterialVarFlag(MATERIAL_VAR_WIREFRAME, wireframe);
-	material->ColorModulate(
-		rgba.r() / 255.0f,
-		rgba.g() / 255.0f,
-		rgba.b() / 255.0f);
-
-	g::mdl_render->ForcedMaterialOverride(material);
-	material->IncrementReferenceCount();
 }

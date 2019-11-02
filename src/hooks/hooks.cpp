@@ -291,6 +291,9 @@ namespace hooks
 
 		visuals::glow();
 
+		if(settings::glow::glowOverride)
+			visuals::glow_override();
+
 		return original(interfaces::client_mode, value);
 	}
 

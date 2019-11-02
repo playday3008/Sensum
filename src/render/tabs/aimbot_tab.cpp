@@ -184,6 +184,7 @@ namespace render
 				checkbox("Randomise RCS", u8"Смягчать", &settings->recoil.humanize);
 				tooltip("Enabling this will randomise RCS between 0.1 - 0.5 at X and 0.1 - 0.6 on Y");
 
+
 				if (settings::aimbot::setting_type == settings_type_t::separately)
 				{
 					switch (definition_index)
@@ -342,6 +343,8 @@ namespace render
 			{
 				checkbox("Enabled", u8"Включено", &settings->recoil.enabled); //checkbox("Standalone", u8"Постоянный", &settings->recoil.standalone);
 				checkbox("First Bullet", u8"С первой пули", &settings->recoil.first_bullet);
+				checkbox("RCS Hitbox Override (?)", &settings->rcs_override_hitbox);
+				tooltip("If shotsFired >= 3 - disable all hitboxes, except body, if shotsFired < 3 - enable hitboxes you had.");
 				/*ImGui::Combo("RCS Type", &settings->rcs_type, rcs_types, IM_ARRAYSIZE(rcs_types)); */
 
 				ImGui::SliderFloatLeftAligned("Pitch:", &settings->recoil.pitch, 0, 2, "%.1f %");

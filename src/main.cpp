@@ -16,6 +16,7 @@
 #include "render/render.h"
 #include "valve_sdk/sdk.hpp"
 #include "features/features.h"
+#include "helpers/imdraw.h"
 
 bool is_unhookable = true;
 
@@ -80,8 +81,6 @@ DWORD __stdcall on_attach(LPVOID base)
 	skins::initialize_kits();
 	skins::LoadStatrack();
 	skins::load();
-
-
 
 	config::cache("settings");
 

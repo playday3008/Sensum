@@ -4,11 +4,6 @@ c_sound_esp sound_esp;
 
 std::vector<c_sound_info> sound_logs;
 
-float red;
-float green;
-float blue;
-float alpha;
-
 void c_sound_esp::draw_circle(Color colors, Vector position) noexcept {
 	BeamInfo_t beam_info;
 	beam_info.m_nType = TE_BEAMRINGPOINT;
@@ -20,10 +15,10 @@ void c_sound_esp::draw_circle(Color colors, Vector position) noexcept {
 	beam_info.m_flWidth = 15.f;
 	beam_info.m_flFadeLength = 1.0f;
 	beam_info.m_flAmplitude = 0.f;
-	beam_info.m_flRed = red;
-	beam_info.m_flGreen = green;
-	beam_info.m_flBlue = blue;
-	beam_info.m_flBrightness = 255.f;
+	beam_info.m_flRed = colors.r();
+	beam_info.m_flGreen = colors.g();
+	beam_info.m_flBlue = colors.b();
+	beam_info.m_flBrightness = colors.a();
 	beam_info.m_flSpeed = 0.f;
 	beam_info.m_nStartFrame = 0.f;
 	beam_info.m_flFrameRate = 60.f;
@@ -121,13 +116,8 @@ void c_sound_esp::draw() noexcept {
 	if (!g::engine_client->IsConnected() && !g::engine_client->IsInGame())
 		return;
 
-	red = settings::esp::soundesp_color[0] * 255;
-	green = settings::esp::soundesp_color[1] * 255;
-	blue = settings::esp::soundesp_color[2] * 255;
-	alpha = settings::esp::soundesp_color[3] * 255;
-
 	for (unsigned int i = 0; i < sound_logs.size(); i++) {
-		draw_circle(Color(red, green, blue, alpha), sound_logs[i].position);
+		draw_circle(Color(settings::esp::colorSoundEsp.r(), settings::esp::colorSoundEsp.g(), settings::esp::colorSoundEsp.b(), settings::esp::colorSoundEsp.a()), sound_logs[i].position);
 		sound_logs.erase(sound_logs.begin() + i);
 	}
 }

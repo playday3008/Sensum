@@ -1,6 +1,7 @@
 #include "settings.h"
 #include "valve_sdk/csgostructs.hpp"
 #include "helpers/math.h"
+#include "settings.h"
 
 
 namespace features
@@ -31,16 +32,22 @@ namespace features
 		if (!(cmd->buttons & IN_MOVERIGHT))
 		{
 			cmd->sidemove -= -right.y;
-		}
+		} 
 
-		/*if (!(cmd->buttons & IN_FORWARD))
+		if (!(cmd->buttons & IN_FORWARD))
 		{
+			if (cmd->buttons & IN_MOVELEFT || cmd->buttons & IN_MOVERIGHT || settings::misc::auto_strafe)
+				return;
+
 			cmd->forwardmove += +move_forward.x;
-		} */
+		} 
 
-		/*if (!(cmd->buttons & IN_BACK))
+		if (!(cmd->buttons & IN_BACK))
 		{
+			if (cmd->buttons & IN_MOVELEFT || cmd->buttons & IN_MOVERIGHT || settings::misc::auto_strafe)
+				return;
+
 			cmd->forwardmove -= -move_backward.x;
-		}*/
+		}
 	}
 }

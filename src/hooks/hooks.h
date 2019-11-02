@@ -5,13 +5,15 @@
 #include "..//IStudioRender.h"
 
 #include <d3dx9.h>
+#include <type_traits>
+
 #pragma comment(lib, "d3dx9.lib")
 
 namespace hooks
 {
 	void initialize();
 	void destroy();
-
+	
 	struct d3d9
 	{
 		static vfunc_hook hook;

@@ -37,6 +37,55 @@ namespace utils
 		return std::max(cl_interp->GetFloat(), (ratio / ud_rate));
 	}
 
+	bool IsPlayingMM()
+	{
+		ConVar* type = nullptr;
+		ConVar* mode = nullptr;
+
+		if (!mode)
+			mode = interfaces::cvar->find("game_mode");
+
+		if (!type)
+			type = interfaces::cvar->find("game_type");
+
+		if (type->GetInt() == 0 && mode->GetInt() == 0) //casual
+			return false;
+
+		if (type->GetInt() == 1 && mode->GetInt() == 1) //demolition
+			return false;
+
+		if (type->GetInt() == 1 && mode->GetInt() == 0) //arms race
+			return false;
+
+		if (type->GetInt() == 1 && mode->GetInt() == 2) //deathmatch
+			return false; 
+
+		if (type->GetInt() == 0 && mode->GetInt() == 1) //competetive
+			return true;
+
+		if (type->GetInt() == 0 && mode->GetInt() == 2) //wingman
+			return true;
+
+		if (type->GetInt() == 6 && mode->GetInt() == 0) //dangerzone
+			return true;
+
+		if (type->GetInt() == 6 && mode->GetInt() == 0) //scrimmage
+			return true;
+
+		return false;
+	}
+
+	bool IsValveDS()
+	{
+		if (g::game_rules_proxy->m_bIsValveDS())
+			return true;
+
+		if (!g::game_rules_proxy->m_bIsValveDS())
+			return false;
+
+		return false;
+	}
+
 	void create_beam(const int& user_id, const Vector& end_pos)
 	{
 		if (!end_pos.IsValid())
