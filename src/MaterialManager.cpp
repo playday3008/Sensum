@@ -8,27 +8,7 @@
 
 MaterialManager::MaterialManager()
 {
-	std::ofstream("csgo\\materials\\simple_regular.vmt") << R"#("VertexLitGeneric"
-{
-  "$basetexture" "vgui/white"
-  "$ignorez"      "0"
-  "$envmap"       ""
-  "$nofog"        "1"
-  "$model"        "1"
-  "$nocull"       "0"
-  "$selfillum"    "1"
-  "$halflambert"  "1"
-  "$znearer"      "0"
-  "$flat"         "1"
-}
-)#";
-	std::ofstream("csgo\\materials\\simple_reflective.vmt") << R"#("VertexLitGeneric"
-{
-  "$basetexture" "vgui/white"
-  "$envmap"       "env_cubemap"
-  "$model" "1"MaterialManager::MaterialManager()
-{
-    std::ofstream("csgo\\materials\\simple_regular.vmt") << R"#("VertexLitGeneric"
+	std::ofstream("csgo\\materials\\sensum_regular.vmt") << R"#("VertexLitGeneric"
 {
   "$basetexture" "vgui/white_additive"
   "$ignorez"      "0"
@@ -42,7 +22,7 @@ MaterialManager::MaterialManager()
   "$flat"         "1"
 }
 )#";
-	std::ofstream("csgo\\materials\\simple_reflective.vmt") << R"#("VertexLitGeneric"
+	std::ofstream("csgo\\materials\\sensum_reflective.vmt") << R"#("VertexLitGeneric"
 {
   "$basetexture" "vgui/white_additive"
   "$envmap"       "env_cubemap"
@@ -59,7 +39,7 @@ MaterialManager::MaterialManager()
   "$wireframe" "0"
 }
 )#";
-	std::ofstream("csgo\\materials\\simple_reflectiveignorez.vmt") << R"#("VertexLitGeneric"
+	std::ofstream("csgo\\materials\\sensum_reflectiveignorez.vmt") << R"#("VertexLitGeneric"
 {
   "$basetexture" "vgui/white_additive"
   "$envmap"       "env_cubemap"
@@ -76,7 +56,7 @@ MaterialManager::MaterialManager()
   "$wireframe" "0"
 }
 )#";
-	std::ofstream("csgo\\materials\\simple_ignorez.vmt") << R"#("VertexLitGeneric"
+	std::ofstream("csgo\\materials\\sensum_ignorez.vmt") << R"#("VertexLitGeneric"
 {
   "$basetexture" "vgui/white_additive"
   "$ignorez"      "1"
@@ -90,7 +70,7 @@ MaterialManager::MaterialManager()
   "$flat"         "1"
 }
 )#";
-	std::ofstream("csgo\\materials\\simple_flat.vmt") << R"#("UnlitGeneric"
+	std::ofstream("csgo\\materials\\sensum_flat.vmt") << R"#("UnlitGeneric"
 {
   "$basetexture" "vgui/white_additive"
   "$ignorez"      "0"
@@ -104,7 +84,7 @@ MaterialManager::MaterialManager()
   "$flat"         "1"
 }
 )#";
-	std::ofstream("csgo\\materials\\simple_flat_ignorez.vmt") << R"#("UnlitGeneric"
+	std::ofstream("csgo\\materials\\sensum_flat_ignorez.vmt") << R"#("UnlitGeneric"
 {
   "$basetexture" "vgui/white_additive"
   "$ignorez"      "1"
@@ -119,12 +99,13 @@ MaterialManager::MaterialManager()
 }
 )#";
 
-	materialRegular = g::mat_system->FindMaterial("simple_regular", TEXTURE_GROUP_MODEL);
-	materialRegularIgnoreZ = g::mat_system->FindMaterial("simple_ignorez", TEXTURE_GROUP_MODEL);
-	materialFlatIgnoreZ = g::mat_system->FindMaterial("simple_flat_ignorez", TEXTURE_GROUP_MODEL);
-	materialFlat = g::mat_system->FindMaterial("simple_flat", TEXTURE_GROUP_MODEL);
-	materialReflective = g::mat_system->FindMaterial("simple_reflective", TEXTURE_GROUP_MODEL);
-	materialReflectiveIgnoreZ = g::mat_system->FindMaterial("simple_reflectiveignorez", TEXTURE_GROUP_MODEL);
+
+	materialRegular = g::mat_system->FindMaterial("sensum_regular", TEXTURE_GROUP_MODEL);
+	materialRegularIgnoreZ = g::mat_system->FindMaterial("sensum_ignorez", TEXTURE_GROUP_MODEL);
+	materialFlatIgnoreZ = g::mat_system->FindMaterial("sensum_flat_ignorez", TEXTURE_GROUP_MODEL);
+	materialFlat = g::mat_system->FindMaterial("sensum_flat", TEXTURE_GROUP_MODEL);
+	materialReflective = g::mat_system->FindMaterial("sensum_reflective", TEXTURE_GROUP_MODEL);
+	materialReflectiveIgnoreZ = g::mat_system->FindMaterial("sensum_reflectiveignorez", TEXTURE_GROUP_MODEL);
 
 	materialRegular->IncrementReferenceCount();
 	materialRegularIgnoreZ->IncrementReferenceCount();
@@ -136,13 +117,13 @@ MaterialManager::MaterialManager()
 
 MaterialManager::~MaterialManager()
 {
-	std::remove("csgo\\materials\\simple_regular.vmt");
-	std::remove("csgo\\materials\\simple_ignorez.vmt");
-	std::remove("csgo\\materials\\simple_flat_ignorez.vmt");
-	std::remove("csgo\\materials\\simple_flat.vmt");
-	std::remove("csgo\\materials\\simple_reflective.vmt");
-	std::remove("csgo\\materials\\regular_reflective.vmt");
-	std::remove("csgo\\materials\\simple_reflectiveignorez.vmt");
+	std::remove("csgo\\materials\\sensum_regular.vmt");
+	std::remove("csgo\\materials\\sensum_ignorez.vmt");
+	std::remove("csgo\\materials\\sensum_flat_ignorez.vmt");
+	std::remove("csgo\\materials\\sensum_flat.vmt");
+	std::remove("csgo\\materials\\sensum_reflective.vmt");
+	std::remove("csgo\\materials\\sensum_reflective.vmt");
+	std::remove("csgo\\materials\\sensum_reflectiveignorez.vmt");
 }
 
 void MaterialManager::OverrideMaterial(bool ignoreZ, bool flat, bool wireframe, bool glass, bool metallic, const Color rgba)

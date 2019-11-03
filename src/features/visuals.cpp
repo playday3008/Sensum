@@ -488,7 +488,6 @@ namespace visuals
 		int cx = x / 2;
 		int cy = y / 2;
 
-
 		VGSHelper::Get().DrawText(side > 0.0f ? "<" : ">", side > 0.0f ? cx - 50 : cx + 40, cy - 10, Color::White, 19);
 	}
 
@@ -510,7 +509,7 @@ namespace visuals
 		static IMaterial* Normal = g::mat_system->FindMaterial("simple_regular", TEXTURE_GROUP_MODEL);
 		static IMaterial* Dogtags = g::mat_system->FindMaterial("models/inventory_items/dogtags/dogtags_outline", TEXTURE_GROUP_MODEL);
 		static IMaterial* Flat = g::mat_system->FindMaterial("debug/debugdrawflat", TEXTURE_GROUP_MODEL);
-		static IMaterial* Metallic = g::mat_system->FindMaterial("simple_reflective", TEXTURE_GROUP_MODEL);
+		static IMaterial* Metallic = g::mat_system->FindMaterial("sensum_reflective", TEXTURE_GROUP_MODEL);
 		static IMaterial* Platinum = g::mat_system->FindMaterial("models/player/ct_fbi/ct_fbi_glass", TEXTURE_GROUP_MODEL);
 		static IMaterial* Glass = g::mat_system->FindMaterial("models/inventory_items/cologne_prediction/cologne_prediction_glass", TEXTURE_GROUP_MODEL);
 		static IMaterial* Crystal = g::mat_system->FindMaterial("models/inventory_items/trophy_majors/crystal_clear", TEXTURE_GROUP_MODEL);
@@ -913,7 +912,6 @@ namespace visuals
 
 		if (settings::visuals::spread_cross)
 			SpreadCircle();
-
 
 		ImGui::PopFont();
 	}

@@ -220,6 +220,11 @@ bool c_base_entity::IsDefuseKit()
 	return GetClientClass()->m_ClassID == CBaseAnimating;
 }
 
+int c_base_entity::getWeaponSubType()
+{
+	return CallVFunction<int>(this, 279);
+}
+
 CCSWeaponInfo* c_base_combat_weapon::get_weapon_data()
 {
 	//return interfaces::weapon_system->GetWpnData(m_iItemDefinitionIndex());

@@ -156,6 +156,7 @@ public:
 	bool IsWeapon();
 	bool IsPlantedC4();
 	bool IsDefuseKit();
+	int getWeaponSubType();
 	bool is_dormant();
 	Vector& GetAbsOrigin();
 	void SetAbsOrigin(const Vector& origin);
@@ -367,6 +368,7 @@ public:
 
 	//NETVAR(float, m_flPoseParameter, "CBaseAnimating", "m_flPoseParameter");
 	PNETVAR(CHandle<c_base_combat_weapon>, m_hMyWeapons, "CBaseCombatCharacter", "m_hMyWeapons");
+	NETVAR(int[48], weapons, "CBaseCombatCharacter", "m_hMyWeapons");
 	PNETVAR(CBaseHandle, m_hMyWearables, "CBaseCombatCharacter", "m_hMyWearables");
 	NETVAR_OFFSET(QAngle*, GetVAngles, "CBasePlayer", "deadflag", +0x4);
 
