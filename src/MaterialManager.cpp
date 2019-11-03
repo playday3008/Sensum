@@ -10,7 +10,7 @@ MaterialManager::MaterialManager()
 {
 	std::ofstream("csgo\\materials\\sensum_regular.vmt") << R"#("VertexLitGeneric"
 {
-  "$basetexture" "vgui/white_additive"
+  "$basetexture" "vgui/white"
   "$ignorez"      "0"
   "$envmap"       ""
   "$nofog"        "1"
@@ -24,7 +24,7 @@ MaterialManager::MaterialManager()
 )#";
 	std::ofstream("csgo\\materials\\sensum_reflective.vmt") << R"#("VertexLitGeneric"
 {
-  "$basetexture" "vgui/white_additive"
+  "$basetexture" "vgui/white"
   "$envmap"       "env_cubemap"
   "$model" "1"
   "$normalmapalphaenvmapmask"  "1"
@@ -41,7 +41,7 @@ MaterialManager::MaterialManager()
 )#";
 	std::ofstream("csgo\\materials\\sensum_reflectiveignorez.vmt") << R"#("VertexLitGeneric"
 {
-  "$basetexture" "vgui/white_additive"
+  "$basetexture" "vgui/white"
   "$envmap"       "env_cubemap"
   "$model" "1"
   "$normalmapalphaenvmapmask"  "1"
@@ -58,7 +58,7 @@ MaterialManager::MaterialManager()
 )#";
 	std::ofstream("csgo\\materials\\sensum_ignorez.vmt") << R"#("VertexLitGeneric"
 {
-  "$basetexture" "vgui/white_additive"
+  "$basetexture" "vgui/white"
   "$ignorez"      "1"
   "$envmap"       ""
   "$nofog"        "1"
@@ -72,7 +72,7 @@ MaterialManager::MaterialManager()
 )#";
 	std::ofstream("csgo\\materials\\sensum_flat.vmt") << R"#("UnlitGeneric"
 {
-  "$basetexture" "vgui/white_additive"
+  "$basetexture" "vgui/white"
   "$ignorez"      "0"
   "$envmap"       ""
   "$nofog"        "1"
@@ -86,7 +86,7 @@ MaterialManager::MaterialManager()
 )#";
 	std::ofstream("csgo\\materials\\sensum_flat_ignorez.vmt") << R"#("UnlitGeneric"
 {
-  "$basetexture" "vgui/white_additive"
+  "$basetexture" "vgui/white"
   "$ignorez"      "1"
   "$envmap"       ""
   "$nofog"        "1"
