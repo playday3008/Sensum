@@ -26,6 +26,26 @@ MaterialManager::MaterialManager()
 {
   "$basetexture" "vgui/white"
   "$envmap"       "env_cubemap"
+  "$model" "1"MaterialManager::MaterialManager()
+{
+    std::ofstream("csgo\\materials\\simple_regular.vmt") << R"#("VertexLitGeneric"
+{
+  "$basetexture" "vgui/white_additive"
+  "$ignorez"      "0"
+  "$envmap"       ""
+  "$nofog"        "1"
+  "$model"        "1"
+  "$nocull"       "0"
+  "$selfillum"    "1"
+  "$halflambert"  "1"
+  "$znearer"      "0"
+  "$flat"         "1"
+}
+)#";
+	std::ofstream("csgo\\materials\\simple_reflective.vmt") << R"#("VertexLitGeneric"
+{
+  "$basetexture" "vgui/white_additive"
+  "$envmap"       "env_cubemap"
   "$model" "1"
   "$normalmapalphaenvmapmask"  "1"
   "$envmapcontrast" "1"
@@ -41,7 +61,7 @@ MaterialManager::MaterialManager()
 )#";
 	std::ofstream("csgo\\materials\\simple_reflectiveignorez.vmt") << R"#("VertexLitGeneric"
 {
-  "$basetexture" "vgui/white"
+  "$basetexture" "vgui/white_additive"
   "$envmap"       "env_cubemap"
   "$model" "1"
   "$normalmapalphaenvmapmask"  "1"
@@ -58,7 +78,7 @@ MaterialManager::MaterialManager()
 )#";
 	std::ofstream("csgo\\materials\\simple_ignorez.vmt") << R"#("VertexLitGeneric"
 {
-  "$basetexture" "vgui/white"
+  "$basetexture" "vgui/white_additive"
   "$ignorez"      "1"
   "$envmap"       ""
   "$nofog"        "1"
@@ -72,7 +92,7 @@ MaterialManager::MaterialManager()
 )#";
 	std::ofstream("csgo\\materials\\simple_flat.vmt") << R"#("UnlitGeneric"
 {
-  "$basetexture" "vgui/white"
+  "$basetexture" "vgui/white_additive"
   "$ignorez"      "0"
   "$envmap"       ""
   "$nofog"        "1"
@@ -86,7 +106,7 @@ MaterialManager::MaterialManager()
 )#";
 	std::ofstream("csgo\\materials\\simple_flat_ignorez.vmt") << R"#("UnlitGeneric"
 {
-  "$basetexture" "vgui/white"
+  "$basetexture" "vgui/white_additive"
   "$ignorez"      "1"
   "$envmap"       ""
   "$nofog"        "1"
@@ -118,10 +138,11 @@ MaterialManager::~MaterialManager()
 {
 	std::remove("csgo\\materials\\simple_regular.vmt");
 	std::remove("csgo\\materials\\simple_ignorez.vmt");
-	std::remove("csgo\\materials\\simple_flat.vmt");
 	std::remove("csgo\\materials\\simple_flat_ignorez.vmt");
-	std::remove("csgo\\materials\\regular_reflective.vmt");
+	std::remove("csgo\\materials\\simple_flat.vmt");
 	std::remove("csgo\\materials\\simple_reflective.vmt");
+	std::remove("csgo\\materials\\regular_reflective.vmt");
+	std::remove("csgo\\materials\\simple_reflectiveignorez.vmt");
 }
 
 void MaterialManager::OverrideMaterial(bool ignoreZ, bool flat, bool wireframe, bool glass, bool metallic, const Color rgba)
@@ -214,6 +235,7 @@ void MaterialManager::OverrideMaterial(bool ignoreZ, bool flat, bool wireframe, 
 			material = materialRegular;
 		}
 	}
+
 
 	if (glass)
 	{

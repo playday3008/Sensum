@@ -376,6 +376,7 @@ namespace visuals
 		ImVec4 clr = ImVec4{ 1.0f, 1.0f, 1.0f, percent * 1.0f };
 
 		globals::draw_list->AddLine(ImVec2(cx - 3.f - addsize, cy - 3.f - addsize), ImVec2(cx + 3.f + addsize, cy + 3.f + addsize), ImGui::GetColorU32(clr));
+		globals::draw_list->AddLine(ImVec2(cx - 3.f - addsize, cy + 3.f + addsize), ImVec2(cx + 3.f + addsize, cy - 3.f - addsize), ImGui::GetColorU32(clr));
 	}
 
 	void RenderNoScopeOverlay()
