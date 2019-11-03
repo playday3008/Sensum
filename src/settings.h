@@ -289,12 +289,10 @@ namespace settings
 		extern float grief_box_alpha;
 		extern int viewmodel_mode;
 
-		extern Color spread_cross_color;
-		extern Color recoilcolor;
+		extern ImVec4 spread_cross_color;
+		extern ImVec4 drawfov_color;
 		extern Color colorBulletTracer;
-		extern Color floatc;
-		extern Color skeletoncolor;
-		extern Color drawfov_color;
+		extern ImVec4 recoilcolor;
 
 		extern ImVec4 sky;
 	}

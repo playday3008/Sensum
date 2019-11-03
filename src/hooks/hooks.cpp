@@ -178,28 +178,16 @@ namespace hooks
 		if (g::engine_client->IsInGame() && g::engine_client->IsConnected() && settings::misc::noscope && !strcmp("HudZoom", interfaces::vgui_panel->GetName(panel)))
 			return;
 
-		if (settings::visuals::rcs_cross)
-			visuals::RenderPunchCross();
+		//if (settings::visuals::rcs_cross)
+			//visuals::RenderPunchCross();
 
 		//visuals::NadeHelper(); //todo
-
-		if (settings::visuals::hitmarker)
-			visuals::RenderHitmarker();
-
-		if (settings::misc::noscope)
-			visuals::RenderNoScopeOverlay();
-
-		if (settings::visuals::spread_cross)
-			visuals::SpreadCircle();
 
 		if (settings::visuals::choke)
 			visuals::Choke();
 
 		if (settings::desync::enabled2)
 			visuals::AAIndicator();
-
-		if (settings::esp::drawFov && g::engine_client->IsInGame() && g::engine_client->IsConnected())
-			visuals::DrawFov();
 
 		if (settings::misc::damage_indicator)
 			visuals::DrawDamageIndicator();

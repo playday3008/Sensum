@@ -183,6 +183,11 @@ namespace render
 		return false;
 	}
 
+	bool ColorEdit4(const char* label, ImVec4* v, ImGuiColorEditFlags flag)
+	{
+		return ImGui::ColorEdit4(label, &v->x, flag);
+	}
+
 	bool ColorEdit3(const char* label, Color* v)
 	{
 		return ColorEdit4(label, v);

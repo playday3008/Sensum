@@ -39,7 +39,7 @@ namespace offscreen_entities
 		const auto screen_pos = Vector(display_size.x / 2, display_size.y / 2, 0) + (popvec * 380.f);
 
 
-		globals::draw_list->AddCircleFilled(ImVec2(screen_pos.x, screen_pos.y), 12.f, color);
+		//globals::draw_list->AddCircleFilled(ImVec2(screen_pos.x, screen_pos.y), 12.f, color);
 
 		int w, h;
 
@@ -71,34 +71,10 @@ namespace offscreen_entities
 
 			//dot(interfaces::local_player->m_vecOrigin(), *sndList[i].m_pOrigin, sound_color);
 
-			Vector vScreen;
-
-			//if (math::world2screen(*sndList[i].m_pOrigin, vScreen))
-
-			if (settings::esp::sound)
-			{
-				//globals::draw_list->AddCircle(ImVec2(vScreen.x, vScreen.y), 12.f, sound_color);
-			}
+			
 
 
 		}
-
-		/*for (int i = 0; i < sndList.Count(); i++)
-		{
-			auto* player = c_base_player::GetPlayerByIndex(sndList[i].m_nSoundSource);
-			if (!player || !player->IsPlayer() || player->is_dormant() || !player->IsAlive() || player == interfaces::local_player)
-				continue;
-
-			if (!settings::misc::deathmatch && player->m_iTeamNum() == interfaces::local_player->m_iTeamNum())
-				continue;
-
-				if (settings::esp::sound)
-				{
-					//globals::draw_list->AddCircle(ImVec2(vScreen.x, vScreen.y), 12.f, sound_color);
-					ringbeam(Color::Orange, *sndList[i].m_nSoundSource);
-
-				}
-		}*/
 	}
 
 	void render(ImDrawList* _draw_list)

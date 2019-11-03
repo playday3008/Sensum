@@ -163,12 +163,11 @@ namespace settings
 		int viewmodel_mode = 0;
 
 		ImVec4 sky = ImVec4(0.25, 0.25, 0.25, 1.0);
-		Color recoilcolor = Color(0, 0, 0);
-		Color floatc = Color(154.f, 0.f, 255.f, 255.f);
+		ImVec4 recoilcolor = ImVec4{0.f, 0.f, 0.f, 1.0f};
+		ImVec4 spread_cross_color = ImVec4{1.f, 0.f, 0.f, 1.0f};
+		ImVec4 drawfov_color = ImVec4{1.f, 1.f, 1.f, 1.0f};
+
 		Color colorBulletTracer = Color(154, 0, 255, 255);
-		Color spread_cross_color = Color(255, 0, 0, 255);
-		Color skeletoncolor = Color(255, 255, 255, 255);
-		Color drawfov_color = Color(255, 255, 255, 255);
 	}
 
 	namespace desync

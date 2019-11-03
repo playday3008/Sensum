@@ -218,11 +218,11 @@ namespace visuals
 		switch (settings::visuals::rcs_cross_mode)
 		{
 		case 0:
-			VGSHelper::Get().DrawLine(x - 5, y, x + 5, y, settings::visuals::recoilcolor, 1.0f);
-			VGSHelper::Get().DrawLine(x, y - 5, x, y + 5, settings::visuals::recoilcolor, 1.0f);
+			globals::draw_list->AddLine(ImVec2(x - 5, y), ImVec2(x + 5, y), ImGui::GetColorU32(settings::visuals::recoilcolor));
+			globals::draw_list->AddLine(ImVec2(x, y - 5), ImVec2(x, y + 5), ImGui::GetColorU32(settings::visuals::recoilcolor));
 			break;
 		case 1:
-			VGSHelper::Get().DrawCircle(x, y, radius, 255, settings::visuals::recoilcolor);
+			globals::draw_list->AddCircle(ImVec2(x, y), radius, ImGui::GetColorU32(settings::visuals::recoilcolor), 255);
 			break;
 		}
 
@@ -263,6 +263,9 @@ namespace visuals
 	{
 		auto pWeapon = g::local_player->m_hActiveWeapon();
 		if (!pWeapon)
+			return;
+
+		if (!g::engine_client->IsConnected() || !g::engine_client->IsInGame())
 			return;
 
 		auto settings = settings::aimbot::m_items[pWeapon->m_iItemDefinitionIndex()];
@@ -331,7 +334,7 @@ namespace visuals
 			//if (dynamic_fov && g::local_player->m_hActiveWeapon()->m_zoomLevel() == 2) //Double Scoped //No need to use now
 				//screenFov = atanf((ratio) * (0.40f) * tan(DEG2RAD(fov * 1.0f)));
 
-			VGSHelper::Get().DrawCircle(center.x, center.y, radiusFOV, 32, settings::visuals::drawfov_color);
+			globals::draw_list->AddCircle(ImVec2(center.x, center.y), radiusFOV, ImGui::GetColorU32(settings::visuals::drawfov_color), 255);
 		}
 	}
 
@@ -370,10 +373,9 @@ namespace visuals
 		percent = 1.f - percent;
 		float addsize = percent2 * 5.f;
 
-		Color clr = Color(255, 255, 255, (int)(percent * 255.f));
+		ImVec4 clr = ImVec4{ 1.0f, 1.0f, 1.0f, percent * 1.0f };
 
-		VGSHelper::Get().DrawLine(cx - 3.f - addsize, cy - 3.f - addsize, cx + 3.f + addsize, cy + 3.f + addsize, clr, 1.f);
-		VGSHelper::Get().DrawLine(cx - 3.f - addsize, cy + 3.f + addsize, cx + 3.f + addsize, cy - 3.f - addsize, clr, 1.f);
+		globals::draw_list->AddLine(ImVec2(cx - 3.f - addsize, cy - 3.f - addsize), ImVec2(cx + 3.f + addsize, cy + 3.f + addsize), ImGui::GetColorU32(clr));
 	}
 
 	void RenderNoScopeOverlay()
@@ -392,9 +394,9 @@ namespace visuals
 
 		if (g::local_player->m_bIsScoped())
 		{
-			VGSHelper::Get().DrawLine(0, cy, w, cy, Color::Black);
-			VGSHelper::Get().DrawLine(cx, 0, cx, h, Color::Black);
-			VGSHelper::Get().DrawCircle(cx, cy, 255, 255, Color::Black);
+			globals::draw_list->AddLine(ImVec2(0, cy), ImVec2(w, cy), ImGui::GetColorU32(ImVec4{ 0.f, 0.f, 0.f, 1.0f }));
+			globals::draw_list->AddLine(ImVec2(cx, 0), ImVec2(cx, h), ImGui::GetColorU32(ImVec4{ 0.f, 0.f, 0.f, 1.0f }));
+			globals::draw_list->AddCircle(ImVec2(cx, cy), 255, ImGui::GetColorU32(ImVec4{0.f, 0.f, 0.f, 1.0f}), 255);
 		}
 	}
 
@@ -692,7 +694,8 @@ namespace visuals
 		g::engine_client->GetScreenSize(x, y);
 		float cx = x / 2.f;
 		float cy = y / 2.f;
-		VGSHelper::Get().DrawCircle(cx, cy, spread, 35, settings::visuals::spread_cross_color);
+
+		globals::draw_list->AddCircle(ImVec2(cx, cy), spread, ImGui::GetColorU32(settings::visuals::spread_cross_color), 255);
 	}
 
 	void glow() noexcept {
@@ -894,6 +897,21 @@ namespace visuals
 				imdraw::outlined_text(entity.text.c_str(), ImVec2(origin.x - text_size.x / 2.f, origin.y), utils::to_im32(entity.color));
 			}
 		}
+
+		if(settings::visuals::rcs_cross)
+			RenderPunchCross();
+
+		if (settings::esp::drawFov)
+			DrawFov();
+
+		if (settings::visuals::hitmarker)
+			RenderHitmarker();
+
+		if (settings::misc::noscope)
+			RenderNoScopeOverlay();
+
+		if (settings::visuals::spread_cross)
+			SpreadCircle();
 
 
 		ImGui::PopFont();
