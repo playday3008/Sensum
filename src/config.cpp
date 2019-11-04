@@ -31,7 +31,7 @@ namespace config
 		if (!source.good())
 		{
 #ifdef _DEBUG
-			console::print("file %s doesnt exists", name.c_str());
+			console::print("File %s doesnt exists.", name.c_str());
 #endif
 			return root;
 		}
@@ -39,7 +39,7 @@ namespace config
 		source >> root;
 
 #ifdef _DEBUG
-		console::print("readed %s file", name.c_str());
+		console::print("File %s was succesfully loaded.", name.c_str());
 #endif
 
 		return root;

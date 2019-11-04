@@ -114,6 +114,18 @@ namespace hooks
 		};
 	};
 
+	struct engine_mode
+	{
+		static vfunc_hook hook;
+
+		struct IsConnected
+		{
+			static const int index = 27;
+			using fn = bool(__thiscall*)(IVEngineClient*);
+			static bool __stdcall hooked();
+		};
+	};
+
 	struct SL
 	{
 		static vfunc_hook hook;

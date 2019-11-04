@@ -356,6 +356,8 @@ namespace settings
 		extern bool equip;
 		extern bool damage_indicator;
 		extern bool fast_stop;
+		extern bool force_inventory_open;
+		extern bool anti_obs;
 		extern bool override_viewmodel;
 
 		extern float viewmodel_offset_x;

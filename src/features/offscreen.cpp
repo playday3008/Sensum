@@ -7,15 +7,6 @@
 
 #include <mutex>
 
-Vector get_rotated_position(Vector start, const float rotation, const float distance)
-{
-	const auto rad = DEG2RAD(rotation);
-	start.x += cosf(rad) * distance;
-	start.y += sinf(rad) * distance;
-
-	return start;
-};
-
 namespace offscreen_entities
 {
 	int alpha = 0;
@@ -38,14 +29,7 @@ namespace offscreen_entities
 
 		const auto screen_pos = Vector(display_size.x / 2, display_size.y / 2, 0) + (popvec * 380.f);
 
-
-		//globals::draw_list->AddCircleFilled(ImVec2(screen_pos.x, screen_pos.y), 12.f, color);
-
-		int w, h;
-
-		interfaces::engine_client->GetScreenSize(w, h);
-		//globals::draw_list->AddCircle(ImVec2(w / 2, h / 2), 12.f, color);
-
+		globals::draw_list->AddCircleFilled(ImVec2(screen_pos.x, screen_pos.y), 12.f, color);
 	}
 
 	void sound()

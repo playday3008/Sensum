@@ -232,6 +232,7 @@ namespace render
 				checkbox("-98 Nade (?)", &settings::misc::selfnade);
 				tooltip("Look up, Hold mouse 2,When you're fully primed to throw with mouse 2 start holding mouse 1, crouch when released.");
 				checkbox("Fast Stop", &settings::misc::fast_stop);
+				checkbox("Force Inventory Open", &settings::misc::force_inventory_open);
 			});
 
 			ImGui::NextColumn();

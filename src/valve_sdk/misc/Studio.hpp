@@ -143,7 +143,7 @@ struct model_t
     Vector  vecMaxs;                //0x0124 
     float   radius;                 //0x0130 
     char    pad[0x1C];              //0x0134
-};//Size=0x0150
+};//Size=0x0150 
 
 class studiohdr_t
 {
@@ -189,4 +189,4 @@ public:
         return (mstudiobone_t*)((uint8_t*)this + boneindex) + i;
     }
 
-};//Size=0x00D4
+};//Size=0x00D4 

@@ -33,7 +33,6 @@ namespace visuals
 {
 	void fetch_entities();
 	void render(ImDrawList* draw_list);
-	void chams_misc(const ModelRenderInfo_t& info) noexcept;
 	void more_chams() noexcept;
 	void glow() noexcept;
 	void glow_override() noexcept;
@@ -50,6 +49,7 @@ namespace visuals
 	void NadeHelper();
 	void DrawDamageIndicator();
 	void runCM(CUserCmd* cmd);
+	void renderSkeleton(c_base_player* pEntity);
 }
 
 namespace esp

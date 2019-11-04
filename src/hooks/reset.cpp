@@ -1,5 +1,6 @@
 #include "hooks.h"
 #include "../render/render.h"
+#include "..//settings.h"
 
 namespace hooks
 {

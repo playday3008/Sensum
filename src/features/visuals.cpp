@@ -190,7 +190,7 @@ namespace visuals
 			}
 		}
 	}
-
+	
 	void RenderPunchCross()
 	{
 
@@ -218,8 +218,8 @@ namespace visuals
 		switch (settings::visuals::rcs_cross_mode)
 		{
 		case 0:
-			globals::draw_list->AddLine(ImVec2(x - 5, y), ImVec2(x + 5, y), ImGui::GetColorU32(settings::visuals::recoilcolor));
-			globals::draw_list->AddLine(ImVec2(x, y - 5), ImVec2(x, y + 5), ImGui::GetColorU32(settings::visuals::recoilcolor));
+			globals::draw_list->AddLine(ImVec2(x - 5, y), ImVec2(x + 6, y), ImGui::GetColorU32(settings::visuals::recoilcolor));
+			globals::draw_list->AddLine(ImVec2(x, y - 5), ImVec2(x, y + 6), ImGui::GetColorU32(settings::visuals::recoilcolor));
 			break;
 		case 1:
 			globals::draw_list->AddCircle(ImVec2(x, y), radius, ImGui::GetColorU32(settings::visuals::recoilcolor), 255);
@@ -424,7 +424,7 @@ namespace visuals
 						g::render_view->SetColorModulation(settings::chams::colorPlantedC4Chams.r() / 255.f, settings::chams::colorPlantedC4Chams.g() / 255.f, settings::chams::colorPlantedC4Chams.b() / 255.f);
 						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
 						interfaces::mdl_render->ForcedMaterialOverride(mat);
-						mat->IncrementReferenceCount();
+						//mat->IncrementReferenceCount();
 						entity->DrawModel(1, 255);
 					}
 					break;
@@ -448,7 +448,7 @@ namespace visuals
 						interfaces::render_view->SetColorModulation(settings::chams::colorNadeChams.r() / 255.f, settings::chams::colorNadeChams.g() / 255.f, settings::chams::colorNadeChams.b() / 255.f);
 						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
 						interfaces::mdl_render->ForcedMaterialOverride(mat);
-						mat->IncrementReferenceCount();
+						//mat->IncrementReferenceCount();
 						entity->DrawModel(1, 255);
 					}
 					break;
@@ -465,7 +465,7 @@ namespace visuals
 					}
 				}
 				interfaces::mdl_render->ForcedMaterialOverride(nullptr);
-				mat->IncrementReferenceCount();
+				//mat->IncrementReferenceCount();
 			}
 		}
 	}
@@ -518,7 +518,7 @@ namespace visuals
 		static IMaterial* PlasticGloss = g::mat_system->FindMaterial("models/inventory_items/trophy_majors/gloss", TEXTURE_GROUP_MODEL);
 		static IMaterial* Glow = g::mat_system->FindMaterial("vgui/achievements/glow", TEXTURE_GROUP_MODEL);
 
-		Normal->IncrementReferenceCount();
+		/*Normal->IncrementReferenceCount();
 		Dogtags->IncrementReferenceCount();
 		Flat->IncrementReferenceCount();
 		Metallic->IncrementReferenceCount();
@@ -528,7 +528,7 @@ namespace visuals
 		Gold->IncrementReferenceCount();
 		DarkChrome->IncrementReferenceCount();
 		PlasticGloss->IncrementReferenceCount();
-		Glow->IncrementReferenceCount();
+		Glow->IncrementReferenceCount(); */
 
 		
 		switch (settings::chams::desyncChamsMode)

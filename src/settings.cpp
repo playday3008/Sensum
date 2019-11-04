@@ -225,6 +225,8 @@ namespace settings
 		bool lefthandknife;
 		bool damage_indicator = false;
 		bool fast_stop = false;
+		bool anti_obs = false;
+		bool force_inventory_open = false;
 		bool override_viewmodel = false;
 
 		float viewmodel_offset_x = 0.f;
@@ -319,6 +321,7 @@ namespace settings
 			Option::Load(root["chams.decoy_color"], settings::chams::ChamsDecoyXQZ);
 			Option::Load(root["chams.smoke_color"], settings::chams::ChamsSmokeXQZ);
 			Option::Load(root["chams.C4dropped_color"], settings::chams::ChamsC4Dropped);
+			Option::Load(root["chams.legitaa_material_mode"], chams::desyncChamsMode);
 			
 			Option::Load(root["misc.bhop"], misc::bhop);
 			Option::Load(root["misc.auto_strafe"], misc::auto_strafe);
@@ -364,6 +367,7 @@ namespace settings
 			Option::Load(root["misc.left_hand_knife"], settings::misc::lefthandknife);
 			Option::Load(root["misc.fast_stop"], settings::misc::fast_stop);
 			Option::Load(root["misc.viewmodel_mode"], settings::visuals::viewmodel_mode);
+			Option::Load(root["misc.force_inventory_open"], settings::misc::force_inventory_open);
 			Option::Load(root["misc.viewmodel_override"], settings::misc::override_viewmodel);
 			Option::Load(root["misc.viewmodel_offset_x"], settings::misc::viewmodel_offset_x);
 			Option::Load(root["misc.viewmodel_offset_y"], settings::misc::viewmodel_offset_y);
@@ -549,6 +553,7 @@ namespace settings
 			config["chams.nades"] = chams::nade_chams;
 			config["chams.arms.enabled"] = chams::arms::enabled;
 			config["chams.arms.wireframe"] = chams::arms::wireframe;
+			config["chams.legitaa_material_mode"] = chams::desyncChamsMode;
 
 			Option::Save(config["chams.backtrack_color"], chams::btColorChams);
 			Option::Save(config["chams.enemy_color_vis"], chams::EnemyColor_vis);
@@ -611,6 +616,7 @@ namespace settings
 			config["misc.disable_3rd_person_on_weapon"] = settings::misc::disable_on_weapon;
 			config["misc.left_hand_knife"] = settings::misc::lefthandknife;
 			config["misc.fast_stop"] = settings::misc::fast_stop;
+			config["misc.force_inventory_open"] = settings::misc::force_inventory_open;
 			config["misc.viewmodel_mode"] = settings::visuals::viewmodel_mode;
 			config["misc.viewmodel_override"] = settings::misc::override_viewmodel;
 			config["misc.viewmodel_offset_x"] = settings::misc::viewmodel_offset_x;

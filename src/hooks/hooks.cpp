@@ -30,6 +30,7 @@ namespace hooks
 	vfunc_hook renderview::hook;
 	vfunc_hook events::hook;
 	vfunc_hook SL::hook;
+	vfunc_hook engine_mode::hook;
 
 	c_game_event_listener* event_listener;
 
@@ -87,6 +88,9 @@ namespace hooks
 		SL::hook.setup(interfaces::g_SpatialPartition);
 		SL::hook.hook_index(SL::SuppressList::index, SL::SuppressList::hooked);
 
+		engine_mode::hook.setup(g::engine_client);
+		engine_mode::hook.hook_index(engine_mode::IsConnected::index, engine_mode::IsConnected::hooked);
+
 		//set_vmt_hook<fire_bullets>(interfaces::fire_bullets, xorstr_("client.dll"));
 		//set_vmt_hook<retrieve_message>(interfaces::game_coordinator);
 
@@ -117,6 +121,7 @@ namespace hooks
 		renderview::hook.unhook_all();
 		events::hook.unhook_all();
 		SL::hook.unhook_all();
+		engine_mode::hook.unhook_all();
 
 		delete sequence::hook;
 	}
@@ -178,9 +183,6 @@ namespace hooks
 		if (g::engine_client->IsInGame() && g::engine_client->IsConnected() && settings::misc::noscope && !strcmp("HudZoom", interfaces::vgui_panel->GetName(panel)))
 			return;
 
-		//if (settings::visuals::rcs_cross)
-			//visuals::RenderPunchCross();
-
 		//visuals::NadeHelper(); //todo
 
 		if (settings::visuals::choke)
@@ -191,7 +193,7 @@ namespace hooks
 
 		if (settings::misc::damage_indicator)
 			visuals::DrawDamageIndicator();
-			
+
 		for (int i = 1; i < interfaces::entity_list->GetHighestEntityIndex(); i++) {
 			auto entity = reinterpret_cast<c_planted_c4*>(interfaces::entity_list->GetClientEntity(i));
 
@@ -283,6 +285,19 @@ namespace hooks
 			visuals::glow_override();
 
 		return original(interfaces::client_mode, value);
+	}
+
+	bool __stdcall engine_mode::IsConnected::hooked()
+	{
+		auto original = hook.get_original<fn>(index);
+
+		static void* force_inventory_open = utils::pattern_scan(("client_panorama.dll"), "75 04 B0 01 5F") - 2;
+
+		if (_ReturnAddress() == force_inventory_open && settings::misc::force_inventory_open) {
+			return false;
+		}
+
+		return original(g::engine_client);
 	}
 
 	bool __stdcall events::fire_event::hooked(IGameEvent* pEvent)
