@@ -233,20 +233,15 @@ static bool ImGui_ImplWin32_UpdateMouseCursor()
 	if (io.ConfigFlags & ImGuiConfigFlags_NoMouseCursorChange)
 		return false;
 
-	static HCURSOR lastcursor = NULL;
-
-	ImGuiMouseCursor imgui_cursor = io.MouseDrawCursor ? ImGuiMouseCursor_None : ImGui::GetMouseCursor();
-	if (imgui_cursor == ImGuiMouseCursor_None)
+	ImGuiMouseCursor imgui_cursor = ImGui::GetMouseCursor();
+	if (imgui_cursor == ImGuiMouseCursor_None || io.MouseDrawCursor)
 	{
 		// Hide OS mouse cursor if imgui is drawing it or if it wants no cursor
-		lastcursor = ::GetCursor();
 		::SetCursor(NULL);
 	}
 	else
 	{
-		::SetCursor(lastcursor);
-		/*
-		// Hardware cursor type
+		// Show OS mouse cursor
 		LPTSTR win32_cursor = IDC_ARROW;
 		switch (imgui_cursor)
 		{
@@ -258,10 +253,11 @@ static bool ImGui_ImplWin32_UpdateMouseCursor()
 		case ImGuiMouseCursor_ResizeNESW:   win32_cursor = IDC_SIZENESW; break;
 		case ImGuiMouseCursor_ResizeNWSE:   win32_cursor = IDC_SIZENWSE; break;
 		}
-		::SetCursor(::LoadCursor(NULL, win32_cursor));*/
+		::SetCursor(::LoadCursor(NULL, win32_cursor));
 	}
 	return true;
 }
+
 
 // Allow compilation with old Windows SDK. MinGW doesn't have default _WIN32_WINNT/WINVER versions.
 #ifndef WM_MOUSEHWHEEL
