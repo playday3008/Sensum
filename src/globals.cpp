@@ -70,6 +70,8 @@ namespace globals
 		int zeus_bot = 0;
 		int lightning_shot = 0;
 		int slow_walk = 0;
+		int edge_jump = 0;
+		int block_bot = 0;
 
 		bool notify_when_loaded = true;
 		std::map<std::string, int> configs;
@@ -143,6 +145,8 @@ namespace globals
 			Option::Load(root["binds.desync"], binds::desync, VK_XBUTTON1);
 			Option::Load(root["binds.fake_duck"], binds::fake_duck);
 			Option::Load(root["binds.slow_walk"], binds::slow_walk);
+			Option::Load(root["binds.edge_jump"], binds::edge_jump);
+			Option::Load(root["binds.block_bot"], binds::block_bot);
 
 			Json::Value config_binds = root["binds.configs"];
 			if (!config_binds.empty())
@@ -181,6 +185,8 @@ namespace globals
 			root["binds.desync"] = binds::desync;
 			root["binds.fake_duck"] = binds::fake_duck;
 			root["binds.slow_walk"] = binds::slow_walk;
+			root["binds.edge_jump"] = binds::edge_jump;
+			root["binds.block_bot"] = binds::block_bot;
 
 			Json::Value config_binds;
 			for (auto& bind : binds::configs)

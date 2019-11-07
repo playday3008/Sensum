@@ -62,6 +62,8 @@ namespace globals
 		extern int zeus_bot;
 		extern int lightning_shot;
 		extern int slow_walk;
+		extern int edge_jump;
+		extern int block_bot;
 
 		extern bool notify_when_loaded;
 		extern std::map<std::string, int> configs;

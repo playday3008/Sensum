@@ -14,6 +14,9 @@ namespace features
 	void human_bhop(CUserCmd* cmd);
 	void SelfNade(CUserCmd *cmd);
 	void fastStop(CUserCmd* cmd);
+	void edgeJumpPre(CUserCmd* cmd) noexcept;
+	void edgeJumpPost(CUserCmd* cmd) noexcept;
+	void blockBot(CUserCmd* cmd);
 }
 
 namespace color_modulation

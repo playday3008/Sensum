@@ -116,11 +116,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Backtrack_new.cpp" />
+    <ClCompile Include="block_bot.cpp" />
     <ClCompile Include="Chams.cpp" />
     <ClCompile Include="colors_tab.cpp" />
     <ClCompile Include="config.cpp" />
     <ClCompile Include="deps\blackbone\LocalHook\LocalHookBase.cpp" />
     <ClCompile Include="deps\blackbone\LocalHook\TraceHook.cpp" />
+    <ClCompile Include="edge_jump.cpp" />
     <ClCompile Include="fast_stop.cpp" />
     <ClCompile Include="features\auto_strafe.cpp" />
     <ClCompile Include="features\bhop.cpp" />

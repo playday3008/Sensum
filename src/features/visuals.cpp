@@ -696,6 +696,7 @@ namespace visuals
 		float cy = y / 2.f;
 
 		globals::draw_list->AddCircle(ImVec2(cx, cy), spread, ImGui::GetColorU32(settings::visuals::spread_cross_color), 255);
+		globals::draw_list->AddCircleFilled(ImVec2(cx, cy), spread - 1, ImGui::GetColorU32({ 0.0f, 0.0f, 0.0f, 0.2f }), 255);
 	}
 
 	void glow() noexcept {

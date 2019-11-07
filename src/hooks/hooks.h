@@ -87,6 +87,18 @@ namespace hooks
 			static void __stdcall hooked(IRecipientFilter& filter, int iEntIndex, int iChannel, const char* pSoundEntry, unsigned int nSoundEntryHash, const char* pSample, float flVolume, int nSeed, float flAttenuation, int iFlags, int iPitch, const Vector* pOrigin, const Vector* pDirection, void* pUtlVecOrigins, bool bUpdatePositions, float soundtime, int speakerentity, int unk);
 		};
 	};
+
+	struct mdlrender
+	{
+		static vfunc_hook hook;
+
+		struct draw_model_execute
+		{
+			static const int index = 29; //was 21
+			using DrawModelExecute = void(__thiscall*)(void*, void*, DrawModelInfo_t*, matrix3x4_t*, float*, float*, Vector&, int);
+			static void __fastcall hooked(void* pEcx, void* pEdx, void* pResults, DrawModelInfo_t* pInfo, matrix3x4_t* pBoneToWorld, float* flpFlexWeights, float* flpFlexDelayedWeights, Vector& vrModelOrigin, int32_t iFlags);
+		};
+	};
 	
 	struct client_mode
 	{

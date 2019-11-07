@@ -334,6 +334,12 @@
     <ClCompile Include="fast_stop.cpp">
       <Filter>features\movement</Filter>
     </ClCompile>
+    <ClCompile Include="edge_jump.cpp">
+      <Filter>features\movement</Filter>
+    </ClCompile>
+    <ClCompile Include="block_bot.cpp">
+      <Filter>features\movement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\directx9\imgui_impl_dx9.h">

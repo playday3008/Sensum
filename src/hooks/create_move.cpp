@@ -143,6 +143,7 @@ namespace hooks
 
 		bool* sendpacket2 = reinterpret_cast<bool*>(reinterpret_cast<uintptr_t>(_AddressOfReturnAddress()) + 0x14);
 
+		features::edgeJumpPre(cmd);
 		engine_prediction::start(cmd);
 
 		visuals::fetch_entities();
@@ -295,6 +296,9 @@ namespace hooks
 		if (g::local_player && g::local_player->IsAlive() && (cmd->buttons & IN_ATTACK || cmd->buttons & IN_ATTACK2))
 			saver.LastShotEyePos = g::local_player->GetEyePos();
 
+		/*if (settings::misc::block_bot) //WIP blockbot, not fully working.
+			features::blockBot(cmd); */
+
 		if (settings::lightning_shot::enabled)
 			lighting_shots::handle(cmd);
 
@@ -419,6 +423,7 @@ namespace hooks
 		}
 
 		engine_prediction::finish(cmd);
+		features::edgeJumpPost(cmd);
 
 		//if (cmd->buttons & IN_SCORE)
 			//hooks::dispatch_user_message::hook.CallOriginal(std::forward<IBaseClientDLL*>(interfaces::base_client), 50, 0, 0, nullptr); // 50 = CS_UM_ServerRankRevealAll

@@ -52,8 +52,8 @@ namespace engine_prediction
 		interfaces::prediction->FinishMove(interfaces::local_player, cmd, m_MoveData);
 
 
-		interfaces::local_player->m_fFlags() = m_fFlags;
-		interfaces::local_player->m_nMoveType() = m_nMoveType;
+		//interfaces::local_player->m_fFlags() = m_fFlags;
+		//interfaces::local_player->m_nMoveType() = m_nMoveType;
 	}
 
 	void finish(CUserCmd* cmd)

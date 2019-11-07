@@ -119,7 +119,7 @@ void Backtrack::OnMove(CUserCmd* pCmd) {
 		*(int*)((uintptr_t)player + 0xA68) = 0;
 		*(int*)((uintptr_t)player + 0xA30) = 0;
 
-		player->InvalidateBoneCache();
+		//player->InvalidateBoneCache();
 		player->SetupBones(bd.boneMatrix, 128, BONE_USED_BY_ANYTHING, g::global_vars->curtime);
 
 		math::VectorTransform(hitbox_center, bd.boneMatrix[hitbox_head->bone], bd.hitboxPos);

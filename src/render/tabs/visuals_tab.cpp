@@ -249,7 +249,7 @@ namespace render
 				//separator("BT Chams - Mode");
 				//ImGui::Combo("BT Chams Mode", &settings::chams::bttype, bttype, IM_ARRAYSIZE(bttype));
 				//checkbox("BT Chams - Flat", &settings::chams::btflat);
-				//ColorEdit4("BT Color", &settings::chams::btcolor);
+				//ColorEdit4("BT Color", &settings::chams::btColorChams);
 
 				/*separator("Arms", u8"Руки");
 

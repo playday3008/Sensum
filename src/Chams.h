@@ -22,6 +22,8 @@ class Chams : public Singleton<Chams>
 {
 public:
 	void OnSceneEnd();
+	void OnDrawModelExecute(void* pResults, DrawModelInfo_t* pInfo, matrix3x4_t* pBoneToWorld, float* flpFlexWeights, float* flpFlexDelayedWeights, Vector& vrModelOrigin, int iFlags);
+	void DMEChams(void* pResults, DrawModelInfo_t* pInfo, matrix3x4_t* pBoneToWorld, float* flpFlexWeights, float* flpFlexDelayedWeights, Vector& vrModelOrigin, int iFlags);
 private:
 	IMaterial* materialRegular = nullptr;
 	IMaterial* materialRegularIgnoreZ = nullptr;

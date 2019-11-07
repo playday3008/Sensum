@@ -358,7 +358,11 @@ namespace settings
 		extern bool fast_stop;
 		extern bool force_inventory_open;
 		extern bool anti_obs;
+		extern int fast_stop_mode;
+		extern bool edge_jump;
 		extern bool override_viewmodel;
+		extern bool edge_jump_duck_in_air;
+		extern bool block_bot;
 
 		extern float viewmodel_offset_x;
 		extern float viewmodel_offset_y;

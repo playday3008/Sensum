@@ -20,6 +20,7 @@ namespace math
     void VectorTransform(const Vector& in1, const matrix3x4_t& in2, Vector& out);
     void angle2vectors(const QAngle &angles, Vector& forward);
 	void AngleVectors(const float & angles, Vector & forward);
+	QAngle CalcAngle(Vector src, Vector dst);
     void angle2vectors(const QAngle &angles, Vector& forward, Vector& right, Vector& up);
 	Vector CrossProduct(const Vector& a, const Vector& b);
     void vector2angles(const Vector& forward, QAngle& angles);

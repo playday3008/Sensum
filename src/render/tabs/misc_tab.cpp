@@ -214,6 +214,14 @@ namespace render
 				//checkbox("Disable Animations (?)", u8"Отключить анимации (?)", &globals::no_animations);
 				//tooltip("Disables the cheat menu animations.", u8"Отключает анимации меню чита.");
 
+
+				const char* fastStopModes[] = {
+					"Off",
+					"Left & Right",
+					"Forward & Backward",
+					"Both"
+				};
+
 				checkbox("Engine Prediction", &settings::movement::engine_prediction);
 				checkbox("Radar", u8"Радар", &settings::misc::radar);
 				checkbox("No Flash", u8"Убрать световые", &settings::misc::no_flash);
@@ -231,8 +239,35 @@ namespace render
 				checkbox("Left Hand Knife", &settings::misc::lefthandknife);
 				checkbox("-98 Nade (?)", &settings::misc::selfnade);
 				tooltip("Look up, Hold mouse 2,When you're fully primed to throw with mouse 2 start holding mouse 1, crouch when released.");
-				checkbox("Fast Stop", &settings::misc::fast_stop);
+				columns(2);
+				{
+					checkbox("Fast Stop", &settings::misc::fast_stop);
+
+					ImGui::NextColumn();
+
+					ImGui::PushItemWidth(-1);
+					ImGui::Combo("Mode", &settings::misc::fast_stop_mode, fastStopModes, IM_ARRAYSIZE(fastStopModes));
+					ImGui::PopItemWidth();
+				}
+				columns(1);
+
 				checkbox("Force Inventory Open", &settings::misc::force_inventory_open);
+
+				columns(2);
+				{
+					checkbox("Edge Jump", &settings::misc::edge_jump);
+
+					ImGui::NextColumn();
+
+					ImGui::PushItemWidth(-1);
+					if (settings::misc::edge_jump) {
+						ImGui::Checkbox("Duck in Air", &settings::misc::edge_jump_duck_in_air);
+					}
+					ImGui::PopItemWidth();
+				}
+				columns(1);
+				//checkbox("Block Bot", &settings::misc::block_bot); //WIP blockbot, not fully working 
+
 			});
 
 			ImGui::NextColumn();
@@ -244,6 +279,9 @@ namespace render
 				bind_button("Fake Crouch", "Fake Crouch", globals::binds::fake_duck);
 				bind_button("Third Person", "Third Person", globals::binds::thirdperson::key);
 				bind_button("Lightning Shot", "Lightning Shot", globals::binds::lightning_shot);
+				bind_button("Edge Jump", "Edge Jump", globals::binds::edge_jump);
+				//bind_button("Block Bot", "Block Bot", globals::binds::block_bot);
+
 
 				if (settings::misc::human_bhop)
 				{

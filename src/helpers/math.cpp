@@ -169,6 +169,18 @@ void math::AngleVectors(const float& angles, Vector& forward)
 	forward.z = -sp;
 }
 
+QAngle math::CalcAngle(Vector src, Vector dst)
+{
+	QAngle angles;
+	Vector delta = src - dst;
+
+	math::vector2angles(delta, angles);
+
+	delta.Normalized();
+
+	return angles;
+}
+
 void math::angle2vectors(const QAngle& angles, Vector& forward, Vector& right, Vector& up)
 {
 	float sr, sp, sy, cr, cp, cy;

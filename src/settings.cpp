@@ -226,8 +226,12 @@ namespace settings
 		bool damage_indicator = false;
 		bool fast_stop = false;
 		bool anti_obs = false;
+		int fast_stop_mode = 0;
+		bool edge_jump = false;
 		bool force_inventory_open = false;
+		bool edge_jump_duck_in_air = false;
 		bool override_viewmodel = false;
+		bool block_bot = false;
 
 		float viewmodel_offset_x = 0.f;
 		float viewmodel_offset_y = 0.f;
@@ -366,12 +370,15 @@ namespace settings
 			Option::Load(root["misc.disable_3rd_person_on_weapon"], settings::misc::disable_on_weapon);
 			Option::Load(root["misc.left_hand_knife"], settings::misc::lefthandknife);
 			Option::Load(root["misc.fast_stop"], settings::misc::fast_stop);
+			Option::Load(root["misc.fast_stop_mode"], settings::misc::fast_stop_mode);
 			Option::Load(root["misc.viewmodel_mode"], settings::visuals::viewmodel_mode);
 			Option::Load(root["misc.force_inventory_open"], settings::misc::force_inventory_open);
 			Option::Load(root["misc.viewmodel_override"], settings::misc::override_viewmodel);
 			Option::Load(root["misc.viewmodel_offset_x"], settings::misc::viewmodel_offset_x);
 			Option::Load(root["misc.viewmodel_offset_y"], settings::misc::viewmodel_offset_y);
 			Option::Load(root["misc.viewmodel_offset_z"], settings::misc::viewmodel_offset_z);
+			Option::Load(root["misc.edge_jump"], settings::misc::edge_jump);
+			Option::Load(root["misc.edge_jump_duck_in_air"], settings::misc::edge_jump_duck_in_air);
 
 			Option::Load(root["glow.enemy"], glow::glowEnemyEnabled);
 			Option::Load(root["glow.team"], glow::glowTeamEnabled);
@@ -616,12 +623,15 @@ namespace settings
 			config["misc.disable_3rd_person_on_weapon"] = settings::misc::disable_on_weapon;
 			config["misc.left_hand_knife"] = settings::misc::lefthandknife;
 			config["misc.fast_stop"] = settings::misc::fast_stop;
+			config["misc.fast_stop_mode"] = settings::misc::fast_stop_mode;
 			config["misc.force_inventory_open"] = settings::misc::force_inventory_open;
 			config["misc.viewmodel_mode"] = settings::visuals::viewmodel_mode;
 			config["misc.viewmodel_override"] = settings::misc::override_viewmodel;
 			config["misc.viewmodel_offset_x"] = settings::misc::viewmodel_offset_x;
 			config["misc.viewmodel_offset_y"] = settings::misc::viewmodel_offset_y;
 			config["misc.viewmodel_offset_z"] = settings::misc::viewmodel_offset_z;
+			config["misc.edge_jump"] = settings::misc::edge_jump;
+			config["misc.edge_jump_duck_in_air"] = settings::misc::edge_jump_duck_in_air;
 
 			Option::Save(config["misc_spread_crosshair_color"], settings::visuals::spread_cross_color);
 			Option::Save(config["mics.rcs_cross_color"], visuals::recoilcolor);

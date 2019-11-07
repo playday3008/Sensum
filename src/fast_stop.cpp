@@ -8,6 +8,9 @@ namespace features
 {
 	void fastStop(CUserCmd* cmd)
 	{
+		if (settings::misc::fast_stop_mode == 0)
+			return;
+
 		Vector velocity = g::local_player->m_vecVelocity();
 		QAngle direction;
 		math::vector2angles(velocity, direction);
@@ -24,30 +27,36 @@ namespace features
 		Vector move_forward = (forward + 0.217812) * -speed;
 		Vector move_backward = (forward + -0.217812) * -speed;
 
-		if (!(cmd->buttons & IN_MOVELEFT))
+		if (settings::misc::fast_stop_mode == 1 || settings::misc::fast_stop_mode == 3 && settings::misc::fast_stop_mode != 2) // Only left & right or both
 		{
-			cmd->sidemove += +left.y;
+			if (!(cmd->buttons & IN_MOVELEFT))
+			{
+				cmd->sidemove += +left.y;
+			}
+
+			if (!(cmd->buttons & IN_MOVERIGHT))
+			{
+				cmd->sidemove -= -right.y;
+			}
 		}
 
-		if (!(cmd->buttons & IN_MOVERIGHT))
+		if (settings::misc::fast_stop_mode == 2 || settings::misc::fast_stop_mode == 3 && settings::misc::fast_stop_mode != 1)  // Only forward & backward or both
 		{
-			cmd->sidemove -= -right.y;
-		} 
+			if (!(cmd->buttons & IN_FORWARD))
+			{
+				if (cmd->buttons & IN_MOVELEFT || cmd->buttons & IN_MOVERIGHT || settings::misc::auto_strafe)
+					return;
 
-		if (!(cmd->buttons & IN_FORWARD))
-		{
-			if (cmd->buttons & IN_MOVELEFT || cmd->buttons & IN_MOVERIGHT || settings::misc::auto_strafe)
-				return;
+				cmd->forwardmove += +move_forward.x;
+			}
 
-			cmd->forwardmove += +move_forward.x;
-		} 
+			if (!(cmd->buttons & IN_BACK))
+			{
+				if (cmd->buttons & IN_MOVELEFT || cmd->buttons & IN_MOVERIGHT || settings::misc::auto_strafe)
+					return;
 
-		if (!(cmd->buttons & IN_BACK))
-		{
-			if (cmd->buttons & IN_MOVELEFT || cmd->buttons & IN_MOVERIGHT || settings::misc::auto_strafe)
-				return;
-
-			cmd->forwardmove -= -move_backward.x;
+				cmd->forwardmove -= -move_backward.x;
+			}
 		}
 	}
 }
