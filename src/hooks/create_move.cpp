@@ -143,6 +143,22 @@ namespace hooks
 
 		bool* sendpacket2 = reinterpret_cast<bool*>(reinterpret_cast<uintptr_t>(_AddressOfReturnAddress()) + 0x14);
 
+		if (settings::misc::bhop)
+			features::bhop(cmd);
+
+		if (settings::misc::human_bhop)
+			features::human_bhop(cmd);
+
+		if (settings::misc::auto_strafe)
+			features::auto_strafe(cmd);
+
+		if (settings::misc::moon_walk)
+			features::moon_walk(cmd);
+
+		slow_walk::handle(cmd);
+		fake_lags::handle(cmd, *sendpacket2);
+		fake_duck::handle(cmd, *sendpacket2);
+
 		features::edgeJumpPre(cmd);
 		engine_prediction::start(cmd);
 
@@ -286,8 +302,8 @@ namespace hooks
 			aimbot::OnMove(cmd);
 
 		visuals::runCM(cmd);
-	
-		if(settings::misc::fast_stop)
+
+		if (settings::misc::fast_stop)
 			features::fastStop(cmd);
 
 		//if (a_settings->backtrack.time >= 0.01f) //NEW BACKTRACK, ENABLE ONLY IF YOU WANT FPS DROPS
@@ -301,18 +317,6 @@ namespace hooks
 
 		if (settings::lightning_shot::enabled)
 			lighting_shots::handle(cmd);
-
-		if (settings::misc::bhop)
-			features::bhop(cmd);
-
-		if (settings::misc::human_bhop)
-			features::human_bhop(cmd);
-
-		if (settings::misc::auto_strafe)
-			features::auto_strafe(cmd);
-
-		if (settings::misc::moon_walk)
-			features::moon_walk(cmd);
 
 		if (settings::misc::selfnade)
 			features::SelfNade(cmd);
@@ -331,9 +335,6 @@ namespace hooks
 			cmd->viewangles = g::client_state->viewangles;
 		}
 
-		slow_walk::handle(cmd);
-		fake_lags::handle(cmd, *sendpacket2);
-		fake_duck::handle(cmd, *sendpacket2);
 		//desync::handle(cmd, send_packet);
 
 		static ConVar* m_yaw = m_yaw = g::cvar->find("m_yaw");
