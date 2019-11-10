@@ -1,4 +1,7 @@
 #include "soundesp.h"
+#include "helpers/math.h"
+#include "esp.hpp"
+#include "globals.h"
 
 c_sound_esp sound_esp;
 

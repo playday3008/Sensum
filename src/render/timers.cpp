@@ -158,12 +158,14 @@ namespace render
 				int level;
 				int wins;
 				float distance;
+				bool IsAlive;
 			};
 
 			struct grief_box_info_t
 			{
 				std::string name;
 				int id;
+				bool IsAlive;
 			};
 
 			std::vector<player_info_t> pinfo;
@@ -182,8 +184,6 @@ namespace render
 
 				auto info = player->GetPlayerInfo();
 
-				//std::string a = std::to_string(logbuy::buy[257]);
-
 				if (player->IsEnemy() && player->IsPlayer() && !(player->GetPlayerInfo().ishltv))
 				{
 
@@ -195,7 +195,8 @@ namespace render
 						player->GetPlayerInfo().userId,
 						player_resource->GetLevel()[player->GetIndex()],
 						player_resource->GetWins()[player->GetIndex()],
-						player->IsDead() ? 0 : g::local_player->m_vecOrigin().DistTo(player->m_vecOrigin())
+						player->IsDead() ? 0 : g::local_player->m_vecOrigin().DistTo(player->m_vecOrigin()),
+						player->IsAlive()
 						});
 				}
 
@@ -203,7 +204,8 @@ namespace render
 				{
 					ginfo.push_back({
 						info.szName,
-						player->GetPlayerInfo().userId
+						player->GetPlayerInfo().userId,
+						player->IsAlive()
 						});
 				}
 			}
@@ -253,18 +255,32 @@ namespace render
 					for (const auto it : pinfo)
 					{
 
-						/*ImGui::Text("%s", it.name.c_str());
-						ImGui::SameLine();
-						ImGui::Text("$%i", it.money);
-						ImGui::SameLine();
-						ImGui::Text("%i", it.hp);
-						ImGui::SameLine();
-						ImGui::Text("%d/300", globals::team_damage[it.id]); */
+						ImVec4 color;
+
+						for (int i = 1; i < interfaces::engine_client->GetMaxClients(); ++i)
+						{
+							c_base_player* player = c_base_player::GetPlayerByIndex(i);
+
+							if (!player)
+								continue;
+
+							if (it.IsAlive)
+								color = ImVec4(0.0f, 1.0f, 0.0f, 1.f);
+							else if (!it.IsAlive)
+								color = ImVec4(1.0f, 0.f, 0.f, 1.f);
+							else
+								color = ImVec4(0.0f, 1.0f, 0.0f, 1.f);
+							continue;
+						}
 
 						columns(6);
 						{
+							ImGui::PushStyleColor(ImGuiCol_Text, color);
+
 							ImGui::SetColumnWidth(-1, 40.f);
 							ImGui::Text("%s", it.name.c_str());
+
+							ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
 
 							ImGui::NextColumn();
 
@@ -331,10 +347,34 @@ namespace render
 					for (const auto it : ginfo)
 					{
 
+						ImVec4 color;
+
+						for (int i = 1; i < interfaces::engine_client->GetMaxClients(); ++i)
+						{
+							c_base_player* player = c_base_player::GetPlayerByIndex(i);
+
+							if (!player)
+								continue;
+
+							if (it.IsAlive)
+								color = ImVec4(0.0f, 1.0f, 0.0f, 1.f);
+							else if (!it.IsAlive)
+								color = ImVec4(1.0f, 0.f, 0.f, 1.f);
+							else
+								color = ImVec4(0.0f, 1.0f, 0.0f, 1.f);
+							continue;
+						}
+
+						ImGui::PushStyleColor(ImGuiCol_Text, color);
+
 						columns(3);
 						{
+							ImGui::PushStyleColor(ImGuiCol_Text, color);
+
 							ImGui::SetColumnWidth(-1, 40.f);
 							ImGui::Text("%s", it.name.c_str());
+
+							ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
 
 							ImGui::NextColumn();
 

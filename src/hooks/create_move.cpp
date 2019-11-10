@@ -7,6 +7,7 @@
 #include "../features/features.h"
 #include "..//runtime_saver.h"
 #include "..//Backtrack_new.h"
+#include "..//soundesp.h"
 #pragma intrinsic(_ReturnAddress)  
 
 float side = 1.0f;

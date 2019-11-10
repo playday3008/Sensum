@@ -690,11 +690,7 @@ namespace aimbot
 		correct_nexttime = TICKS_TO_TIME(tick_count + 1) + network_delay;
 	}
 	//--------------------------------------------------------------------------------
-	void RCSHitboxOverride()
-	{
-	}
-
-
+	
 	void handle(CUserCmd* cmd)
 	{
 		if (!interfaces::local_player || !interfaces::local_player->IsAlive())

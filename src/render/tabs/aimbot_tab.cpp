@@ -305,7 +305,7 @@ namespace render
 					checkbox("Legit Backtrack (?)", &settings->backtrack.legit);
 					tooltip("Will backtrack depending on stuff as fov,angle,hitbox ID, sim_time, etc...");
 
-					ImGui::SliderFloatLeftAligned(___("FOV:", u8"Радиус:"), &settings->fov, 0, 15.f, "%.1f %"); 
+					ImGui::SliderFloatLeftAligned(___("FOV:", u8"Радиус:"), &settings->fov, 0, 15.f, "%.1f %");
 
 					ImGui::SliderFloatLeftAligned(___("Smooth:", u8"Плавность:"), &settings->smooth, 1, 15.f, "%.1f %");
 
@@ -335,17 +335,12 @@ namespace render
 
 			ImGui::NextColumn();
 
-			/*static char* rcs_types[] = {
-			"Always"
-			}; */
-
 			child(___("Recoil Control System", u8"Спрей"), [&settings]()
 			{
-				checkbox("Enabled", u8"Включено", &settings->recoil.enabled); //checkbox("Standalone", u8"Постоянный", &settings->recoil.standalone);
+				checkbox("Enabled", u8"Включено", &settings->recoil.enabled);
 				checkbox("First Bullet", u8"С первой пули", &settings->recoil.first_bullet);
 				checkbox("RCS Hitbox Override (?)", &settings->rcs_override_hitbox);
 				tooltip("If shotsFired >= 3 - disable all hitboxes, except body, if shotsFired < 3 - enable hitboxes you had.");
-				/*ImGui::Combo("RCS Type", &settings->rcs_type, rcs_types, IM_ARRAYSIZE(rcs_types)); */
 
 				ImGui::SliderFloatLeftAligned("Pitch:", &settings->recoil.pitch, 0, 2, "%.1f %");
 				ImGui::SliderFloatLeftAligned("Yaw:", &settings->recoil.yaw, 0, 2, "%.1f %");

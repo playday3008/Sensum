@@ -9,6 +9,7 @@
 #include "..//render/render.h"
 #include "..//Backtrack_new.h"
 #include "..//helpers/autowall.h"
+#include "..//soundesp.h"
 
 #include <mutex>
 
@@ -393,7 +394,7 @@ namespace visuals
 		cy = h / 2;
 
 
-		if (g::local_player->m_bIsScoped())
+		if (g::local_player->m_bIsScoped() && g::local_player->m_hActiveWeapon()->IsSniper())
 		{
 			globals::draw_list->AddLine(ImVec2(0, cy), ImVec2(w, cy), ImGui::GetColorU32(ImVec4{ 0.f, 0.f, 0.f, 1.0f }));
 			globals::draw_list->AddLine(ImVec2(cx, 0), ImVec2(cx, h), ImGui::GetColorU32(ImVec4{ 0.f, 0.f, 0.f, 1.0f }));
@@ -406,9 +407,9 @@ namespace visuals
 
 		static IMaterial* mat = nullptr;
 
-		static IMaterial* Metallic = g::mat_system->FindMaterial("simple_reflective", TEXTURE_GROUP_MODEL);
+		static IMaterial* flat = g::mat_system->FindMaterial("sensum_flat", TEXTURE_GROUP_MODEL);
 
-		mat = Metallic;
+		mat = flat;
 
 		for (int i = 0; i < interfaces::entity_list->GetHighestEntityIndex(); i++) {
 			auto entity = reinterpret_cast<c_base_player*>(interfaces::entity_list->GetClientEntity(i));
