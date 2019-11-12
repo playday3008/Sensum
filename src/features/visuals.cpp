@@ -425,7 +425,6 @@ namespace visuals
 						g::render_view->SetColorModulation(settings::chams::colorPlantedC4Chams.r() / 255.f, settings::chams::colorPlantedC4Chams.g() / 255.f, settings::chams::colorPlantedC4Chams.b() / 255.f);
 						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
 						interfaces::mdl_render->ForcedMaterialOverride(mat);
-						//mat->IncrementReferenceCount();
 						entity->DrawModel(1, 255);
 					}
 					break;
@@ -449,7 +448,6 @@ namespace visuals
 						interfaces::render_view->SetColorModulation(settings::chams::colorNadeChams.r() / 255.f, settings::chams::colorNadeChams.g() / 255.f, settings::chams::colorNadeChams.b() / 255.f);
 						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
 						interfaces::mdl_render->ForcedMaterialOverride(mat);
-						//mat->IncrementReferenceCount();
 						entity->DrawModel(1, 255);
 					}
 					break;
@@ -466,7 +464,7 @@ namespace visuals
 					}
 				}
 				interfaces::mdl_render->ForcedMaterialOverride(nullptr);
-				//mat->IncrementReferenceCount();
+				mat->IncrementReferenceCount();
 			}
 		}
 	}
@@ -519,7 +517,7 @@ namespace visuals
 		static IMaterial* PlasticGloss = g::mat_system->FindMaterial("models/inventory_items/trophy_majors/gloss", TEXTURE_GROUP_MODEL);
 		static IMaterial* Glow = g::mat_system->FindMaterial("vgui/achievements/glow", TEXTURE_GROUP_MODEL);
 
-		/*Normal->IncrementReferenceCount();
+		Normal->IncrementReferenceCount();
 		Dogtags->IncrementReferenceCount();
 		Flat->IncrementReferenceCount();
 		Metallic->IncrementReferenceCount();
@@ -529,7 +527,7 @@ namespace visuals
 		Gold->IncrementReferenceCount();
 		DarkChrome->IncrementReferenceCount();
 		PlasticGloss->IncrementReferenceCount();
-		Glow->IncrementReferenceCount(); */
+		Glow->IncrementReferenceCount();
 
 		
 		switch (settings::chams::desyncChamsMode)
