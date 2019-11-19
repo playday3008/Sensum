@@ -124,17 +124,17 @@ bool c_base_entity::is_dormant()
 
 float c_base_combat_weapon::GetInaccuracy()
 {
-	return CallVFunction<float(__thiscall*)(void*)>(this, 478)(this);
+	return CallVFunction<float(__thiscall*)(void*)>(this, 479)(this);
 }
 
 float c_base_combat_weapon::GetSpread()
 {
-	return CallVFunction<float(__thiscall*)(void*)>(this, 448)(this);
+	return CallVFunction<float(__thiscall*)(void*)>(this, 449)(this);
 }
 
 void c_base_combat_weapon::UpdateAccuracyPenalty()
 {
-	CallVFunction<void(__thiscall*)(void*)>(this, 479)(this);
+	CallVFunction<void(__thiscall*)(void*)>(this, 480)(this);
 }
 
 void c_base_player::PVSFix()
@@ -228,7 +228,7 @@ int c_base_entity::getWeaponSubType()
 CCSWeaponInfo* c_base_combat_weapon::get_weapon_data()
 {
 	//return interfaces::weapon_system->GetWpnData(m_iItemDefinitionIndex());
-	return CallVFunction<CCSWeaponInfo * (__thiscall*)(void*)>(this, 456)(this);
+	return CallVFunction<CCSWeaponInfo * (__thiscall*)(void*)>(this, 457)(this);
 }
 
 bool c_base_combat_weapon::HasBullets()
@@ -246,6 +246,7 @@ char* c_base_combat_weapon::GetGunIcon()
 	{
 	case WEAPON_KNIFE:
 	case 500:
+	case 503:
 	case 505:
 	case 506:
 	case 507:
@@ -255,6 +256,14 @@ char* c_base_combat_weapon::GetGunIcon()
 	case 514:
 	case 515:
 	case 516:
+	case 517:
+	case 518:
+	case 519:
+	case 520:
+	case 521:
+	case 522:
+	case 523:
+	case 525:
 		return "]";
 	case WEAPON_DEAGLE:
 		return "A";

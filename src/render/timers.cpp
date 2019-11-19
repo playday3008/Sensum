@@ -159,6 +159,7 @@ namespace render
 				int wins;
 				float distance;
 				bool IsAlive;
+				bool IsDormant;
 			};
 
 			struct grief_box_info_t
@@ -166,6 +167,7 @@ namespace render
 				std::string name;
 				int id;
 				bool IsAlive;
+				bool IsDormant;
 			};
 
 			std::vector<player_info_t> pinfo;
@@ -196,7 +198,8 @@ namespace render
 						player_resource->GetLevel()[player->GetIndex()],
 						player_resource->GetWins()[player->GetIndex()],
 						player->IsDead() ? 0 : g::local_player->m_vecOrigin().DistTo(player->m_vecOrigin()),
-						player->IsAlive()
+						player->IsAlive(),
+						player->IsDormant() ? true : false
 						});
 				}
 
@@ -205,7 +208,8 @@ namespace render
 					ginfo.push_back({
 						info.szName,
 						player->GetPlayerInfo().userId,
-						player->IsAlive()
+						player->IsAlive(),
+						player->IsDormant() ? true : false
 						});
 				}
 			}
@@ -268,9 +272,8 @@ namespace render
 								color = ImVec4(0.0f, 1.0f, 0.0f, 1.f);
 							else if (!it.IsAlive)
 								color = ImVec4(1.0f, 0.f, 0.f, 1.f);
-							else
+							else if (!it.IsDormant)
 								color = ImVec4(0.0f, 1.0f, 0.0f, 1.f);
-							continue;
 						}
 
 						columns(6);
@@ -356,13 +359,15 @@ namespace render
 							if (!player)
 								continue;
 
+							if (!it.IsDormant)
+								color = ImVec4(0.0f, 1.0f, 0.0f, 1.f);
+
 							if (it.IsAlive)
 								color = ImVec4(0.0f, 1.0f, 0.0f, 1.f);
 							else if (!it.IsAlive)
 								color = ImVec4(1.0f, 0.f, 0.f, 1.f);
-							else
+							else if (!it.IsDormant)
 								color = ImVec4(0.0f, 1.0f, 0.0f, 1.f);
-							continue;
 						}
 
 						ImGui::PushStyleColor(ImGuiCol_Text, color);

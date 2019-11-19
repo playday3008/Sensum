@@ -30,7 +30,7 @@ namespace hooks
 	vfunc_hook mdlrender::hook;
 	vfunc_hook renderview::hook;
 	vfunc_hook events::hook;
-	vfunc_hook SL::hook;
+	//vfunc_hook SL::hook;
 	vfunc_hook engine_mode::hook;
 
 	c_game_event_listener* event_listener;
@@ -89,8 +89,8 @@ namespace hooks
 		events::hook.setup(interfaces::game_events, xorstr_("engine.dll"));
 		events::hook.hook_index(events::fire_event::index, events::fire_event::hooked);
 
-		SL::hook.setup(interfaces::g_SpatialPartition);
-		SL::hook.hook_index(SL::SuppressList::index, SL::SuppressList::hooked);
+		//SL::hook.setup(interfaces::g_SpatialPartition);
+		//SL::hook.hook_index(SL::SuppressList::index, SL::SuppressList::hooked);
 
 		engine_mode::hook.setup(g::engine_client);
 		engine_mode::hook.hook_index(engine_mode::IsConnected::index, engine_mode::IsConnected::hooked);
@@ -125,7 +125,7 @@ namespace hooks
 		mdlrender::hook.unhook_all();
 		renderview::hook.unhook_all();
 		events::hook.unhook_all();
-		SL::hook.unhook_all();
+		//SL::hook.unhook_all();
 		engine_mode::hook.unhook_all();
 
 		delete sequence::hook;
@@ -164,7 +164,7 @@ namespace hooks
 		original(interfaces::client_mode, view);
 	}
 
-	void __stdcall SL::SuppressList::hooked(int a2, bool a3) {
+	/*void __stdcall SL::SuppressList::hooked(int a2, bool a3) {
 		static auto ofunc = hook.get_original<fn>(index);
 
 		static auto OnRenderStart_Return = utils::pattern_scan(("client_panorama.dll"), "FF 50 40 8B 1D ? ? ? ?") + 0x3;
@@ -178,7 +178,7 @@ namespace hooks
 		}
 
 		ofunc(g::g_SpatialPartition, a2, a3);
-	}
+	}*/
 
 	void __stdcall vgui_panel::paint_traverse::hooked(vgui::VPANEL panel, bool forceRepaint, bool allowForce)
 	{

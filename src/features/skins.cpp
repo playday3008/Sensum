@@ -32,7 +32,11 @@ namespace skins
 		{ WEAPON_KNIFE_GYPSY_JACKKNIFE,{ "models/weapons/v_knife_gypsy_jackknife.mdl", "knife_gypsy_jackknife" } },
 		{ WEAPON_KNIFE_STILETTO,{ "models/weapons/v_knife_stiletto.mdl", "knife_stiletto" } },
 		{ WEAPON_KNIFE_WIDOWMAKER,{ "models/weapons/v_knife_widowmaker.mdl", "knife_widowmaker" } },
-		{ WEAPON_KNIFE_CSS, { "models/weapons/v_knife_css.mdl", "knife_css" } },
+		{ WEAPON_KNIFE_CSS,{ "models/weapons/v_knife_css.mdl", "knife_css" } },
+		{ WEAPON_KNIFE_CORD,{ "models/weapons/v_knife_cord.mdl", "knife_cord" } },
+		{ WEAPON_KNIFE_CANIS,{ "models/weapons/v_knife_canis.mdl", "knife_canis" } },
+		{ WEAPON_KNIFE_OUTDOOR,{ "models/weapons/v_knife_outdoor.mdl", "knife_outdoor" } },
+		{ WEAPON_KNIFE_SKELETON,{ "models/weapons/v_knife_skeleton.mdl", "knife_skeleton" } },
 		{ GLOVE_STUDDED_BLOODHOUND,{ "models/weapons/v_models/arms/glove_bloodhound/v_glove_bloodhound.mdl" } },
 		{ GLOVE_T_SIDE,{ "models/weapons/v_models/arms/glove_fingerless/v_glove_fingerless.mdl" } },
 		{ GLOVE_CT_SIDE,{ "models/weapons/v_models/arms/glove_hardknuckle/v_glove_hardknuckle.mdl" } },
@@ -62,6 +66,10 @@ namespace skins
 		{ WEAPON_KNIFE_STILETTO, "Stiletto Knife" },
 		{ WEAPON_KNIFE_WIDOWMAKER, "Talon Knife" },
 		{ WEAPON_KNIFE_CSS, "Classic Knife" },
+		{ WEAPON_KNIFE_CORD, "Paracord Knife" },
+		{ WEAPON_KNIFE_CANIS, "Survival Knife" },
+		{ WEAPON_KNIFE_OUTDOOR, "Nomad Knife" },
+		{ WEAPON_KNIFE_SKELETON, "Skeleton Knife" }
 	};
 
 	std::vector<weapon_name_t> glove_names =
