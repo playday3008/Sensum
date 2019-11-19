@@ -308,6 +308,12 @@ namespace aimbot
 			return;
 		}
 
+		if (a_settings.recoil.humanize)
+		{
+			a_settings.recoil.yaw += utils::random(0.1f, 0.5f);
+			a_settings.recoil.pitch += utils::random(0.1f, 0.6f);
+		}
+
 		if (target) {
 			QAngle punch = g::local_player->m_aimPunchAngle();
 			angle.pitch -= punch.pitch * (a_settings.recoil.yaw / 50.f);	//was 50

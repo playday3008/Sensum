@@ -425,7 +425,6 @@ namespace visuals
 						g::render_view->SetColorModulation(settings::chams::colorPlantedC4Chams.r() / 255.f, settings::chams::colorPlantedC4Chams.g() / 255.f, settings::chams::colorPlantedC4Chams.b() / 255.f);
 						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
 						interfaces::mdl_render->ForcedMaterialOverride(mat);
-						//mat->IncrementReferenceCount();
 						entity->DrawModel(1, 255);
 					}
 					break;
@@ -449,7 +448,6 @@ namespace visuals
 						interfaces::render_view->SetColorModulation(settings::chams::colorNadeChams.r() / 255.f, settings::chams::colorNadeChams.g() / 255.f, settings::chams::colorNadeChams.b() / 255.f);
 						mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
 						interfaces::mdl_render->ForcedMaterialOverride(mat);
-						//mat->IncrementReferenceCount();
 						entity->DrawModel(1, 255);
 					}
 					break;

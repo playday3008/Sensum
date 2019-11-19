@@ -272,8 +272,9 @@ namespace render
 								color = ImVec4(0.0f, 1.0f, 0.0f, 1.f);
 							else if (!it.IsAlive)
 								color = ImVec4(1.0f, 0.f, 0.f, 1.f);
-							else if (!it.IsDormant)
+							else
 								color = ImVec4(0.0f, 1.0f, 0.0f, 1.f);
+							continue;
 						}
 
 						columns(6);
@@ -366,8 +367,9 @@ namespace render
 								color = ImVec4(0.0f, 1.0f, 0.0f, 1.f);
 							else if (!it.IsAlive)
 								color = ImVec4(1.0f, 0.f, 0.f, 1.f);
-							else if (!it.IsDormant)
+							else
 								color = ImVec4(0.0f, 1.0f, 0.0f, 1.f);
+							continue;
 						}
 
 						ImGui::PushStyleColor(ImGuiCol_Text, color);
