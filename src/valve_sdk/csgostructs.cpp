@@ -293,6 +293,8 @@ char* c_base_combat_weapon::GetGunIcon()
 		return "M";
 	case WEAPON_MP7:
 		return "N";
+	case WEAPON_MP5SD:
+		return "N";
 	case WEAPON_MP9:
 		return "O";
 	case WEAPON_P90:

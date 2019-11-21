@@ -312,6 +312,7 @@ namespace render
 							ImGui::Text("%1.f", it.distance);
 						}
 						columns(1);
+						ImGui::PopStyleColor(2);
 					}
 				}
 				pinfo.clear();
@@ -394,6 +395,7 @@ namespace render
 							ImGui::Text(" %d/3", globals::team_kill[it.id]);
 						}
 						columns(1);
+						ImGui::PopStyleColor(3);
 					}
 				}
 				pinfo.clear();
@@ -402,7 +404,6 @@ namespace render
 
 				ImGui::GetStyle().WindowMinSize = OldMinSize;
 			}
-
 			ImGui::PopFont();
 		}
 

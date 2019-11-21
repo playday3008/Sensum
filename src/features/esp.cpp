@@ -303,6 +303,8 @@ namespace esp
 			{
 				const auto weapon_size = ImGui::CalcTextSize(data.weapon.c_str());
 
+				const auto icon_size = ImGui::CalcTextSize(data.icon.c_str());
+
 				if (!render::fonts::weapon_icon)
 					return;
 				
@@ -320,7 +322,8 @@ namespace esp
 					break;
 				case 1:
 					ImGui::PushFont(render::fonts::weapon_icon);
-					imdraw::outlined_text(data.icon.c_str(), ImVec2(box.left + width / 2.f - 28 / 2.f, y_pos), white_color); //was 33
+					//imdraw::outlined_text(data.icon.c_str(), ImVec2(box.left + width / 2.f - 28 / 2.f, y_pos), white_color); //was 33
+					imdraw::outlined_text(data.icon.c_str(), ImVec2(box.left + width / 2.f - (icon_size.x + 24) / 2.f, y_pos), white_color); //was 28
 					ImGui::PopFont();
 					break;
 				}

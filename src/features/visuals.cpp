@@ -393,12 +393,16 @@ namespace visuals
 		cx = w / 2;
 		cy = h / 2;
 
+		auto weapon = g::local_player->m_hActiveWeapon();
 
-		if (g::local_player->m_bIsScoped() && g::local_player->m_hActiveWeapon()->IsSniper())
+		if (weapon)
 		{
-			globals::draw_list->AddLine(ImVec2(0, cy), ImVec2(w, cy), ImGui::GetColorU32(ImVec4{ 0.f, 0.f, 0.f, 1.0f }));
-			globals::draw_list->AddLine(ImVec2(cx, 0), ImVec2(cx, h), ImGui::GetColorU32(ImVec4{ 0.f, 0.f, 0.f, 1.0f }));
-			globals::draw_list->AddCircle(ImVec2(cx, cy), 255, ImGui::GetColorU32(ImVec4{0.f, 0.f, 0.f, 1.0f}), 255);
+			if (g::local_player->m_bIsScoped() && weapon->IsSniper())
+			{
+				globals::draw_list->AddLine(ImVec2(0, cy), ImVec2(w, cy), ImGui::GetColorU32(ImVec4{ 0.f, 0.f, 0.f, 1.0f }));
+				globals::draw_list->AddLine(ImVec2(cx, 0), ImVec2(cx, h), ImGui::GetColorU32(ImVec4{ 0.f, 0.f, 0.f, 1.0f }));
+				globals::draw_list->AddCircle(ImVec2(cx, cy), 255, ImGui::GetColorU32(ImVec4{ 0.f, 0.f, 0.f, 1.0f }), 255);
+			}
 		}
 	}
 
