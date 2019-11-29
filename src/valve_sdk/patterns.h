@@ -7,7 +7,7 @@
 #define MOVE_HELPER				 xorstr_("client.dll"), xorstr_("8B 0D ? ? ? ? 8B 45 ? 51 8B D4 89 02 8B 01")
 #define VIEW_RENDER				 xorstr_("client.dll"), xorstr_("A1 ? ? ? ? B9 ? ? ? ? C7 05 ? ? ? ? ? ? ? ? FF 10")
 #define D3D_DEVICE				 xorstr_("shaderapidx9.dll"), xorstr_("A1 ? ? ? ? 50 8B 08 FF 51 0C")
-#define CLIENT_STATE			 xorstr_("engine.dll"), xorstr_("A1 ? ? ? ? 8B 80 ? ? ? ? C3")
+#define CLIENT_STATE 			 xorstr_("engine.dll"), xorstr_("A1 ? ? ? ? 33 D2 6A 00 6A 00 33 C9 89 B0")
 #define LOCAL_PLAYER			 xorstr_("client.dll"), xorstr_("8B 0D ? ? ? ? 83 FF FF 74 07")
 #define CRENDER					 xorstr_("engine.dll"), xorstr_("56 57 0F 57 C0 C7 05 ? ? ? ? ? ? ? ? 51")
 #define CHUD					 xorstr_("client.dll"), xorstr_("B9 ? ? ? ? 68 ? ? ? ? E8 ? ? ? ? 89 46 24")
@@ -15,7 +15,7 @@
 #define GLOW_MANAGER			 xorstr_("client.dll"), xorstr_("0F 11 05 ? ? ? ? 83 C8 01")
 #define WEAPON_SYSTEM			 xorstr_("client.dll"), xorstr_("8B 35 ? ? ? ? FF 10 0F B7 C0")
 #define FIRE_BULLETS			 xorstr_("client.dll"), xorstr_("55 8B EC 51 53 56 8B F1 BB ? ? ? ? B8")
-#define GAME_RULES_PROXY		 xorstr_("client.dll"), xorstr_("A1 ? ? ? ? 8B 0D ? ? ? ? 6A 00 68 ? ? ? ? C6")
+#define GAME_RULES_PROXY 	     xorstr_("client.dll"), xorstr_("A1 ? ? ? ? 85 C0 0F 84 ? ? ? ? 80 B8 ? ? ? ? ? 74 7A")
 #define VIEW_RENDER_BEAMS		 xorstr_("client.dll"), xorstr_("B9 ? ? ? ? A1 ? ? ? ? FF 10 A1 ? ? ? ? B9")
 
 #define IS_LINE_GOES_THROUGH_SMOKE xorstr_("client.dll"), xorstr_("55 8B EC 83 EC 08 8B 15 ? ? ? ? 0F 57 C0")
