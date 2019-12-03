@@ -27,7 +27,7 @@ namespace hooks
 	vfunc_hook client_mode::hook;
 	vfunc_hook sound_hook::hook;
 	vfunc_hook vgui_panel::hook;
-	vfunc_hook mdlrender::hook;
+	//vfunc_hook mdlrender::hook;
 	vfunc_hook renderview::hook;
 	vfunc_hook events::hook;
 	//vfunc_hook SL::hook;
@@ -77,8 +77,8 @@ namespace hooks
 		vgui_panel::hook.setup(interfaces::vgui_panel, xorstr_("vgui2.dll"));
 		vgui_panel::hook.hook_index(vgui_panel::paint_traverse::index, vgui_panel::paint_traverse::hooked);
 
-		mdlrender::hook.setup(interfaces::g_studiorender);
-		mdlrender::hook.hook_index(mdlrender::draw_model_execute::index, mdlrender::draw_model_execute::hooked);
+		//mdlrender::hook.setup(interfaces::g_studiorender);
+		//mdlrender::hook.hook_index(mdlrender::draw_model_execute::index, mdlrender::draw_model_execute::hooked);
 
 		sound_hook::hook.setup(interfaces::engine_sound, xorstr_("engine.dll"));
 		sound_hook::hook.hook_index(sound_hook::emit_sound1::index, sound_hook::emit_sound1::hooked);
@@ -122,7 +122,7 @@ namespace hooks
 		client_mode::hook.unhook_all();
 		vgui_panel::hook.unhook_all();
 		sound_hook::hook.unhook_all();
-		mdlrender::hook.unhook_all();
+		//mdlrender::hook.unhook_all();
 		renderview::hook.unhook_all();
 		events::hook.unhook_all();
 		//SL::hook.unhook_all();
@@ -236,7 +236,7 @@ namespace hooks
 		}
 	}
 
-	void __fastcall mdlrender::draw_model_execute::hooked(void* pEcx, void* pEdx, void* pResults, DrawModelInfo_t* pInfo, matrix3x4_t* pBoneToWorld, float* flpFlexWeights, float* flpFlexDelayedWeights, Vector& vrModelOrigin, int32_t iFlags)
+	/*void __fastcall mdlrender::draw_model_execute::hooked(void* pEcx, void* pEdx, void* pResults, DrawModelInfo_t* pInfo, matrix3x4_t* pBoneToWorld, float* flpFlexWeights, float* flpFlexDelayedWeights, Vector& vrModelOrigin, int32_t iFlags)
 	{
 		static auto original = hook.get_original<DrawModelExecute>(index);
 
@@ -249,7 +249,7 @@ namespace hooks
 
 		//if (forced_mat)
 			//g::mdl_render->ForcedMaterialOverride(nullptr);
-	}
+	}*/
 
 	void __stdcall sound_hook::emit_sound1::hooked(IRecipientFilter& filter, int iEntIndex, int iChannel, const char* pSoundEntry, unsigned int nSoundEntryHash, const char* pSample, float flVolume, int nSeed, float flAttenuation, int iFlags, int iPitch, const Vector* pOrigin, const Vector* pDirection, void* pUtlVecOrigins, bool bUpdatePositions, float soundtime, int speakerentity, int unk)
 	{
