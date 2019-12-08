@@ -114,7 +114,7 @@ void Chams::OnSceneEnd()
 	g::mdl_render->ForcedMaterialOverride(nullptr);
 }
 
-void Chams::OnDrawModelExecute(void* pResults, DrawModelInfo_t* pInfo, matrix3x4_t* pBoneToWorld,
+/*void Chams::OnDrawModelExecute(void* pResults, DrawModelInfo_t* pInfo, matrix3x4_t* pBoneToWorld,
 	float* flpFlexWeights, float* flpFlexDelayedWeights, Vector& vrModelOrigin, int iFlags) {
 	static auto fnDME = hooks::mdlrender::hook.get_original<hooks::mdlrender::draw_model_execute::DrawModelExecute>(hooks::mdlrender::draw_model_execute::index);
 
@@ -154,7 +154,7 @@ void Chams::OnDrawModelExecute(void* pResults, DrawModelInfo_t* pInfo, matrix3x4
 			}
 		}
 	}
-}
+} */
 
 /*void Chams::DMEChams(void* pResults, DrawModelInfo_t* pInfo, matrix3x4_t* pBoneToWorld,
 	float* flpFlexWeights, float* flpFlexDelayedWeights, Vector& vrModelOrigin, int iFlags) {
