@@ -16,7 +16,7 @@ std::map<std::string, std::string> weaponNames =
 { "weapon_aug", "AUG" },
 { "weapon_famas", "FAMAS" },
 { "weapon_galilar", "Galil AR" },
-{ "weapon_m4a1", "M4A1" },
+{ "weapon_m4a1", "M4A4" },
 { "weapon_m4a1_silencer", "M4A1-S" },
 { "weapon_sg556", "SG 556" },
 
@@ -59,6 +59,7 @@ std::map<std::string, std::string> weaponNames =
 { "weapon_hegrenade", "HE" },
 { "weapon_flashbang", "Flashbang" },
 { "weapon_molotov", "Molotov" },
+{ "weapon_smokegrenade", "Smoke" },
 { "weapon_incendiary", "Incendiary" },
 { "weapon_decoy", "Decoy" },
 { "weapon_taser", "Zeus x27" },
@@ -243,7 +244,8 @@ class c_game_event_listener final : public IGameEventListener2
 
 			std::string buf2 = context->GetString("weapon");
 
-			WeaponCheck(buf2, enemy);
+			if(settings::esp::buylog)
+				WeaponCheck(buf2, enemy);
 		}
 		else if (name == FNV("round_start") && settings::misc::esp_random)
 		{

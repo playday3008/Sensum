@@ -144,6 +144,7 @@ namespace render
 				checkbox("Money ESP", &settings::esp::money);
 				checkbox("Choke ESP", &settings::visuals::choke);
 				checkbox("Sound ESP", &settings::esp::soundesp);
+				checkbox("Buy Log", &settings::esp::buylog);
 				//checkbox("Beams", u8"Ћучи света", &settings::esp::beams); //Doesnt work.
 				//checkbox("Sound Direction (?)", &settings::esp::sound); //Doesnt work.
 				//tooltip("Sound ESP", u8"ѕоказывает стрелками направление звука, откуда слышно игрока.");
@@ -246,6 +247,7 @@ namespace render
 				tooltip("Dropped Weapons Chams");
 				ImGui::SameLine();
 				checkbox("Nades", &settings::chams::nade_chams);
+				checkbox("Health Chams", &settings::chams::health_chams);
 
 				//separator("BT Chams - Mode");
 				//ImGui::Combo("BT Chams Mode", &settings::chams::bttype, bttype, IM_ARRAYSIZE(bttype));

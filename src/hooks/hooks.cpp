@@ -279,6 +279,7 @@ namespace hooks
 	void __fastcall renderview::scene_end::hooked(IVRenderView*& view)
 	{
 		static const auto original = hook.get_original<fn>(index);
+
 		Chams::Get().OnSceneEnd();
 		visuals::more_chams();
 

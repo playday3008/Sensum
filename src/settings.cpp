@@ -48,6 +48,7 @@ namespace settings
 		bool soundesp = false;
 		bool mat_force_apply = false;
 		bool is_desyncing = false;
+		bool buylog = false;
 
 		Color visibleColor = Color(0, 200, 80);
 		Color occludedColor = Color(0, 0, 0);
@@ -102,6 +103,7 @@ namespace settings
 		int enemymodenew = 0;
 		int teammodenew = 0;
 		int desyncChamsMode = 0;
+		bool health_chams = false;
 
 		Color btColorChams = Color(0, 255, 248, 147);
 		Color ColorWeaponDroppedChams = Color(0, 255, 125, 255);
@@ -274,8 +276,10 @@ namespace settings
 			Option::Load(root["esp_weapon_mode"], settings::esp::weapon_mode);
 			Option::Load(root["esp.player_info_box_alpha"], settings::visuals::player_info_box_alpha);
 			Option::Load(root["esp.grief_box_alpha"], settings::visuals::grief_box_alpha);
+			Option::Load(root["esp.buylog"], esp::buylog);
 			Option::Load(root["esp.visible_color"], esp::visibleColor, Color(0, 200, 80));
 			Option::Load(root["esp.occluded_color"], esp::occludedColor, Color::Black);
+			Option::Load(root["esp.is_desyncing"], esp::is_desyncing);
 
 			Option::Load(root["visuals.world_grenades"], visuals::world_grenades, true);
 			Option::Load(root["visuals.sniper_crosshair"], visuals::sniper_crosshair, true);
@@ -297,6 +301,7 @@ namespace settings
 			Option::Load(root["chams.enemy_mode"], chams::enemymodenew);
 			Option::Load(root["chams.team_mode"], chams::teammodenew);
 			Option::Load(root["chams.local_mode"], chams::localmodenew);
+			Option::Load(root["chams.health"], chams::health_chams);
 			Option::Load(root["chams.enemy_color_vis"], chams::EnemyColor_vis, Color::Black);
 			Option::Load(root["chams.team_color_vis"], chams::TeamColor_vis, Color::Black);
 			Option::Load(root["chams.local_color_vis"], chams::LocalColor_vis, Color::Black);
@@ -381,6 +386,7 @@ namespace settings
 			Option::Load(root["misc.viewmodel_offset_z"], settings::misc::viewmodel_offset_z);
 			Option::Load(root["misc.edge_jump"], settings::misc::edge_jump);
 			Option::Load(root["misc.edge_jump_duck_in_air"], settings::misc::edge_jump_duck_in_air);
+			Option::Load(root["misc.anti_obs"], misc::anti_obs);
 
 			Option::Load(root["glow.enemy"], glow::glowEnemyEnabled);
 			Option::Load(root["glow.team"], glow::glowTeamEnabled);
@@ -531,6 +537,8 @@ namespace settings
 			config["esp_weapon_mode"] = settings::esp::weapon_mode;
 			config["esp.player_info_box_alpha"] = settings::visuals::player_info_box_alpha;
 			config["esp.grief_box_alpha"] = settings::visuals::grief_box_alpha;
+			config["esp.is_desyncing"] = esp::is_desyncing;
+			config["esp.buylog"] = esp::buylog;
 
 			Option::Save(config["esp.visible_color"], esp::visibleColor);
 			Option::Save(config["esp.occluded_color"], esp::occludedColor);
@@ -563,6 +571,7 @@ namespace settings
 			config["chams.arms.enabled"] = chams::arms::enabled;
 			config["chams.arms.wireframe"] = chams::arms::wireframe;
 			config["chams.legitaa_material_mode"] = chams::desyncChamsMode;
+			config["chams.health"] = chams::health_chams;
 
 			Option::Save(config["chams.backtrack_color"], chams::btColorChams);
 			Option::Save(config["chams.enemy_color_vis"], chams::EnemyColor_vis);
@@ -635,6 +644,7 @@ namespace settings
 			config["misc.viewmodel_offset_z"] = settings::misc::viewmodel_offset_z;
 			config["misc.edge_jump"] = settings::misc::edge_jump;
 			config["misc.edge_jump_duck_in_air"] = settings::misc::edge_jump_duck_in_air;
+			config["misc.anti_obs"] = misc::anti_obs;
 
 			Option::Save(config["misc_spread_crosshair_color"], settings::visuals::spread_cross_color);
 			Option::Save(config["mics.rcs_cross_color"], visuals::recoilcolor);

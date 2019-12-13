@@ -271,7 +271,7 @@ namespace hooks
 
 					broke_lby = false;
 					*send_packet = false;
-					cmd->viewangles.yaw += 120.0f * -side; //was 120.f and side
+					cmd->viewangles.yaw += 120.0f * side; //was 120.f and side
 				}
 				else {
 					broke_lby = true;

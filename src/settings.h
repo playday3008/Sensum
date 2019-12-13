@@ -177,6 +177,7 @@ namespace settings
 		extern bool soundesp;
 		extern bool mat_force_apply;
 		extern bool is_desyncing;
+		extern bool buylog;
 
 		extern Color visibleColor;
 		extern Color occludedColor;
@@ -227,6 +228,7 @@ namespace settings
 		extern int teammodenew;
 		extern int enemymodenew;
 		extern int desyncChamsMode;
+		extern bool health_chams;
 
 		extern Color btColorChams;
 		extern Color ColorWeaponDroppedChams;

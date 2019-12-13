@@ -98,6 +98,20 @@ void Chams::OnSceneEnd()
 			break;
 		}
 
+		int health = entity->m_iHealth();
+		
+		if (settings::chams::health_chams)
+		{
+			if (health == 100 || health >= 81)
+				clr2 = Color(5, 255, 0, 255);
+			else if (health == 80 || health >= 61)
+				clr2 = Color::Yellow;
+			else if (health == 60 || health >= 21)
+				clr2 = Color(255, 127, 0, 255); //Orange
+			else if (health <= 20)
+				clr2 = Color::Red;
+		}
+
 		MaterialManager::Get().OverrideMaterial(xqz || metallic_xqz || flat_xqz, flat, wireframe, glass, metallic);
 		g::render_view->SetColorModulation(clr2.r() / 255.f, clr2.g() / 255.f, clr2.b() / 255.f);
 		entity->GetClientRenderable()->DrawModel(0x1, 255);
