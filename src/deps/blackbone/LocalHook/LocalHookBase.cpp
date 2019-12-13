@@ -120,5 +120,4 @@ namespace blackbone
 		}
 		return EXCEPTION_CONTINUE_SEARCH;
 	}
-
 }

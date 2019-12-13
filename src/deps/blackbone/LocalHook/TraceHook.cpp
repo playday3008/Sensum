@@ -9,7 +9,6 @@
 #define NDI Edi
 #define NSP Esp
 
-
 #define HIGHEST_BIT_SET     (1LL << (sizeof(void*) * 8 - 1))
 #define HIGHEST_BIT_UNSET  ~HIGHEST_BIT_SET
 #define SingleStep          0x100
@@ -18,7 +17,6 @@
 
 namespace blackbone
 {
-
 	TraceHook::TraceHook()
 	{
 	}

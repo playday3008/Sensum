@@ -4,7 +4,6 @@
 #include "valve_sdk/csgostructs.hpp"
 #include "settings.h"
 
-
 class c_sound_info {
 public:
 	c_sound_info(Vector positions, float times, int userids) {

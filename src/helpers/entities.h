@@ -52,7 +52,6 @@ namespace entities
 		std::string icon;
 		std::string kevlar_icon;
 
-
 		bool is_shooting = false;
 		Vector shot_origin;
 
@@ -66,6 +65,7 @@ namespace entities
 		bool has_kevlar;
 		bool is_c4_carrier;
 		bool has_defkit;
+		bool is_desyncing;
 
 		c_base_combat_weapon* weapData;
 

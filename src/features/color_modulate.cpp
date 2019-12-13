@@ -40,8 +40,6 @@ namespace color_modulation
 	const uint32_t static_prop_textures = FNV("StaticProp textures");
 	const uint32_t particle_textures = FNV("Particle textures");
 
-
-
 	uint8_t* sky_fn_offset = nullptr;
 
 	void event()
@@ -260,7 +258,6 @@ namespace color_modulation
 			viewmodel_offset_y->SetValue(backup_viewmodel_y);
 			viewmodel_offset_z->SetValue(backup_viewmodel_z);
 		}
-
 	}
 
 	void SetMatForce()
@@ -284,7 +281,6 @@ namespace color_modulation
 			auto observer = (c_base_player*)c_base_player::GetEntityFromHandle(interfaces::local_player->m_hObserverTarget());
 			if (observer && observer->IsPlayer())
 				is_scoped = observer->m_bIsScoped();
-
 		}
 
 		static auto weapon_debug_spread_show = interfaces::cvar->find(xorstr_("weapon_debug_spread_show"));
@@ -334,7 +330,6 @@ namespace color_modulation
 		static auto sv_skyname_backup = g::cvar->find("sv_skyname")->GetString();
 		static auto sv_skyname = interfaces::cvar->find(xorstr_("sv_skyname"));
 
-
 		for (auto i = interfaces::mat_system->FirstMaterial(); i != interfaces::mat_system->InvalidMaterial(); i = interfaces::mat_system->NextMaterial(i))
 		{
 			auto* material = interfaces::mat_system->GetMaterial(i);
@@ -369,20 +364,20 @@ namespace color_modulation
 			if (_group == static_prop_textures) //Static props, aka Ticket box on A Mirage or boxes.
 			{
 				material->ColorModulate(0.5f, 0.5f, 0.5f); //was 0.5
-			} 
+			}
 
 			if (!night_mode_first)
 				if (settings::visuals::night_mode) night_mode_first = true; //Thanks, Credits to Klavaro - MartiNJ409
 				else continue;
 
-				sv_skyname->SetValue(settings::visuals::night_mode ? "sky_csgo_night02" : sv_skyname_backup);
+			sv_skyname->SetValue(settings::visuals::night_mode ? "sky_csgo_night02" : sv_skyname_backup);
 
 			if (!settings::visuals::night_mode)
 			{
 				static auto mat_force_tonemap_scale = interfaces::cvar->find(xorstr_("mat_force_tonemap_scale"));
 
 				mat_force_tonemap_scale->SetValue(1.0f);
-				
+
 				if (_group == static_prop_textures) //Static props, aka Ticket box on A Mirage or boxes.
 				{
 					material->ColorModulate(1.f, 1.f, 1.f); //was 0.5

@@ -31,7 +31,6 @@ public:
 	float m_OneOverThetaDotMinusPhiDot; //0x004C
 	__int32 m_Flags;                    //0x0050
 	float m_RangeSquared;               //0x0054
-
 }; //Size=0x0058
 
 class lightpos_t {
@@ -39,7 +38,6 @@ public:
 	Vector delta;  //0x0000
 	float falloff; //0x000C
 	float dot;     //0x0010
-
 }; //Size=0x0014
 
 struct MaterialLightingState_t {

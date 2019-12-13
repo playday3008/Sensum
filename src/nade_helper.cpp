@@ -1,7 +1,7 @@
 #include "nade_helper.h"
 
 nadedata cs[] =
-{		//name			//desciption   //wpn   //posx  //posy  //posz //angx  //angy //angz 
+{		//name			//desciption   //wpn   //posx  //posy  //posz //angx  //angy //angz
 	{"Connector Smoke", "Jump Throw", "Smoke", 1135.f, 647.f, -197.f, -29.f, -142.f, 0.f},
 	{"Jungle Smoke", "Normal", "Smoke", 815.f, -1416.f, -44.f, -27.f, 172.f, 0.f}
 };

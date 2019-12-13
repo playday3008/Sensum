@@ -52,7 +52,6 @@
 
 namespace li {
 	namespace detail {
-
 		template<class First, class Second>
 		struct pair {
 			First  first;
@@ -60,7 +59,6 @@ namespace li {
 		};
 
 		namespace win {
-
 			struct LIST_ENTRY_T {
 				const char* Flink;
 				const char* Blink;
@@ -235,7 +233,6 @@ namespace li {
 				IMAGE_OPTIONAL_HEADER32 OptionalHeader;
 #endif
 			};
-
 		} // namespace win
 
 		// hashing stuff
@@ -275,7 +272,7 @@ namespace li {
 		}
 
 		LAZY_IMPORTER_FORCEINLINE hash_t::value_type hash(
-			const win::UNICODE_STRING_T & str) noexcept
+			const win::UNICODE_STRING_T& str) noexcept
 		{
 			auto       first = str.Buffer;
 			const auto last = first + (str.Length / sizeof(wchar_t));
@@ -304,9 +301,8 @@ namespace li {
 			return module_and_function;
 		}
 
-
 		// some helper functions
-		LAZY_IMPORTER_FORCEINLINE const win::PEB_T * peb() noexcept
+		LAZY_IMPORTER_FORCEINLINE const win::PEB_T* peb() noexcept
 		{
 #if defined(_WIN64)
 			return reinterpret_cast<const win::PEB_T*>(__readgsqword(0x60));
@@ -387,7 +383,7 @@ namespace li {
 				const auto* const rva_table =
 					reinterpret_cast<const unsigned long*>(_base + _ied->AddressOfFunctions);
 
-				const auto * const ord_table = reinterpret_cast<const unsigned short*>(
+				const auto* const ord_table = reinterpret_cast<const unsigned short*>(
 					_base + _ied->AddressOfNameOrdinals);
 
 				return _base + rva_table[ord_table[index]];
@@ -649,7 +645,6 @@ namespace li {
 				return in_safe_cached<F>(ldr_data_entry()->load_order_next()->DllBase);
 			}
 		};
-
 	}
 } // namespace li::detail
 

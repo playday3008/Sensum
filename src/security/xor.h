@@ -52,9 +52,7 @@
 #endif
 
 namespace jm {
-
 	namespace detail {
-
 		template<std::size_t S>
 		struct unsigned_;
 
@@ -142,7 +140,6 @@ namespace jm {
 				<< ((i % (8 / value_size)) * 8 * value_size));
 			}
 		};
-
 	} // namespace detail
 
 	template<class T, class... Keys>
@@ -168,8 +165,8 @@ namespace jm {
 			(_crypt_256_single(keys + Idxs * 4, _storage + Idxs * 4), ...);
 		}
 
-		XORSTR_FORCEINLINE void _crypt_128_single(const std::uint64_t * keys,
-			std::uint64_t * storage) noexcept
+		XORSTR_FORCEINLINE void _crypt_128_single(const std::uint64_t* keys,
+			std::uint64_t* storage) noexcept
 		{
 			_mm_store_si128(
 				reinterpret_cast<__m128i*>(storage),
@@ -178,7 +175,7 @@ namespace jm {
 		}
 
 		template<std::size_t... Idxs>
-		XORSTR_FORCEINLINE void _crypt_128(const std::uint64_t * keys,
+		XORSTR_FORCEINLINE void _crypt_128(const std::uint64_t* keys,
 			std::index_sequence<Idxs...>) noexcept
 		{
 			(_crypt_128_single(keys + Idxs * 2, _storage + Idxs * 2), ...);
@@ -245,7 +242,6 @@ namespace jm {
 		return xor_string<detail::tstring_<str_lambda()[StringIndices]...>,
 			detail::_ki<KeyIndices, detail::key8<KeyIndices>()>...>{};
 	}
-
 } // namespace jm
 
 #endif // include guard

@@ -66,10 +66,10 @@ struct BeamInfo_t
 	Vector m_vecEnd;
 
 	int m_nModelIndex;
-	const char *m_pszModelName;
+	const char* m_pszModelName;
 
 	int m_nHaloIndex;
-	const char *m_pszHaloName;
+	const char* m_pszHaloName;
 	float m_flHaloScale;
 
 	float m_flLife;
@@ -125,30 +125,30 @@ public:
 	// Updates the state of the temp ent beams
 	virtual void UpdateTempEntBeams() = 0;
 
-	virtual void DrawBeam(C_Beam* pbeam, ITraceFilter *pEntityBeamTraceFilter = NULL) = 0;
-	virtual void DrawBeam(Beam_t *pbeam) = 0;
+	virtual void DrawBeam(C_Beam* pbeam, ITraceFilter* pEntityBeamTraceFilter = NULL) = 0;
+	virtual void DrawBeam(Beam_t* pbeam) = 0;
 
-	virtual void KillDeadBeams(c_base_entity *pEnt) = 0;
+	virtual void KillDeadBeams(c_base_entity* pEnt) = 0;
 
 	// New interfaces!
-	virtual Beam_t *CreateBeamEnts(BeamInfo_t &beamInfo) = 0;
-	virtual Beam_t *CreateBeamEntPoint(BeamInfo_t &beamInfo) = 0;
-	virtual Beam_t *CreateBeamPoints(BeamInfo_t &beamInfo) = 0;
-	virtual Beam_t *CreateBeamRing(BeamInfo_t &beamInfo) = 0;
-	virtual Beam_t *CreateBeamRingPoint(BeamInfo_t &beamInfo) = 0;
-	virtual Beam_t *CreateBeamCirclePoints(BeamInfo_t &beamInfo) = 0;
+	virtual Beam_t* CreateBeamEnts(BeamInfo_t& beamInfo) = 0;
+	virtual Beam_t* CreateBeamEntPoint(BeamInfo_t& beamInfo) = 0;
+	virtual Beam_t* CreateBeamPoints(BeamInfo_t& beamInfo) = 0;
+	virtual Beam_t* CreateBeamRing(BeamInfo_t& beamInfo) = 0;
+	virtual Beam_t* CreateBeamRingPoint(BeamInfo_t& beamInfo) = 0;
+	virtual Beam_t* CreateBeamCirclePoints(BeamInfo_t& beamInfo) = 0;
 
-	virtual Beam_t *CreateBeamFollow(BeamInfo_t &beamInfo) = 0;
+	virtual Beam_t* CreateBeamFollow(BeamInfo_t& beamInfo) = 0;
 
-	virtual void FreeBeam(Beam_t *pBeam) = 0;
-	virtual void UpdateBeamInfo(Beam_t *pBeam, BeamInfo_t &beamInfo) = 0;
+	virtual void FreeBeam(Beam_t* pBeam) = 0;
+	virtual void UpdateBeamInfo(Beam_t* pBeam, BeamInfo_t& beamInfo) = 0;
 
 	// These will go away!
 	virtual void CreateBeamEnts(int startEnt, int endEnt, int modelIndex, int haloIndex, float haloScale,
 		float life, float width, float m_nEndWidth, float m_nFadeLength, float amplitude,
 		float brightness, float speed, int startFrame,
 		float framerate, float r, float g, float b, int type = -1) = 0;
-	virtual void CreateBeamEntPoint(int nStartEntity, const Vector *pStart, int nEndEntity, const Vector* pEnd,
+	virtual void CreateBeamEntPoint(int nStartEntity, const Vector* pStart, int nEndEntity, const Vector* pEnd,
 		int modelIndex, int haloIndex, float haloScale,
 		float life, float width, float m_nEndWidth, float m_nFadeLength, float amplitude,
 		float brightness, float speed, int startFrame,

@@ -34,4 +34,3 @@ public:
 };
 
 extern runtime_saver saver;
-

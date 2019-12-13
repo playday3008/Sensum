@@ -26,7 +26,7 @@ namespace detail
 		}
 
 	private:
-		void*         _base;
+		void* _base;
 		size_t        _length;
 		std::uint32_t _old;
 	};
@@ -122,7 +122,7 @@ public:
 		try {
 			if (old_vftbl != nullptr) {
 				auto guard = detail::protect_guard{ class_base, sizeof(std::uintptr_t), PAGE_READWRITE };
-				*(std::uintptr_t**)class_base = old_vftbl;
+				*(std::uintptr_t * *)class_base = old_vftbl;
 				old_vftbl = nullptr;
 			}
 		}
@@ -139,7 +139,7 @@ public:
 private:
 	static inline std::size_t estimate_vftbl_length(std::uintptr_t* vftbl_start);
 
-	void*           class_base;
+	void* class_base;
 	std::size_t     vftbl_len;
 	std::uintptr_t* old_vftbl;
 	std::uintptr_t* new_vftbl;

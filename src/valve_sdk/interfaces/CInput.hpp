@@ -22,15 +22,14 @@ public:
 
 CUserCmd* CInput::GetUserCmd(int sequence_number)
 {
-	return &(*(CUserCmd**)((DWORD)this + 0xF4))[sequence_number % MULTIPLAYER_BACKUP];
+	return &(*(CUserCmd * *)((DWORD)this + 0xF4))[sequence_number % MULTIPLAYER_BACKUP];
 
 	//return &m_pCommands[sequence_number % MULTIPLAYER_BACKUP];
 }
 
 CVerifiedUserCmd* CInput::GetVerifiedCmd(int sequence_number)
 {
-	return &(*(CVerifiedUserCmd**)((DWORD)this + 0xF8))[sequence_number % MULTIPLAYER_BACKUP];
+	return &(*(CVerifiedUserCmd * *)((DWORD)this + 0xF8))[sequence_number % MULTIPLAYER_BACKUP];
 
 	//return &m_pVerifiedCommands[sequence_number % MULTIPLAYER_BACKUP];
 }
-

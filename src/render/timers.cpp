@@ -79,7 +79,6 @@ namespace render
 
 				const auto bomb_color = m_local.bomb_time > 0.f ? ImVec4(0.88f, 0.82f, 0.45f, 1.f) : ImVec4(1.f, 1.f, 1.f, 1.f);
 
-
 				text_pos = ImVec2(start_pos.x + 240.f - 2.f - txt_size.x - 25.f - 30.f - ping_text_size.x - 4.f - txt_size.x, !is_top ? end_pos.y - 2.f - txt_size.y : end_pos.y + 2.f);
 				imdraw::outlined_text(bomb_time, text_pos, ImGui::GetColorU32(bomb_color));
 
@@ -126,8 +125,6 @@ namespace render
 				txt_size = ImGui::CalcTextSize(hp);
 
 				//const auto bomb_color = m_local.bomb_time > 0.f ? ImVec4(0.88f, 0.82f, 0.45f, 1.f) : ImVec4(1.f, 1.f, 1.f, 1.f);
-
-
 
 				if (g::local_player->IsAlive() && m_local.damage <= g::local_player->m_iHealth()) {
 					text_pos = ImVec2(start_pos.x + 240.f - 2.f - txt_size.x, !is_top ? end_pos.y - 2.f - txt_size.y : end_pos.y + 2.f);
@@ -188,7 +185,6 @@ namespace render
 
 				if (player->IsEnemy() && player->IsPlayer() && !(player->GetPlayerInfo().ishltv))
 				{
-
 					pinfo.push_back({
 						player->m_iTeamNum() == team::team_ct,
 						info.szName,
@@ -223,7 +219,6 @@ namespace render
 
 				if (ImGui::Begin("Player Info Box", &settings::visuals::player_info_box, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar))
 				{
-
 					columns(6);
 					{
 						ImGui::SetColumnWidth(-1, 40.f);
@@ -258,7 +253,6 @@ namespace render
 
 					for (const auto it : pinfo)
 					{
-
 						ImVec4 color;
 
 						for (int i = 1; i < interfaces::engine_client->GetMaxClients(); ++i)
@@ -331,7 +325,6 @@ namespace render
 
 				if (ImGui::Begin("Grief Box", &settings::visuals::grief_box, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar))
 				{
-
 					columns(3);
 					{
 						ImGui::SetColumnWidth(-1, 40.f);
@@ -351,7 +344,6 @@ namespace render
 
 					for (const auto it : ginfo)
 					{
-
 						ImVec4 color;
 
 						for (int i = 1; i < interfaces::engine_client->GetMaxClients(); ++i)

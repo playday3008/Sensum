@@ -12,7 +12,7 @@ namespace features
 	void auto_strafe(CUserCmd* cmd);
 	void thirdperson();
 	void human_bhop(CUserCmd* cmd);
-	void SelfNade(CUserCmd *cmd);
+	void SelfNade(CUserCmd* cmd);
 	void fastStop(CUserCmd* cmd);
 	void edgeJumpPre(CUserCmd* cmd) noexcept;
 	void edgeJumpPost(CUserCmd* cmd) noexcept;
@@ -60,9 +60,9 @@ namespace esp
 	void render(ImDrawList* draw_list);
 }
 
-namespace aimbot 
+namespace aimbot
 {
-	void handle(CUserCmd *pCmd);
+	void handle(CUserCmd* pCmd);
 	void OnMove(CUserCmd* pCmd);
 	float get_fov();
 	float GetFov();
@@ -123,7 +123,7 @@ namespace grenade_prediction
 }
 
 namespace offscreen_entities
-{ 
+{
 	extern ImU32 sound_color;
 	extern ImU32 origin_color;
 

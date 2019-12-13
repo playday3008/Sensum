@@ -55,6 +55,29 @@ namespace entities
 		}
 	}
 
+	bool IsDesyncing(c_base_player* player)
+	{
+		auto hdr = g::mdl_info->GetStudiomodel(player->GetModel());
+		if (!hdr)
+			return false;
+
+		for (int k = 0; k < 13; k++)
+		{
+			auto overlay = player->GetAnimOverlay(k);
+			if (!overlay)
+				return false;
+
+			const auto activity = player->GetSequenceActivity(hdr, overlay->m_nSequence);
+			if (activity == 979)
+				return true;
+		}
+
+		if (player->GetPlayerInfo().fakeplayer)
+			return false;
+
+		return false;
+	}
+
 	RECT GetBBox(c_base_entity* ent, Vector* pointsTransformed)
 	{
 		auto collideable = ent->GetCollideable();
@@ -151,10 +174,7 @@ namespace entities
 		m_local.damage = damage;
 		hp_reimaing -= damage;
 
-
-
 		return hp_reimaing;
-
 	}
 
 	float get_bomb_time(c_planted_c4* bomb, const int& tick_base)
@@ -185,7 +205,6 @@ namespace entities
 
 		if (defuse_time > -1 && bomb->m_hBombDefuser())
 			return defuse_time - curtime(tick_base);
-
 
 		return 0;
 	}
@@ -371,6 +390,7 @@ namespace entities
 			player_data.has_kevlar = player->m_ArmorValue() > 0;
 			player_data.is_c4_carrier = player->HasC4();
 			player_data.has_defkit = player->m_bHasDefuser();
+			player_data.is_desyncing = IsDesyncing(player);
 
 			auto weapData = player->m_hActiveWeapon();
 

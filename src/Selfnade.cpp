@@ -20,7 +20,6 @@ void features::SelfNade(CUserCmd* cmd)
 
 	const auto grenade = (c_base_combat_weapon*)weapon;
 
-
 	if (grenade->m_flThrowStrength() >= 0.11f || grenade->m_flThrowStrength() <= 0.10f
 		|| cmd->viewangles.yaw > -88.0f)
 		return;

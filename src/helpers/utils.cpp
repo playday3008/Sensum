@@ -58,7 +58,7 @@ namespace utils
 			return false;
 
 		if (type->GetInt() == 1 && mode->GetInt() == 2) //deathmatch
-			return false; 
+			return false;
 
 		if (type->GetInt() == 0 && mode->GetInt() == 1) //competetive
 			return true;

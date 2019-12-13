@@ -42,3 +42,4 @@
 #define IS_GAME_STARTED			xorstr_("materialsystem.dll"), xorstr_("80 B9 ? ? ? ? ? 74 0F")
 #define LOBBIES_COLLECTION		xorstr_("client.dll"), xorstr_("8B 35 ? ? ? ? 66 3B D0 74 07")
 #define GET_SEQUENCE_ACTIVITY	xorstr_("client.dll"), xorstr_("55 8B EC 53 8B 5D 08 56 8B F1 83")
+

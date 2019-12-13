@@ -4,10 +4,8 @@
 #include "globals.h"
 #include "helpers/input.h"
 
-
 namespace features
 {
-
 	void blockBot(CUserCmd* cmd) //WIP blockbot, not fully working.
 	{
 		if (!settings::misc::block_bot)
@@ -58,5 +56,4 @@ namespace features
 		else if (angles.yaw > 0.0f)
 			cmd->sidemove = -450.f;
 	}
-
 }

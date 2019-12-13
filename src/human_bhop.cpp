@@ -2,7 +2,6 @@
 #include "settings.h"
 
 void features::human_bhop(CUserCmd* cmd) {
-
 	static int hops_restricted = 0;
 	static int hops_hit = 0;
 

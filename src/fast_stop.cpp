@@ -3,7 +3,6 @@
 #include "helpers/math.h"
 #include "settings.h"
 
-
 namespace features
 {
 	void fastStop(CUserCmd* cmd)

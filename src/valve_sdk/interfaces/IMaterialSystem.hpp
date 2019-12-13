@@ -31,7 +31,7 @@
 #define TEXTURE_GROUP_VERTEX_SHADERS				      "Vertex Shaders"
 #define TEXTURE_GROUP_RENDER_TARGET_SURFACE			  "RenderTarget Surfaces"
 #define TEXTURE_GROUP_MORPH_TARGETS					      "Morph Targets"
-#define TEXTURE_GROUP_STATIC_PROPS						"StaticProp textures"	
+#define TEXTURE_GROUP_STATIC_PROPS						"StaticProp textures"
 
 struct IDirect3DTexture9;
 
@@ -89,12 +89,12 @@ class IMaterialSystem : public IAppSystem
 public:
 	IMaterial* CreateMaterial(const char* pMaterialName, KeyValues* pVMTKeyValues)
 	{
-		return CallVFunction<IMaterial*(__thiscall*)(PVOID, const char*, KeyValues*)>(this, 83)(this, pMaterialName, pVMTKeyValues);
+		return CallVFunction<IMaterial * (__thiscall*)(PVOID, const char*, KeyValues*)>(this, 83)(this, pMaterialName, pVMTKeyValues);
 	}
 
 	IMaterial* FindMaterial(const char* pMaterialName, const char* pTextureGroupName, bool complain = true, const char* pComplainPrefix = 0)
 	{
-		return CallVFunction<IMaterial*(__thiscall*)(PVOID, const char*, const char*, bool, const char*)>(this, 84)(this, pMaterialName, pTextureGroupName, complain, pComplainPrefix);
+		return CallVFunction<IMaterial * (__thiscall*)(PVOID, const char*, const char*, bool, const char*)>(this, 84)(this, pMaterialName, pTextureGroupName, complain, pComplainPrefix);
 	}
 
 	MaterialHandle_t FirstMaterial()
@@ -114,7 +114,7 @@ public:
 
 	IMaterial* GetMaterial(MaterialHandle_t h)
 	{
-		return CallVFunction<IMaterial*(__thiscall*)(PVOID, MaterialHandle_t)>(this, 89)(this, h);
+		return CallVFunction<IMaterial * (__thiscall*)(PVOID, MaterialHandle_t)>(this, 89)(this, h);
 	}
 
 	int	GetNumMaterials()
@@ -139,19 +139,16 @@ public:
 
 	ITexture* CreateNamedRenderTargetTextureEx(int back_buffer, const char* name)
 	{
-		return CallVFunction<ITexture*(__thiscall*)(PVOID, const char*, int, int, int, int, int, int, int)>(this, 97)(this, name, 1, 1, 4, back_buffer, 0x0, 0x00000004 | 0x00000008, 1);
+		return CallVFunction<ITexture * (__thiscall*)(PVOID, const char*, int, int, int, int, int, int, int)>(this, 97)(this, name, 1, 1, 4, back_buffer, 0x0, 0x00000004 | 0x00000008, 1);
 	}
 
 	IMatRenderContext* GetRenderContext()
 	{
-		return CallVFunction<IMatRenderContext*(__thiscall*)(PVOID)>(this, 115)(this);
+		return CallVFunction<IMatRenderContext * (__thiscall*)(PVOID)>(this, 115)(this);
 	}
 
 	bool& m_bGameStarted(uint32_t offset)
 	{
 		return *(bool*)((uintptr_t)this + offset);
 	}
-
-
-
 };

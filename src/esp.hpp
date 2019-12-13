@@ -2,24 +2,20 @@
 
 #include "singleton.hpp"
 #include "iostream"
-#include "valve_sdk/interfaces/ISurface.h" 
+#include "valve_sdk/interfaces/ISurface.h"
 #include "valve_sdk/misc/Color.hpp"
 #include "helpers/imdraw.h"
 
 struct dmg_indicator
 {
-		int iDamage;
-		bool bInitialized;
-		float flEraseTime;
-		float flLastUpdate;
-		c_base_player* Player;
-		Vector Position;
+	int iDamage;
+	bool bInitialized;
+	float flEraseTime;
+	float flLastUpdate;
+	c_base_player* Player;
+	Vector Position;
 };
 inline std::vector<dmg_indicator> indicator;
-
-
-
-
 
 class VGSHelper : public Singleton<VGSHelper>
 {

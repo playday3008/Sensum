@@ -120,7 +120,7 @@ namespace render
 					};
 
 					ImGui::Combo("##lag_type", &settings::fake_lags::type, lag_types, IM_ARRAYSIZE(lag_types));
-					ImGui::SliderIntLeftAligned(___("Factor:", u8"Фактор:"), &settings::fake_lags::factor, 1, 14, ___("%.0f ticks", u8"%.0f тиков"));
+					ImGui::SliderIntLeftAligned(___("Factor:", u8"Фактор:"), &settings::fake_lags::factor, 1, 6, settings::fake_lags::factor == 1 ? "%.0f tick" : "%.0f ticks");
 				}
 				ImGui::PopID();
 
@@ -198,12 +198,11 @@ namespace render
 					ImGui::SliderFloatLeftAligned("Offset Z:", &settings::misc::viewmodel_offset_z, -30.f, 30.f, "%.0f");
 					break;
 				}
-				
+
 				/*if (ImGui::Button("Apply", ImVec2(ImGui::GetContentRegionAvailWidth(), 0.f)))
 				  {
 						color_modulation::SkyChanger();
 				  } */
-
 			});
 
 			ImGui::NextColumn();
@@ -213,7 +212,6 @@ namespace render
 				//checkbox("Russian", u8"Русский язык", &globals::russian_language);
 				//checkbox("Disable Animations (?)", u8"Отключить анимации (?)", &globals::no_animations);
 				//tooltip("Disables the cheat menu animations.", u8"Отключает анимации меню чита.");
-
 
 				const char* fastStopModes[] = {
 					"Off",
@@ -266,8 +264,7 @@ namespace render
 					ImGui::PopItemWidth();
 				}
 				columns(1);
-				//checkbox("Block Bot", &settings::misc::block_bot); //WIP blockbot, not fully working 
-
+				//checkbox("Block Bot", &settings::misc::block_bot); //WIP blockbot, not fully working
 			});
 
 			ImGui::NextColumn();
@@ -281,7 +278,6 @@ namespace render
 				bind_button("Lightning Shot", "Lightning Shot", globals::binds::lightning_shot);
 				bind_button("Edge Jump", "Edge Jump", globals::binds::edge_jump);
 				//bind_button("Block Bot", "Block Bot", globals::binds::block_bot);
-
 
 				if (settings::misc::human_bhop)
 				{

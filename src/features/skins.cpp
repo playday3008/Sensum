@@ -5,7 +5,6 @@
 #include "../helpers/http.h"
 #include "../helpers/console.h"
 
-
 namespace skins
 {
 	std::map<int, item_setting> m_items = { };

@@ -99,7 +99,6 @@ MaterialManager::MaterialManager()
 }
 )#";
 
-
 	materialRegular = g::mat_system->FindMaterial("sensum_regular", TEXTURE_GROUP_MODEL);
 	materialRegularIgnoreZ = g::mat_system->FindMaterial("sensum_ignorez", TEXTURE_GROUP_MODEL);
 	materialFlatIgnoreZ = g::mat_system->FindMaterial("sensum_flat_ignorez", TEXTURE_GROUP_MODEL);
@@ -216,7 +215,6 @@ void MaterialManager::OverrideMaterial(bool ignoreZ, bool flat, bool wireframe, 
 			material = materialRegular;
 		}
 	}
-
 
 	if (glass)
 	{

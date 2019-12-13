@@ -103,7 +103,7 @@ bool vfunc_hook::setup(void* base, const char* moduleName)
 	if (vftbl_len == 0)
 		return false;
 
-	if (moduleName)// If provided a module name then we will find a place in that module				
+	if (moduleName)// If provided a module name then we will find a place in that module
 	{
 		new_vftbl = search_free_data_page(moduleName, vftbl_len + sizeof(std::uintptr_t));
 		std::memset(new_vftbl, NULL, vftbl_len + sizeof(std::uintptr_t));
@@ -137,7 +137,6 @@ bool vfunc_hook::setup(void* base, const char* moduleName)
 			return false;
 		}
 	}
-
 
 	return true;
 }

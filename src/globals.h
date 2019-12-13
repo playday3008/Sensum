@@ -5,7 +5,7 @@
 #include <string>
 #include "options.hpp"
 
-namespace globals 
+namespace globals
 {
 	extern bool chat_translation;
 	extern bool post_processing;
@@ -52,7 +52,7 @@ namespace globals
 			extern bool enabled;
 			extern int key;
 		}
-		
+
 		extern int fake_duck;
 		extern int desync;
 		extern int back_shot;

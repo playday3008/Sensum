@@ -14,7 +14,6 @@
 #include "..//helpers/input.h"
 #include "..//soundesp.h"
 
-
 using namespace blackbone;
 
 static CCSGOPlayerAnimState g_AnimState;
@@ -232,7 +231,6 @@ namespace hooks
 
 			if (g::local_player && GetAsyncKeyState(VK_TAB))
 				utils::RankRevealAll();
-
 		}
 	}
 
@@ -261,7 +259,6 @@ namespace hooks
 			HWND window = FindWindow(NULL, L"Counter-Strike: Global Offensive");
 
 			if (fnAccept) {
-
 				fnAccept("");
 
 				//This will flash the CSGO window on the taskbar
@@ -292,7 +289,6 @@ namespace hooks
 
 		if (!g::engine_client->IsInGame() || !g::engine_client->IsConnected())
 			return;
-
 	}
 
 	int __stdcall client_mode::post_screen_effects::hooked(int value)
@@ -301,7 +297,7 @@ namespace hooks
 
 		visuals::glow();
 
-		if(settings::glow::glowOverride)
+		if (settings::glow::glowOverride)
 			visuals::glow_override();
 
 		return original(interfaces::client_mode, value);

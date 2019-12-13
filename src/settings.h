@@ -40,9 +40,9 @@ enum fov_type_t : int
 };
 
 #pragma pack(push, 1)
-struct weapon_setting 
+struct weapon_setting
 {
-	bool enabled = false;	
+	bool enabled = false;
 	bool autopistol = false;
 	bool check_smoke = false;
 	bool check_flash = false;
@@ -57,7 +57,7 @@ struct weapon_setting
 
 	int rcs_type = 0;
 
-	struct 
+	struct
 	{
 		bool enabled = false;
 		bool bt2 = false;
@@ -129,7 +129,7 @@ enum fake_lag_types : int
 	lag_adaptive,
 };
 
-namespace settings 
+namespace settings
 {
 	void load(std::string name);
 	void save(std::string name);
@@ -139,7 +139,7 @@ namespace settings
 		extern bool engine_prediction;
 	}
 
-	namespace esp 
+	namespace esp
 	{
 		extern bool enabled;
 		extern bool visible_only;
@@ -176,7 +176,8 @@ namespace settings
 		extern bool antiobs;
 		extern bool soundesp;
 		extern bool mat_force_apply;
-		
+		extern bool is_desyncing;
+
 		extern Color visibleColor;
 		extern Color occludedColor;
 
@@ -185,7 +186,6 @@ namespace settings
 
 	namespace glow
 	{
-
 		extern bool glowEnemyEnabled;
 		extern bool glowTeamEnabled;
 		extern bool glowC4PlantedEnabled;
@@ -247,6 +247,7 @@ namespace settings
 		extern Color ChamsDecoyXQZ;
 		extern Color ChamsSmokeXQZ;
 		extern Color ChamsC4Dropped;
+		extern Color desync_color;
 
 		extern int matmode;
 
@@ -259,7 +260,7 @@ namespace settings
 		}
 	}
 
-	namespace visuals 
+	namespace visuals
 	{
 		extern bool grenade_prediction;
 		extern bool player_info_box;
@@ -306,7 +307,7 @@ namespace settings
 		extern bool enabled2;
 	}
 
-	namespace aimbot 
+	namespace aimbot
 	{
 		extern int setting_type;
 
@@ -328,7 +329,7 @@ namespace settings
 		extern bool check_zoom;
 	}
 
-	namespace misc 
+	namespace misc
 	{
 		extern bool bhop;
 		extern bool auto_strafe;
@@ -369,4 +370,3 @@ namespace settings
 		extern float viewmodel_offset_z;
 	}
 }
-

@@ -45,7 +45,6 @@ void setup_hotkeys(LPVOID base)
 		render::switch_hwnd();
 	});
 
-
 	if (is_unhookable)
 	{
 		bool is_active = true;
@@ -54,7 +53,7 @@ void setup_hotkeys(LPVOID base)
 			if (render::menu::is_visible())
 				//render::switch_hwnd();
 
-			hooks::destroy();
+				hooks::destroy();
 
 			is_active = false;
 		});

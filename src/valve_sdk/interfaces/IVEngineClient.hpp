@@ -11,33 +11,33 @@ class KeyValues;
 
 typedef struct player_info_s
 {
-    __int64         unknown;            //0x0000 
-    union
-    {
-      __int64       steamID64;          //0x0008 - SteamID64
-      struct
-      {
-        __int32     xuid_low;
-        __int32     xuid_high;
-      };
-    };
-    char            szName[128];        //0x0010 - Player Name
-    int             userId;             //0x0090 - Unique Server Identifier
-    char            szSteamID[20];      //0x0094 - STEAM_X:Y:Z
-    char            pad_0x00A8[0x10];   //0x00A8
-    unsigned long   iSteamID;           //0x00B8 - SteamID 
-    char            szFriendsName[128];
-    bool            fakeplayer;
-    bool            ishltv;
-    unsigned int    customfiles[4];
-    unsigned char   filesdownloaded;
+	__int64         unknown;            //0x0000
+	union
+	{
+		__int64       steamID64;          //0x0008 - SteamID64
+		struct
+		{
+			__int32     xuid_low;
+			__int32     xuid_high;
+		};
+	};
+	char            szName[128];        //0x0010 - Player Name
+	int             userId;             //0x0090 - Unique Server Identifier
+	char            szSteamID[20];      //0x0094 - STEAM_X:Y:Z
+	char            pad_0x00A8[0x10];   //0x00A8
+	unsigned long   iSteamID;           //0x00B8 - SteamID
+	char            szFriendsName[128];
+	bool            fakeplayer;
+	bool            ishltv;
+	unsigned int    customfiles[4];
+	unsigned char   filesdownloaded;
 } player_info_t;
 
 class INetChannelInfo
 {
 public:
-	virtual const char  *GetName(void) const = 0;	// get channel name
-	virtual const char  *GetAddress(void) const = 0; // get channel IP address as string
+	virtual const char* GetName(void) const = 0;	// get channel name
+	virtual const char* GetAddress(void) const = 0; // get channel IP address as string
 	virtual float		GetTime(void) const = 0;	// current net time
 	virtual float		GetTimeConnected(void) const = 0;	// get connection time in seconds
 	virtual int			GetBufferSize(void) const = 0;	// netchannel packet history size
@@ -56,11 +56,11 @@ public:
 	virtual bool		IsValidPacket(int flow, int frame_number) const = 0; // true if packet was not lost/dropped/chocked/flushed
 	virtual float		GetPacketTime(int flow, int frame_number) const = 0; // time when packet was send
 	virtual int			GetPacketBytes(int flow, int frame_number, int group) const = 0; // group size of this packet
-	virtual bool		GetStreamProgress(int flow, int *received, int *total) const = 0;  // TCP progress if transmitting
+	virtual bool		GetStreamProgress(int flow, int* received, int* total) const = 0;  // TCP progress if transmitting
 	virtual float		GetTimeSinceLastReceived(void) const = 0;	// get time since last recieved packet in seconds
 	virtual	float		GetCommandInterpolationAmount(int flow, int frame_number) const = 0;
-	virtual void		GetPacketResponseLatency(int flow, int frame_number, int *pnLatencyMsecs, int *pnChoke) const = 0;
-	virtual void		GetRemoteFramerate(float *pflFrameTime, float *pflFrameTimeStdDeviation) const = 0;
+	virtual void		GetPacketResponseLatency(int flow, int frame_number, int* pnLatencyMsecs, int* pnChoke) const = 0;
+	virtual void		GetRemoteFramerate(float* pflFrameTime, float* pflFrameTimeStdDeviation) const = 0;
 	virtual float		GetTimeoutSeconds() const = 0;
 };
 
@@ -72,9 +72,9 @@ public:
 		return CallVFunction<void(__thiscall*)(void*, int&, int&)>(this, 5)(this, width, height);
 	}
 
-	void ClientCmd(const char *szCmdString)
+	void ClientCmd(const char* szCmdString)
 	{
-		return CallVFunction<void(__thiscall*)(void*, const char *)>(this, 7)(this, szCmdString);
+		return CallVFunction<void(__thiscall*)(void*, const char*)>(this, 7)(this, szCmdString);
 	}
 
 	player_info_t GetPlayerInfo(int ent_num)
@@ -109,7 +109,7 @@ public:
 	{
 		CallVFunction<void(__thiscall*)(void*, QAngle&)>(this, 19)(this, va);
 	}
-	
+
 	int GetMaxClients()
 	{
 		return CallVFunction<int(__thiscall*)(void*)>(this, 20)(this);
@@ -127,32 +127,32 @@ public:
 
 	const VMatrix& WorldToScreenMatrix()
 	{
-		return CallVFunction<const VMatrix&(__thiscall*)(void*)>(this, 37)(this);
+		return CallVFunction<const VMatrix & (__thiscall*)(void*)>(this, 37)(this);
 	}
 
 	const VMatrix& WorldToViewMatrix()
 	{
-		return CallVFunction<const VMatrix&(__thiscall*)(void*)>(this, 38)(this);
+		return CallVFunction<const VMatrix & (__thiscall*)(void*)>(this, 38)(this);
 	}
 
 	char const* GetLevelName()
 	{
-		return CallVFunction<char const*(__thiscall*)(void*)>(this, 52)(this);
+		return CallVFunction<char const* (__thiscall*)(void*)>(this, 52)(this);
 	}
 
 	char const* GetLevelNameShort()
 	{
-		return CallVFunction<char const*(__thiscall*)(void*)>(this, 53)(this);
+		return CallVFunction<char const* (__thiscall*)(void*)>(this, 53)(this);
 	}
 
 	char const* GetMapGroupName()
 	{
-		return CallVFunction<char const*(__thiscall*)(void*)>(this, 54)(this);
+		return CallVFunction<char const* (__thiscall*)(void*)>(this, 54)(this);
 	}
 
 	INetChannelInfo* GetNetChannelInfo()
 	{
-		return CallVFunction<INetChannelInfo*(__thiscall*)(void*)>(this, 78)(this);
+		return CallVFunction<INetChannelInfo * (__thiscall*)(void*)>(this, 78)(this);
 	}
 
 	bool IsTakingScreenshot()
@@ -162,12 +162,12 @@ public:
 
 	const char* GetProductVersionString()
 	{
-		return CallVFunction<const char*(__thiscall*)(void*)>(this, 105)(this);
+		return CallVFunction<const char* (__thiscall*)(void*)>(this, 105)(this);
 	}
 
 	void ClientCmd_Unrestricted(const char* command, const bool delayed = false)
 	{
-		return CallVFunction<void(__thiscall *)(void*, const char*, bool)>(this, 114)(this, command, delayed);
+		return CallVFunction<void(__thiscall*)(void*, const char*, bool)>(this, 114)(this, command, delayed);
 	}
 
 	bool IsVoiceRecording()

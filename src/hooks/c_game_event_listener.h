@@ -72,7 +72,7 @@ std::string allcolors[] =
 void WeaponCheck(std::string weapon, c_base_player* player)
 {
 	std::string wepName;
-	
+
 	auto it = weaponNames.find(weapon);
 	if (it != weaponNames.end())
 		wepName = it->second;
@@ -92,7 +92,7 @@ void WeaponCheck(std::string weapon, c_base_player* player)
 
 class c_game_event_listener final : public IGameEventListener2
 {
-	const char* hitgroups[10] = 
+	const char* hitgroups[10] =
 	{
 		"generic", "head", "chest", "stomach", "arm", "arm", "leg", "leg", "gear"
 	};
@@ -120,7 +120,6 @@ class c_game_event_listener final : public IGameEventListener2
 
 			if (attacker->m_iTeamNum() == target->m_iTeamNum())
 				globals::team_kill[context->GetInt("attacker")] += globals::teamkills + 1;
-
 		}
 		else if (name == FNV("player_hurt"))
 		{
@@ -139,27 +138,27 @@ class c_game_event_listener final : public IGameEventListener2
 			if (attacker == interfaces::local_player && target != interfaces::local_player)
 			{
 				char buf[256];
-				sprintf_s(buf, "%s -%d (%d hp left)",target->GetPlayerInfo().szName, context->GetInt("dmg_health"), context->GetInt("health"));
+				sprintf_s(buf, "%s -%d (%d hp left)", target->GetPlayerInfo().szName, context->GetInt("dmg_health"), context->GetInt("health"));
 
 				notifies::push(buf, notify_state_s::debug_state);
 
-					/*if (!game_mode)
-						game_mode = interfaces::cvar->find("game_mode");
+				/*if (!game_mode)
+					game_mode = interfaces::cvar->find("game_mode");
 
-					if (!game_type)
-						game_type = interfaces::cvar->find("game_type");
+				if (!game_type)
+					game_type = interfaces::cvar->find("game_type");
 
-					if (game_type->GetInt() == 0 && game_mode->GetInt() == 0) //casual
-						return;
+				if (game_type->GetInt() == 0 && game_mode->GetInt() == 0) //casual
+					return;
 
-					if (game_type->GetInt() == 1 && game_mode->GetInt() == 1) //demolition
-						return;
+				if (game_type->GetInt() == 1 && game_mode->GetInt() == 1) //demolition
+					return;
 
-					if (game_type->GetInt() == 1 && game_mode->GetInt() == 0) //arms race
-						return;
+				if (game_type->GetInt() == 1 && game_mode->GetInt() == 0) //arms race
+					return;
 
-					if (game_type->GetInt() == 1 && game_mode->GetInt() == 2) //deathmatch
-						return;  */
+				if (game_type->GetInt() == 1 && game_mode->GetInt() == 2) //deathmatch
+					return;  */
 			}
 
 			if (settings::misc::damage_indicator)
@@ -178,7 +177,6 @@ class c_game_event_listener final : public IGameEventListener2
 
 			if (settings::visuals::hitmarker)
 			{
-
 				int _attacker = context->GetInt("attacker");
 				if (g::engine_client->GetPlayerForUserID(_attacker) == g::engine_client->GetLocalPlayer())
 				{
@@ -275,7 +273,7 @@ class c_game_event_listener final : public IGameEventListener2
 
 				/* CHAMS MODES: */
 
-				if (settings::chams::enemymodenew == 0) //Normal 
+				if (settings::chams::enemymodenew == 0) //Normal
 					settings::chams::enemymodenew = 5; //XQZ
 
 				if (settings::chams::enemymodenew == 1) //Flat
@@ -289,7 +287,6 @@ class c_game_event_listener final : public IGameEventListener2
 
 				if (settings::chams::enemymodenew == 4) //Metallic
 					settings::chams::enemymodenew = 6; //Metallic XQZ
-
 			}
 			else if (chance < settings::esp::esp_chance)
 			{
@@ -311,7 +308,6 @@ class c_game_event_listener final : public IGameEventListener2
 
 				if (settings::chams::enemymodenew == 6) //Metallic XQZ
 					settings::chams::enemymodenew = 4; //Metallic
-
 			}
 		}
 		else if (name == FNV("cs_pre_restart") || name == FNV("switch_team") || name == FNV("announce_phase_end") || name == FNV("round_freeze_end"))

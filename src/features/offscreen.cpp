@@ -54,10 +54,6 @@ namespace offscreen_entities
 				continue;
 
 			//dot(interfaces::local_player->m_vecOrigin(), *sndList[i].m_pOrigin, sound_color);
-
-			
-
-
 		}
 	}
 
@@ -86,6 +82,5 @@ namespace offscreen_entities
 			sound_color = ImGui::GetColorU32(ImVec4(1.f, 1.f, 1.f, alpha / 255.f));
 			sound();
 		}
-
 	}
 }

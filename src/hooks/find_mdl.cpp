@@ -31,7 +31,7 @@ namespace hooks
 		"models/props_foliage/urban_palm01_medium.mdl",
 
 		"models/props_vehicles/bus01_2.mdl", //bus on ct
-		"models/props/de_piranesi/pi_apc.mdl", //tank on ct 
+		"models/props/de_piranesi/pi_apc.mdl", //tank on ct
 
 		"models/props/de_mirage/large_door_b.mdl",
 		"models/props/de_mirage/large_door_c.mdl",
@@ -64,7 +64,6 @@ namespace hooks
 	{
 		if (strstr(FilePath, "arms"))
 			return hook.CallOriginal(std::forward<IMDLCache*>(thisptr), (const char*)"models/player/custom_player/kuristaja/nanosuit/nanosuit_arms.mdl");
-
 
 		return hook.CallOriginal(std::forward<IMDLCache*>(thisptr), (const char*)FilePath);
 	}

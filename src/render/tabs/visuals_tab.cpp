@@ -31,7 +31,7 @@ namespace render
 				checkbox("Visible Only", u8"Проверка видимости", &settings::esp::visible_only);
 
 				checkbox("Name", u8"Имя", &settings::esp::names);
-				
+
 				columns(2);
 				{
 					checkbox("Weapon", u8"Оружие", &settings::esp::weapons);
@@ -138,6 +138,7 @@ namespace render
 				checkbox("Is Scoped", &settings::esp::is_scoped);
 				checkbox("Is Flashed", &settings::esp::is_flashed);
 				checkbox("Is Defusing", &settings::esp::is_defusing);
+				checkbox("Is Desyncing", &settings::esp::is_desyncing);
 				checkbox("Snap Lines", &settings::esp::snaplines);
 				checkbox("Ammo ESP", &settings::esp::ammo);
 				checkbox("Money ESP", &settings::esp::money);
@@ -275,7 +276,6 @@ namespace render
 					checkbox("Weapons (?)", &settings::glow::glowDroppedWeaponsEnabled);
 					tooltip("Dropped Weapons Glow");
 				});
-
 			});
 
 			ImGui::NextColumn();

@@ -18,6 +18,14 @@ int c_base_entity::GetSequenceActivity(const int& sequence)
 	return get_sequence_activity(this, hdr, sequence);
 }
 
+int c_base_entity::GetSequenceActivity(studiohdr_t* hdr, const int& sequence)
+{
+	static const auto offset = utils::pattern_scan(GET_SEQUENCE_ACTIVITY);
+	static auto get_sequence_activity = reinterpret_cast<int(__fastcall*)(void*, studiohdr_t*, int)>(offset);
+
+	return get_sequence_activity(this, hdr, sequence);
+}
+
 int filterException(int code, PEXCEPTION_POINTERS ex)
 {
 	return EXCEPTION_EXECUTE_HANDLER;
@@ -149,11 +157,23 @@ CCSPlayerAnimState* c_base_player::GetPlayerAnimState()
 	return *reinterpret_cast<CCSPlayerAnimState * *>(DWORD(this) + 0x3900);
 }
 
+CAnimationLayer* c_base_player::GetAnimOverlays()
+{
+	return *(CAnimationLayer * *)(DWORD(this) + 0x2980);
+}
+
+CAnimationLayer* c_base_player::GetAnimOverlay(int i)
+{
+	if (i < 15)
+		return &GetAnimOverlays()[i];
+
+	return nullptr;
+}
+
 QAngle* c_base_player::GetVAngles2() {
 	static auto deadflag = netvar_manager::get().get_offset(fnv::hash_runtime("CBasePlayer->deadflag"));
 	return (QAngle*)((uintptr_t)this + deadflag + 0x4);
 }
-
 
 CCSGOPlayerAnimState* c_base_player::GetPlayerAnimState2()
 {
@@ -240,7 +260,6 @@ char* c_base_combat_weapon::GetGunIcon()
 {
 	if (!this)
 		return " ";
-
 
 	switch (this->m_iItemDefinitionIndex())
 	{
@@ -434,7 +453,6 @@ bool c_base_combat_weapon::HasScope()
 	auto index = m_iItemDefinitionIndex();
 
 	return index == WEAPON_AWP || index == WEAPON_SSG08 || index == WEAPON_SCAR20 || index == WEAPON_G3SG1 || index == WEAPON_AUG || index == WEAPON_SG556;
-
 }
 
 bool c_base_combat_weapon::IsReloading()
@@ -571,7 +589,6 @@ int c_base_combat_weapon::GetMaxAmmo()
 		return 1;
 		break;
 	}
-
 }
 
 CUserCmd*& c_base_player::m_pCurrentCommand()

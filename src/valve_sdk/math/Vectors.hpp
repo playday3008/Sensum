@@ -142,7 +142,7 @@ public:
 		return res;
 	}
 
-	float DistTo(const Vector &vOther) const
+	float DistTo(const Vector& vOther) const
 	{
 		Vector delta;
 
@@ -152,7 +152,7 @@ public:
 
 		return delta.Length();
 	}
-	float DistToSqr(const Vector &vOther) const
+	float DistToSqr(const Vector& vOther) const
 	{
 		Vector delta;
 
@@ -164,22 +164,22 @@ public:
 	}
 	float Dot(const Vector& vOther) const
 	{
-		return (x*vOther.x + y * vOther.y + z * vOther.z);
+		return (x * vOther.x + y * vOther.y + z * vOther.z);
 	}
 	float Length() const
 	{
-		return sqrt(x*x + y * y + z * z);
+		return sqrt(x * x + y * y + z * z);
 	}
 	float LengthSqr(void) const
 	{
-		return (x*x + y * y + z * z);
+		return (x * x + y * y + z * z);
 	}
 	float Length2D() const
 	{
-		return sqrt(x*x + y * y);
+		return sqrt(x * x + y * y);
 	}
 
-	Vector& operator=(const Vector &vOther)
+	Vector& operator=(const Vector& vOther)
 	{
 		x = vOther.x; y = vOther.y; z = vOther.z;
 		return *this;
@@ -224,9 +224,9 @@ public:
 
 	void CrossProduct(const Vector& a, const Vector& b, Vector& result)
 	{
-		result.x = a.y*b.z - a.z*b.y;
-		result.y = a.z*b.x - a.x*b.z;
-		result.z = a.x*b.y - a.y*b.x;
+		result.x = a.y * b.z - a.z * b.y;
+		result.y = a.z * b.x - a.x * b.z;
+		result.z = a.x * b.y - a.y * b.x;
 	}
 
 	Vector Cross(const Vector& vOther)
@@ -258,18 +258,18 @@ public:
 	}
 
 public:
-	explicit VectorAligned(const Vector &vOther)
+	explicit VectorAligned(const Vector& vOther)
 	{
 		Init(vOther.x, vOther.y, vOther.z);
 	}
 
-	VectorAligned& operator=(const Vector &vOther)
+	VectorAligned& operator=(const Vector& vOther)
 	{
 		Init(vOther.x, vOther.y, vOther.z);
 		return *this;
 	}
 
-	VectorAligned& operator=(const VectorAligned &vOther)
+	VectorAligned& operator=(const VectorAligned& vOther)
 	{
 		Init(vOther.x, vOther.y, vOther.z);
 		return *this;
@@ -277,7 +277,6 @@ public:
 
 	float w;
 };
-
 
 typedef float vec_t;
 // 2D Vector
@@ -292,7 +291,7 @@ public:
 	Vector2D(vec_t X, vec_t Y);
 	Vector2D(vec_t* clr);
 
-	Vector2D(const Vector2D &vOther)
+	Vector2D(const Vector2D& vOther)
 	{
 		x = vOther.x; y = vOther.y;
 	}
@@ -386,7 +385,7 @@ public:
 	// Get the vector's magnitude squared.
 	vec_t LengthSqr(void) const
 	{
-		return (x*x + y * y);
+		return (x * x + y * y);
 	}
 
 	// return true if this vector is (0,0,0) within tolerance
@@ -402,15 +401,15 @@ public:
 	bool IsLengthLessThan(float val) const;
 
 	// check if a vector is within the box defined by two other vectors
-	bool WithinAABox(Vector2D const &boxmin, Vector2D const &boxmax);
+	bool WithinAABox(Vector2D const& boxmin, Vector2D const& boxmax);
 
 	// Get the distance from this vector to the other one.
-	vec_t DistTo(const Vector2D &vOther) const;
+	vec_t DistTo(const Vector2D& vOther) const;
 
 	// Get the distance from this vector to the other one squared.
-	// NJS: note, VC wasn't inlining it correctly in several deeply nested inlines due to being an 'out of line' .  
+	// NJS: note, VC wasn't inlining it correctly in several deeply nested inlines due to being an 'out of line' .
 	// may be able to tidy this up after switching to VC7
-	vec_t DistToSqr(const Vector2D &vOther) const
+	vec_t DistToSqr(const Vector2D& vOther) const
 	{
 		Vector2D delta;
 
@@ -432,7 +431,7 @@ public:
 	vec_t Dot(const Vector2D& vOther) const;
 
 	// assignment
-	Vector2D& operator=(const Vector2D &vOther);
+	Vector2D& operator=(const Vector2D& vOther);
 
 	// 2d
 	vec_t Length2D(void) const;
@@ -455,11 +454,11 @@ public:
 	Vector2D operator/(float fl) const;
 
 	// Cross product between two vectors.
-	Vector2D Cross(const Vector2D &vOther) const;
+	Vector2D Cross(const Vector2D& vOther) const;
 
 	// Returns a vector with the min or max in X, Y, and Z.
-	Vector2D Min(const Vector2D &vOther) const;
-	Vector2D Max(const Vector2D &vOther) const;
+	Vector2D Min(const Vector2D& vOther) const;
+	Vector2D Max(const Vector2D& vOther) const;
 };
 
 typedef float vec_t;
@@ -576,7 +575,7 @@ public:
 	// Get the vector's magnitude squared.
 	vec_t LengthSqr(void) const
 	{
-		return (x*x + y * y + z * z);
+		return (x * x + y * y + z * z);
 	}
 
 	// return true if this vector is (0,0,0) within tolerance
@@ -594,15 +593,15 @@ public:
 	bool IsLengthLessThan(float val) const;
 
 	// check if a vector is within the box defined by two other vectors
-	bool WithinAABox(Vector4D const &boxmin, Vector4D const &boxmax);
+	bool WithinAABox(Vector4D const& boxmin, Vector4D const& boxmax);
 
 	// Get the distance from this vector to the other one.
-	vec_t DistTo(const Vector4D &vOther) const;
+	vec_t DistTo(const Vector4D& vOther) const;
 
 	// Get the distance from this vector to the other one squared.
-	// NJS: note, VC wasn't inlining it correctly in several deeply nested inlines due to being an 'out of line' .  
+	// NJS: note, VC wasn't inlining it correctly in several deeply nested inlines due to being an 'out of line' .
 	// may be able to tidy this up after switching to VC7
-	vec_t DistToSqr(const Vector4D &vOther) const
+	vec_t DistToSqr(const Vector4D& vOther) const
 	{
 		Vector4D delta;
 
@@ -626,7 +625,7 @@ public:
 	vec_t Dot(const Vector4D& vOther) const;
 
 	// assignment
-	Vector4D& operator=(const Vector4D &vOther);
+	Vector4D& operator=(const Vector4D& vOther);
 
 	// 2d
 	vec_t Length2D(void) const;
@@ -649,6 +648,6 @@ public:
 	Vector4D operator/(float fl) const;
 
 	// Returns a vector with the min or max in X, Y, and Z.
-	Vector4D Min(const Vector4D &vOther) const;
-	Vector4D Max(const Vector4D &vOther) const;
+	Vector4D Min(const Vector4D& vOther) const;
+	Vector4D Max(const Vector4D& vOther) const;
 };

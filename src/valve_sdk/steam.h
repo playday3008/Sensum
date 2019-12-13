@@ -15,10 +15,9 @@ enum EGCResults
 class ISteamGameCoordinator
 {
 public:
-	virtual EGCResults GCSendMessage(int unMsgType, const void *pubData, int cubData) = 0;
-	virtual bool IsMessageAvailable(int *pcubMsgSize) = 0;
-	virtual EGCResults RetrieveMessage(int *punMsgType, void *pubDest, int cubDest, int *pcubMsgSize) = 0;
-
+	virtual EGCResults GCSendMessage(int unMsgType, const void* pubData, int cubData) = 0;
+	virtual bool IsMessageAvailable(int* pcubMsgSize) = 0;
+	virtual EGCResults RetrieveMessage(int* punMsgType, void* pubDest, int cubDest, int* pcubMsgSize) = 0;
 };
 
 class CSteamID
@@ -97,27 +96,27 @@ class ISteamFriends;
 class ISteamClient
 {
 public:
-	ISteamUser *GetISteamUser(HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion)
+	ISteamUser* GetISteamUser(HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char* pchVersion)
 	{
-		typedef ISteamUser*(__stdcall* func)(HSteamUser, HSteamPipe, const char *);
+		typedef ISteamUser* (__stdcall * func)(HSteamUser, HSteamPipe, const char*);
 		return CallVFunction<func>(this, 5)(hSteamUser, hSteamPipe, pchVersion);
 	}
 
-	ISteamFriends *GetISteamFriends(HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion)
+	ISteamFriends* GetISteamFriends(HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char* pchVersion)
 	{
-		typedef ISteamFriends*(__stdcall* func)(HSteamUser, HSteamPipe, const char *);
+		typedef ISteamFriends* (__stdcall * func)(HSteamUser, HSteamPipe, const char*);
 		return CallVFunction<func>(this, 8)(hSteamUser, hSteamPipe, pchVersion);
 	}
 
-	ISteamGameCoordinator* GetISteamGenericInterface(HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion)
+	ISteamGameCoordinator* GetISteamGenericInterface(HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char* pchVersion)
 	{
-		typedef ISteamGameCoordinator*(__stdcall* func)(HSteamUser, HSteamPipe, const char *);
+		typedef ISteamGameCoordinator* (__stdcall * func)(HSteamUser, HSteamPipe, const char*);
 		return CallVFunction<func>(this, 12)(hSteamUser, hSteamPipe, pchVersion);
 	}
 
-	ISteamHTTP* GetISteamHTTP(HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion)
+	ISteamHTTP* GetISteamHTTP(HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char* pchVersion)
 	{
-		typedef ISteamHTTP*(__stdcall* func)(HSteamUser, HSteamPipe, const char *);
+		typedef ISteamHTTP* (__stdcall * func)(HSteamUser, HSteamPipe, const char*);
 		return CallVFunction<func>(this, 23)(hSteamUser, hSteamPipe, pchVersion);
 	}
 };

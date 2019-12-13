@@ -330,7 +330,6 @@ namespace aimbot
 			angle.yaw -= NewPunch.yaw * (a_settings.recoil.pitch / 50.f);
 		}
 		angle.NormalizeClamp();
-
 	}
 
 	void OnMove(CUserCmd* pCmd)
@@ -696,7 +695,7 @@ namespace aimbot
 		correct_nexttime = TICKS_TO_TIME(tick_count + 1) + network_delay;
 	}
 	//--------------------------------------------------------------------------------
-	
+
 	void handle(CUserCmd* cmd)
 	{
 		if (!interfaces::local_player || !interfaces::local_player->IsAlive())
@@ -707,8 +706,6 @@ namespace aimbot
 			reset_vars();
 			return;
 		}
-
-
 
 		auto active = g::local_player->m_hActiveWeapon();
 		auto aa_settings = settings::aimbot::m_items[active->m_iItemDefinitionIndex()];

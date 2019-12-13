@@ -131,7 +131,7 @@ public:
 		static auto fn = reinterpret_cast<DWORD(__thiscall*)(void*, const char*)>(ptr);
 
 		return (T*)fn(this, name);
-	} 
+	}
 };
 
 class CCSGO_HudChat : public CHud
@@ -143,7 +143,7 @@ public:
 private:
 	char pad_0x0050[0x8]; //0x0050
 public:
-	bool m_isOpen; //0x0058 
+	bool m_isOpen; //0x0058
 private:
 	char pad_0x0059[0x427]; //0x0059
 };
@@ -193,7 +193,6 @@ public:
 	Vector m_vecOrigin; //0x0014
 	QAngle m_absAngles; //0x0020
 };
-
 
 class CModelRenderSystem;
 class c_cs_game_rules_proxy;
@@ -338,5 +337,4 @@ struct SndInfo_t
 
 #include "misc/EHandle.hpp"
 
-namespace g  = interfaces; //You dont need now to type interfaces:: , "g::" is shorter,cause why not //MJ409 
-
+namespace g = interfaces; //You dont need now to type interfaces:: , "g::" is shorter,cause why not //MJ409

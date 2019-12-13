@@ -44,13 +44,10 @@ namespace engine_prediction
 		void* m_MoveData = *(void**)((DWORD)interfaces::game_movement + 0x8);
 		memset(m_MoveData, 0, sizeof(m_MoveData));
 
-
-
 		interfaces::move_helper->SetHost(interfaces::local_player);
 		interfaces::prediction->SetupMove(interfaces::local_player, cmd, interfaces::move_helper, m_MoveData);
 		interfaces::game_movement->ProcessMovement(interfaces::local_player, m_MoveData);
 		interfaces::prediction->FinishMove(interfaces::local_player, cmd, m_MoveData);
-
 
 		//interfaces::local_player->m_fFlags() = m_fFlags;
 		//interfaces::local_player->m_nMoveType() = m_nMoveType;

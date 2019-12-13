@@ -146,7 +146,6 @@ namespace visuals
 		if (!g::engine_client->IsInGame() || !g::engine_client->IsConnected())
 			return;
 
-
 		if (!g::local_player && !g::local_player->IsAlive())
 			return;
 
@@ -162,7 +161,7 @@ namespace visuals
 
 			if (!indicator[i].bInitialized)
 			{
-				indicator[i].Position = indicator[i].Player->get_bone_position(8); //HITBOX_HEAD is returning some hitbox in belly,wtf??? 
+				indicator[i].Position = indicator[i].Player->get_bone_position(8); //HITBOX_HEAD is returning some hitbox in belly,wtf???
 				indicator[i].bInitialized = true;
 			}
 
@@ -191,10 +190,9 @@ namespace visuals
 			}
 		}
 	}
-	
+
 	void RenderPunchCross()
 	{
-
 		int w, h;
 
 		g::engine_client->GetScreenSize(w, h);
@@ -226,12 +224,10 @@ namespace visuals
 			globals::draw_list->AddCircle(ImVec2(x, y), radius, ImGui::GetColorU32(settings::visuals::recoilcolor), 255);
 			break;
 		}
-
 	}
 
 	void KnifeLeft()
 	{
-
 		static auto left_knife = g::cvar->find("cl_righthand");
 
 		if (!g::local_player || !g::local_player->IsAlive())
@@ -274,12 +270,10 @@ namespace visuals
 		bool dynamic_fov = settings.dynamic_fov;
 
 		if (settings.enabled) {
-
 			float fov = static_cast<float>(g::local_player->GetFOV());
 
 			if (!g::engine_client->IsInGame() || !g::engine_client->IsConnected())
 				return;
-
 
 			if (!g::local_player && !g::local_player->IsAlive())
 				return;
@@ -329,12 +323,6 @@ namespace visuals
 				radiusFOV = tanf(DEG2RAD(aimbot::get_fov())) / tanf(screenFov) * center.x;
 			}
 
-			//if (dynamic_fov && g::local_player->m_hActiveWeapon()->m_zoomLevel() == 1) //Single Scoped //No need to use now
-				//screenFov = atanf((ratio) * (0.40f) * tan(DEG2RAD(fov * 1.0f)));
-
-			//if (dynamic_fov && g::local_player->m_hActiveWeapon()->m_zoomLevel() == 2) //Double Scoped //No need to use now
-				//screenFov = atanf((ratio) * (0.40f) * tan(DEG2RAD(fov * 1.0f)));
-
 			globals::draw_list->AddCircle(ImVec2(center.x, center.y), radiusFOV, ImGui::GetColorU32(settings::visuals::drawfov_color), 255);
 		}
 	}
@@ -343,7 +331,6 @@ namespace visuals
 	{
 		viewanglesBackup = cmd->viewangles;
 	}
-
 
 	void RenderHitmarker()
 	{
@@ -408,7 +395,6 @@ namespace visuals
 
 	void more_chams() noexcept
 	{
-
 		static IMaterial* mat = nullptr;
 
 		static IMaterial* flat = g::mat_system->FindMaterial("sensum_flat", TEXTURE_GROUP_MODEL);
@@ -457,7 +443,6 @@ namespace visuals
 					break;
 				}
 
-
 				if (client_class->m_ClassID == CAK47 || client_class->m_ClassID == CDEagle || client_class->m_ClassID == CC4 ||
 					client_class->m_ClassID >= CWeaponAug && client_class->m_ClassID <= CWeaponXM1014) {
 					if (settings::chams::wep_droppedchams) {
@@ -504,7 +489,7 @@ namespace visuals
 
 		if (!utils::IsPlayingMM() && utils::IsValveDS())
 			return;
-	
+
 		Vector OrigAng;
 
 		static IMaterial* material = nullptr;
@@ -533,30 +518,29 @@ namespace visuals
 		PlasticGloss->IncrementReferenceCount();
 		Glow->IncrementReferenceCount();
 
-		
 		switch (settings::chams::desyncChamsMode)
 		{
-		case 0: material = Normal; 
+		case 0: material = Normal;
 			break;
-		case 1: material = Dogtags; 
+		case 1: material = Dogtags;
 			break;
-		case 2: material = Flat; 
+		case 2: material = Flat;
 			break;
-		case 3: material = Metallic; 
+		case 3: material = Metallic;
 			break;
-		case 4: material = Platinum; 
+		case 4: material = Platinum;
 			break;
-		case 5: material = Glass; 
+		case 5: material = Glass;
 			break;
 		case 6: material = Crystal;
 			break;
 		case 7: material = Gold;
 			break;
-		case 8: material = DarkChrome; 
+		case 8: material = DarkChrome;
 			break;
-		case 9: material = PlasticGloss; 
+		case 9: material = PlasticGloss;
 			break;
-		case 10: material = Glow; 
+		case 10: material = Glow;
 			break;
 		}
 
@@ -565,7 +549,7 @@ namespace visuals
 		if (g::Input->m_fCameraInThirdPerson)
 		{
 			g::mdl_render->ForcedMaterialOverride(material);
-			g::render_view->SetColorModulation(1.0f, 1.0f, 1.0f);
+			g::render_view->SetColorModulation(settings::chams::desync_color.r(), settings::chams::desync_color.g(), settings::chams::desync_color.b());
 		}
 		g::local_player->GetClientRenderable()->DrawModel(0x1, 255);
 		g::local_player->SetAngle2(OrigAng);
@@ -649,7 +633,6 @@ namespace visuals
 
 		c_planted_c4* bomb = nullptr;
 		for (int i = 1; i < interfaces::entity_list->GetHighestEntityIndex(); i++) {
-
 			if (entity->GetClientClass()->m_ClassID == EClassId::CPlantedC4) {
 				bomb = (c_planted_c4*)entity;
 				break;
@@ -657,8 +640,6 @@ namespace visuals
 		}
 		//render bomb timer
 		//render.draw_text(12, value - 11, render.name_font_big, buffer, false, color(255, 255, 255));
-
-
 
 		//render bomb damage
 		if (g::local_player->IsAlive() && damage <= g::local_player->m_iHealth()) {
@@ -674,7 +655,7 @@ namespace visuals
 		if (!math::world2screen(bomb_origin, bomb_position))
 			return;
 		VGSHelper::Get().DrawTextW(buffer, bomb_position.x - 13, bomb_position.y + 8, Color::White, 15);
-		//VGSHelper::Get().DrawFilledBox(bomb_position.x - c4_timer / 2, bomb_position.y + 13, c4_timer, 3, Color::Black);  //wont draw 
+		//VGSHelper::Get().DrawFilledBox(bomb_position.x - c4_timer / 2, bomb_position.y + 13, c4_timer, 3, Color::Black);  //wont draw
 		//VGSHelper::Get().DrawFilledBox(bomb_position.x - c4_timer / 2, bomb_position.y + 13, explode_time, 3, Color::Blue);
 	}
 
@@ -703,7 +684,6 @@ namespace visuals
 	}
 
 	void glow() noexcept {
-
 		auto local_player = reinterpret_cast<c_base_player*>(interfaces::entity_list->GetClientEntity(interfaces::engine_client->GetLocalPlayer()));
 		if (!local_player)
 			return;
@@ -768,7 +748,6 @@ namespace visuals
 	}
 
 	void glow_override() noexcept {
-
 		auto local_player = reinterpret_cast<c_base_player*>(interfaces::entity_list->GetClientEntity(interfaces::engine_client->GetLocalPlayer()));
 		if (!local_player)
 			return;
@@ -786,9 +765,7 @@ namespace visuals
 			auto is_enemy = glow_entity->m_iTeamNum() != local_player->m_iTeamNum();
 			auto is_teammate = glow_entity->m_iTeamNum() == local_player->m_iTeamNum();
 
-
 			switch (client_class->m_ClassID) {
-			
 			case EClassId::CHEGrenade:
 				if (settings::glow::glowOverride) {
 					glow.set(settings::glow::glowHE.r() / 255.f, settings::glow::glowHE.g() / 255.f, settings::glow::glowHE.b() / 255.f, settings::glow::glowHE.a() / 255.f);
@@ -836,7 +813,7 @@ namespace visuals
 				break;
 			}
 
-			if (settings::glow::glowOverride) 
+			if (settings::glow::glowOverride)
 			{
 				if (client_class->m_ClassID == CC4)
 				{
@@ -902,7 +879,7 @@ namespace visuals
 			}
 		}
 
-		if(settings::visuals::rcs_cross)
+		if (settings::visuals::rcs_cross)
 			RenderPunchCross();
 
 		if (settings::esp::drawFov)

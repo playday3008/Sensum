@@ -1,7 +1,7 @@
 #define MAX_SIZE  512
 
 template <typename T>
-class Array 
+class Array
 {
 public:
 
@@ -9,15 +9,13 @@ public:
 		this->value = new T[this->_capacity];
 	}
 	inline Array(size_t n) {
-
 		this->_capacity = n << 2;
 		this->value = new T[this->_capacity];
 		for (size_t i = 0; i < n; ++i)
 			this->value[i] = T();
 		this->count = n;
 	}
-	inline Array(const Array<T> & val) {
-
+	inline Array(const Array<T>& val) {
 		this->_capacity = val._capacity;
 		this->value = new T[this->_capacity];
 		for (size_t i = 0; i < val.size(); ++i)
@@ -48,7 +46,7 @@ public:
 		return this->_capacity;
 	}
 
-	inline void   push_back(const T & val) {
+	inline void   push_back(const T& val) {
 		if (this->count == this->_capacity) {
 			this->_capacity <<= 2;
 			reallocate();
@@ -85,7 +83,7 @@ public:
 			reallocate();
 		}
 	}
-	inline void   swap(Array<T> & val) {
+	inline void   swap(Array<T>& val) {
 		size_t tmp_count = this->count;
 		size_t tmp_capacity = this->_capacity;
 		T* tmp_value = this->value;
@@ -98,7 +96,6 @@ public:
 		val._capacity = tmp_capacity;
 		val.value = tmp_value;
 	}
-
 
 	inline T& operator [](size_t i) {
 		return this->value[i];
@@ -143,14 +140,13 @@ private:
 	size_t  count;
 	size_t _capacity = 4;
 
-
 	inline void reallocate() {
 		T* tmp = new T[this->_capacity];
 		memcpy(tmp, this->value, this->count * sizeof(T));
 		delete[] this->value;
 		this->value = tmp;
 	}
-	inline void copy(const Array<T> & val) {
+	inline void copy(const Array<T>& val) {
 		this->count = val.count;
 		this->capacity = val.capacity;
 		this->value = new T[val.capacity];

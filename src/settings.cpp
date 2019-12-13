@@ -47,7 +47,8 @@ namespace settings
 		bool antiobs = false;
 		bool soundesp = false;
 		bool mat_force_apply = false;
-		
+		bool is_desyncing = false;
+
 		Color visibleColor = Color(0, 200, 80);
 		Color occludedColor = Color(0, 0, 0);
 		Color colorSoundEsp = Color(154, 0, 255, 255);
@@ -73,7 +74,6 @@ namespace settings
 		Color glowDecoy = Color(0, 255, 0, 255);
 		Color glowSmoke = Color(105, 105, 105, 255);
 		Color glowDroppedC4Color = Color(0, 255, 0, 255);
-
 	}
 
 	namespace chams
@@ -122,6 +122,7 @@ namespace settings
 		Color ChamsDecoyXQZ = Color(0, 255, 0, 255);
 		Color ChamsSmokeXQZ = Color(105, 105, 105, 255);
 		Color ChamsC4Dropped = Color(0, 255, 255, 255);
+		Color desync_color = Color(255, 255, 255, 255);
 
 		namespace arms
 		{
@@ -163,9 +164,9 @@ namespace settings
 		int viewmodel_mode = 0;
 
 		ImVec4 sky = ImVec4(0.25, 0.25, 0.25, 1.0);
-		ImVec4 recoilcolor = ImVec4{0.f, 0.f, 0.f, 1.0f};
-		ImVec4 spread_cross_color = ImVec4{1.f, 0.f, 0.f, 1.0f};
-		ImVec4 drawfov_color = ImVec4{1.f, 1.f, 1.f, 1.0f};
+		ImVec4 recoilcolor = ImVec4{ 0.f, 0.f, 0.f, 1.0f };
+		ImVec4 spread_cross_color = ImVec4{ 1.f, 0.f, 0.f, 1.0f };
+		ImVec4 drawfov_color = ImVec4{ 1.f, 1.f, 1.f, 1.0f };
 
 		Color colorBulletTracer = Color(154, 0, 255, 255);
 	}
@@ -326,7 +327,8 @@ namespace settings
 			Option::Load(root["chams.smoke_color"], settings::chams::ChamsSmokeXQZ);
 			Option::Load(root["chams.C4dropped_color"], settings::chams::ChamsC4Dropped);
 			Option::Load(root["chams.legitaa_material_mode"], chams::desyncChamsMode);
-			
+			Option::Load(root["chams.legitaa_color"], chams::desync_color);
+
 			Option::Load(root["misc.bhop"], misc::bhop);
 			Option::Load(root["misc.auto_strafe"], misc::auto_strafe);
 			Option::Load(root["misc.viewmodel_fov"], misc::viewmodel_fov, 68);
@@ -582,6 +584,7 @@ namespace settings
 			Option::Save(config["chams.decoy_color"], settings::chams::ChamsDecoyXQZ);
 			Option::Save(config["chams.smoke_color"], settings::chams::ChamsSmokeXQZ);
 			Option::Save(config["chams.C4dropped_color"], settings::chams::ChamsC4Dropped);
+			Option::Save(config["chams.legitaa_color"], settings::chams::desync_color);
 
 			config["misc.bhop"] = misc::bhop;
 			config["misc.auto_strafe"] = misc::auto_strafe;

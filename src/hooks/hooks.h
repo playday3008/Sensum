@@ -13,7 +13,7 @@ namespace hooks
 {
 	void initialize();
 	void destroy();
-	
+
 	struct d3d9
 	{
 		static vfunc_hook hook;
@@ -99,7 +99,7 @@ namespace hooks
 			static void __fastcall hooked(void* pEcx, void* pEdx, void* pResults, DrawModelInfo_t* pInfo, matrix3x4_t* pBoneToWorld, float* flpFlexWeights, float* flpFlexDelayedWeights, Vector& vrModelOrigin, int32_t iFlags);
 		};
 	};
-	
+
 	struct client_mode
 	{
 		static vfunc_hook hook;
@@ -141,7 +141,7 @@ namespace hooks
 	struct SL
 	{
 		static vfunc_hook hook;
-			
+
 		struct SuppressList
 		{
 			static const int index = 16;
@@ -175,7 +175,7 @@ namespace hooks
 		static void __fastcall hooked(IVRenderView*&);
 		static blackbone::Detour<fn> hook;
 	};
-	
+
 	struct render_view
 	{
 		static const int index = 6;
@@ -188,16 +188,16 @@ namespace hooks
 	{
 		static const int index = 2;
 		using fn = EGCResults(__thiscall*)(void*, uint32_t*, void*, uint32_t, uint32_t*);
-		static EGCResults __stdcall hooked(uint32_t* punMsgType, void *pubDest, uint32_t cubDest, uint32_t *pcubMsgSize);
+		static EGCResults __stdcall hooked(uint32_t* punMsgType, void* pubDest, uint32_t cubDest, uint32_t* pcubMsgSize);
 		static vfunc_hook hook;
 	};
 
 	struct dispatch_user_message
 	{
-			static const int index = 38;
-			using fn = bool(__thiscall*)(void*, int type, int a3, int length, void* msg_data);
-			static bool __stdcall hooked(void*&, int& type, int& a3, int& length, void*& msg_data);
-			static blackbone::Detour<fn> hook;
+		static const int index = 38;
+		using fn = bool(__thiscall*)(void*, int type, int a3, int length, void* msg_data);
+		static bool __stdcall hooked(void*&, int& type, int& a3, int& length, void*& msg_data);
+		static blackbone::Detour<fn> hook;
 	};
 
 	struct netchannel

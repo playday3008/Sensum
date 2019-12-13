@@ -95,7 +95,6 @@ bool Vector2D::operator!=(const Vector2D& src) const
 	return (src.x != x) || (src.y != y);
 }
 
-
 //-----------------------------------------------------------------------------
 // Copy
 //-----------------------------------------------------------------------------
@@ -143,7 +142,6 @@ void Vector2DMultiply(const Vector2D& a, const Vector2D& b, Vector2D& c)
 	c.x = a.x * b.x;
 	c.y = a.y * b.y;
 }
-
 
 void Vector2DDivide(const Vector2D& a, vec_t b, Vector2D& c)
 {
@@ -232,13 +230,11 @@ vec_t Vector2D::Length(void) const
 	return Vector2DLength(*this);
 }
 
-
 void Vector2DMin(const Vector2D& a, const Vector2D& b, Vector2D& result)
 {
 	result.x = (a.x < b.x) ? a.x : b.x;
 	result.y = (a.y < b.y) ? a.y : b.y;
 }
-
 
 void Vector2DMax(const Vector2D& a, const Vector2D& b, Vector2D& result)
 {
@@ -276,7 +272,6 @@ Vector2D Vector2D::Max(const Vector2D& vOther) const
 {
 	return Vector2D(x > vOther.x ? x : vOther.x, y > vOther.y ? y : vOther.y);
 }
-
 
 //-----------------------------------------------------------------------------
 // arithmetic operations
@@ -417,7 +412,6 @@ Vector4D& Vector4D::operator=(const Vector4D& vOther)
 	return *this;
 }
 
-
 //-----------------------------------------------------------------------------
 // Array access
 //-----------------------------------------------------------------------------
@@ -430,7 +424,6 @@ vec_t Vector4D::operator[](int i) const
 {
 	return ((vec_t*)this)[i];
 }
-
 
 //-----------------------------------------------------------------------------
 // Base address...
@@ -480,7 +473,6 @@ bool Vector4D::operator!=(const Vector4D& src) const
 {
 	return (src.x != x) || (src.y != y) || (src.z != z) || (src.w != w);
 }
-
 
 //-----------------------------------------------------------------------------
 // Copy
@@ -549,7 +541,7 @@ bool Vector4D::WithinAABox(Vector4D const& boxmin, Vector4D const& boxmax)
 }
 
 //-----------------------------------------------------------------------------
-// Get the distance from this vector to the other one 
+// Get the distance from this vector to the other one
 //-----------------------------------------------------------------------------
 vec_t Vector4D::DistTo(const Vector4D& vOther) const
 {
@@ -576,7 +568,6 @@ Vector4D Vector4D::Max(const Vector4D& vOther) const
 		z > vOther.z ? z : vOther.z,
 		w > vOther.w ? w : vOther.w);
 }
-
 
 //-----------------------------------------------------------------------------
 // arithmetic operations

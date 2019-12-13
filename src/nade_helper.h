@@ -17,5 +17,3 @@ struct nadedata
 	float angley;
 	float anglez;
 };
-
-

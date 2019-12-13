@@ -179,6 +179,14 @@ namespace esp
 				imdraw::outlined_text("K", ImVec2(box.right + 2.f, box.top - defusing_text_size.y - -10.0f), white_color);
 			}
 
+			if (settings::esp::is_desyncing && data.is_desyncing)
+			{
+				static const auto defusing_text_size = ImGui::CalcTextSize("Desync");
+
+				imdraw::outlined_text("Desync", ImVec2(box.right + 2.f, box.top - defusing_text_size.y - -20.0f), red_color);
+			}
+
+
 			if (settings::esp::bomb_esp && data.is_c4_carrier && !data.is_dormant)
 			{
 				static const auto defusing_text_size = ImGui::CalcTextSize("C4");
@@ -307,7 +315,7 @@ namespace esp
 
 				if (!render::fonts::weapon_icon)
 					return;
-				
+
 				auto y_pos = box.bottom + 2.f;
 				if (settings::esp::health && settings::esp::health_position == 2)
 					y_pos += 7.f;
@@ -327,8 +335,6 @@ namespace esp
 					ImGui::PopFont();
 					break;
 				}
-
-
 			}
 
 			if (settings::esp::boxes)
@@ -363,7 +369,6 @@ namespace esp
 		ImGui::PopFont();
 	}
 }
-
 
 void VGSHelper::Init()
 {
@@ -450,14 +455,12 @@ void VGSHelper::DrawBox(float x1, float y1, float x2, float y2, Color clr, float
 	DrawLine(x1, y2, x2, y2, clr, size);
 	DrawLine(x1, y1, x1, y2, clr, size);
 	DrawLine(x2, y1, x2, y2, clr, size);
-
 }
 void VGSHelper::DrawFilledBox(float x1, float y1, float x2, float y2, Color clr)
 {
 	g::surface->DrawSetColor(clr);
 	//g_VGuiSurface->DrawSetApparentDepth(size);
 	g::surface->DrawFilledRect(static_cast<int> (x1), static_cast<int> (y1), static_cast<int> (x2), static_cast<int> (y2));
-
 }
 void VGSHelper::DrawTriangle(int count, Vertex_t* vertexes, Color c)
 {

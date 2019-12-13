@@ -5,11 +5,10 @@
 
 namespace blackbone
 {
-    class BLACKBONE_API NoClass { };
+	class BLACKBONE_API NoClass { };
 
-    template<typename Fn, class C>
-    struct HookHandler;
-
+	template<typename Fn, class C>
+	struct HookHandler;
 }
 
 template<typename _Tgt, typename _Src>

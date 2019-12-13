@@ -350,6 +350,5 @@ namespace grenade_prediction
 		const auto last_point = saved_points[saved_points.size() - 1].second; //here edited
 		//draw_list->AddCircleFilled(ImVec2(last_point.x, last_point.y), 5.f, red_color);
 		draw_list->AddCircle(ImVec2(last_point.x, last_point.y), 5.f, red_color);
-
 	}
 }

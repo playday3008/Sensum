@@ -184,7 +184,6 @@ namespace render
 				checkbox("Randomise RCS", u8"Смягчать", &settings->recoil.humanize);
 				tooltip("Enabling this will randomise RCS between 0.1 - 0.5 at X and 0.1 - 0.6 on Y");
 
-
 				if (settings::aimbot::setting_type == settings_type_t::separately)
 				{
 					switch (definition_index)
@@ -279,7 +278,6 @@ namespace render
 
 				if (weapon)
 					definition_index = item_definition_index;
-
 			});
 
 			ImGui::NextColumn();
@@ -356,7 +354,6 @@ namespace render
 					ImGui::PushItemWidth(-1);
 					hotkey("##binds.trigger", &globals::binds::trigger);
 					ImGui::PopItemWidth();
-
 				}
 				columns(1);
 
@@ -365,7 +362,6 @@ namespace render
 				ImGui::SliderIntLeftAligned(___("Reaction time:", u8"Перед выстрелом:"), &settings->trigger.delay, 0, 250, "%.0f ms");
 				ImGui::SliderIntLeftAligned(___("Delay Between Shots:", u8"Между выстрелами:"), &settings->trigger.delay_btw_shots, 0, 250, "%.0f ms");
 				ImGui::SliderIntLeftAligned(___("Hit Chance:", u8"Мин шанс попадания:"), &settings->trigger.hitchance, 1, 100, "%.0f%%");
-
 			});
 		}
 	}

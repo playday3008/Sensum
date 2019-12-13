@@ -63,6 +63,24 @@ public:
 	void* pBaseEntity; //0x60
 };
 
+class CAnimationLayer
+{
+public:
+	char  pad_0000[20];
+	// These should also be present in the padding, don't see the use for it though
+	//float	m_flLayerAnimtime;
+	//float	m_flLayerFadeOuttime;
+	uint32_t m_nOrder; //0x0014
+	uint32_t m_nSequence; //0x0018
+	float_t m_flPrevCycle; //0x001C
+	float_t m_flWeight; //0x0020
+	float_t m_flWeightDeltaRate; //0x0024
+	float_t m_flPlaybackRate; //0x0028
+	float_t m_flCycle; //0x002C
+	void* m_pOwner; //0x0030 // player's thisptr
+	char  pad_0038[4]; //0x0034
+}; //Size: 0x0038
+
 class CCSGOPlayerAnimState
 {
 public:
@@ -163,6 +181,7 @@ public:
 	const matrix3x4_t& m_rgflCoordinateFrame();
 	void UpdateVisibilityAllEntities();
 	int GetSequenceActivity(const int& sequence);
+	int GetSequenceActivity(studiohdr_t* hdr, const int& sequence);
 
 	static __forceinline c_base_entity* GetEntityByIndex(int index)
 	{
@@ -175,7 +194,7 @@ public:
 		return static_cast<A*>(interfaces::entity_list->GetClientEntityFromHandle(h));
 	}
 
-	static __forceinline c_base_entity* GetEntityFromHandle(CBaseHandle h) 
+	static __forceinline c_base_entity* GetEntityFromHandle(CBaseHandle h)
 	{
 		return GetEntityFromHandle<c_base_entity>(h);
 	}
@@ -319,7 +338,6 @@ public:
 	NETVAR(int32_t, m_iFOV, "CBasePlayer", "m_iFOV");
 	NETVAR(int32_t, m_iDefaultFOV, "CBasePlayer", "m_iDefaultFOV");
 
-
 	bool InDangerzone()
 	{
 		static auto game_type = g::cvar->find("game_type");
@@ -340,7 +358,6 @@ public:
 		//return *( float_t* )( ( uintptr_t )this + m_iAddonBits - 0x4 );
 		return *(float_t*)((uintptr_t)this + 0xA360);
 	}
-		
 
 	bool IsEnemy()
 	{
@@ -372,8 +389,6 @@ public:
 	PNETVAR(CBaseHandle, m_hMyWearables, "CBaseCombatCharacter", "m_hMyWearables");
 	NETVAR_OFFSET(QAngle*, GetVAngles, "CBasePlayer", "deadflag", +0x4);
 
-
-
 	CUserCmd*& m_pCurrentCommand();
 	Vector        GetEyePos();
 	Vector		  get_hitbox_position(c_base_player* entity, int hitbox_id);
@@ -398,6 +413,8 @@ public:
 	void PVSFix();
 
 	CCSPlayerAnimState* GetPlayerAnimState();
+	CAnimationLayer* GetAnimOverlay(int i);
+	CAnimationLayer* GetAnimOverlays();
 
 	QAngle* GetVAngles2();
 	int GetFOV();
@@ -415,7 +432,6 @@ public:
 	{
 		return static_cast<c_base_player*>(GetEntityByIndex(i));
 	}
-
 };
 
 class c_base_view_model : public c_base_entity

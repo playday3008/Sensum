@@ -25,7 +25,6 @@ namespace render
 			auto& selected_entry = entries[definition_index];
 			selected_entry.definition_index = definition_index;
 
-
 			static int index = 1;
 			auto& entry2 = skins::statrack_items;
 			auto& sel_entry2 = entry2[index];
@@ -125,7 +124,6 @@ namespace render
 						color = ImVec4(0.29f, 0.41f, 1.f, 1.f);
 						ImGui::PushStyleColor(ImGuiCol_Text, color);
 
-
 						char buf_name[256];
 						sprintf_s(buf_name, sizeof(buf_name), "%s##%d", name.c_str(), skins::skin_kits[k].id);
 						if (selectable(buf_name, skins::skin_kits[k].id == selected_entry.paint_kit_index))
@@ -192,8 +190,6 @@ namespace render
 				else
 					selected_entry.definition_override_index = 0;
 
-
-
 				if (selected_entry.definition_index != GLOVE_CT_SIDE && selected_entry.definition_index != GLOVE_T_SIDE)
 					checkbox("Enabled", u8"Включено", &selected_entry.enabled);
 
@@ -214,7 +210,6 @@ namespace render
 					if (selected_entry.wear >= 0.46) //Well Worn
 						index = 4;
 
-
 				static int wearIndex = index;
 
 				const char* types[] =
@@ -234,7 +229,6 @@ namespace render
 				ImGui::Text("Wear:");
 				ImGui::InputFloat("##skins.wear", &selected_entry.wear);
 				tooltip("FN: 0 - 0.07, MW: 0.08 - 0.14, FT: 0.15 - 0.38, WW: 0.39 - 0.45, BS: 0.46");
-
 
 				ImGui::Text("Seed");
 				ImGui::InputInt("##skins.seed", &selected_entry.seed);

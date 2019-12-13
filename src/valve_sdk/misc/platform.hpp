@@ -26,7 +26,6 @@
 // place the defines for these in here.
 //-----------------------------------------------------------------------------
 
-
 //-----------------------------------------------------------------------------
 // Set up platform defines.
 //-----------------------------------------------------------------------------
@@ -111,8 +110,6 @@
 #define IsPC()		true
 #define IsConsole() false
 #endif
-
-
 
 //-----------------------------------------------------------------------------
 // Set up build configuration defines.
@@ -203,14 +200,13 @@
 
 #ifdef GNUC
 #undef offsetof
-//#define offsetof( type, var ) __builtin_offsetof( type, var ) 
+//#define offsetof( type, var ) __builtin_offsetof( type, var )
 #define offsetof(s,m)	(size_t)&(((s *)0)->m)
 #else
 #include <stddef.h>
 #undef offsetof
 #define offsetof(s,m)	(size_t)&(((s *)0)->m)
 #endif
-
 
 #define  FLOAT32_MIN		FLT_MIN
 #define  FLOAT64_MIN		DBL_MIN
@@ -225,7 +221,6 @@
 #ifdef DISALLOW_USE_OF_LONG
 #define long			long_is_the_devil_stop_using_it_use_int32_or_int64
 #endif
-
 
 //-----------------------------------------------------------------------------
 // Various compiler-specific keywords
@@ -278,7 +273,7 @@
 // decls for aligning data
 #define DECL_ALIGN(x)			__declspec( align( x ) )
 
-// GCC had a few areas where it didn't construct objects in the same order 
+// GCC had a few areas where it didn't construct objects in the same order
 // that Windows does. So when CVProfile::CVProfile() would access g_pMemAlloc,
 // it would crash because the allocator wasn't initalized yet.
 #define CONSTRUCT_EARLY
@@ -292,11 +287,10 @@
 
 #if !defined( NO_THREAD_LOCAL )
 #define DECL_THREAD_LOCAL		__declspec(thread)
-#endif 
+#endif
 
 #define DISABLE_VC_WARNING( x ) __pragma(warning(disable:4310) )
 #define DEFAULT_VC_WARNING( x ) __pragma(warning(default:4310) )
-
 
 #elif defined ( COMPILER_GCC )
 
@@ -322,7 +316,7 @@
 #define EXPLICIT
 #define NO_VTABLE
 
-#define NULLTERMINATED			
+#define NULLTERMINATED
 
 #define TEMPLATE_STATIC
 
@@ -364,7 +358,7 @@
 #if defined( GNUC )
 // gnuc has the align decoration at the end
 #define ALIGN4
-#define ALIGN8 
+#define ALIGN8
 #define ALIGN16
 #define ALIGN32
 #define ALIGN128
@@ -389,7 +383,6 @@
 #define ALIGN128_POST
 #endif
 
-
 // This can be used to declare an abstract (interface only) class.
 // Classes marked abstract should not be instantiated.  If they are, and access violation will occur.
 //
@@ -411,7 +404,6 @@
 #define abstract_class class NO_VTABLE
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Why do we need this? It would be nice to make it die die die
 //-----------------------------------------------------------------------------
@@ -427,7 +419,6 @@
 #else
 #define id386	0
 #endif  // __i386__
-
 
 //-----------------------------------------------------------------------------
 // Disable annoying unhelpful warnings
@@ -472,7 +463,6 @@
 
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Stack-based allocation related helpers
 //-----------------------------------------------------------------------------
@@ -495,7 +485,6 @@
 
 #define  stackfree( _p )			0
 
-
 //-----------------------------------------------------------------------------
 // Used to break into the debugger
 //-----------------------------------------------------------------------------
@@ -505,14 +494,13 @@
 #define DebuggerBreak()		__asm { int 3 }
 #elif COMPILER_MSVCX360
 #define DebuggerBreak()		DebugBreak()
-#elif COMPILER_GCC 
+#elif COMPILER_GCC
 #if defined( PLATFORM_CYGWIN ) || defined( PLATFORM_POSIX )
 #define DebuggerBreak()		__asm__( "int $0x3;")
 #else
 #define DebuggerBreak()		asm( "int3" )
 #endif
 #endif
-
 
 //-----------------------------------------------------------------------------
 // DLL export for platform utilities
@@ -570,13 +558,12 @@
 
 #endif // PLATFORM_POSIX
 
-
 //-----------------------------------------------------------------------------
 // Generally useful platform-independent macros (move to another file?)
 //-----------------------------------------------------------------------------
 
 // need macro for constant expression
-#define ALIGN_VALUE( val, alignment ) ( ( val + alignment - 1 ) & ~( alignment - 1 ) ) 
+#define ALIGN_VALUE( val, alignment ) ( ( val + alignment - 1 ) & ~( alignment - 1 ) )
 
 // Force a function call site -not- to inlined. (useful for profiling)
 #define DONT_INLINE(a) (((int)(a)+1)?(a):(a))
@@ -594,7 +581,6 @@
 #define MAX_PATH  260
 #endif
 
-
 //-----------------------------------------------------------------------------
 // FP exception handling
 //-----------------------------------------------------------------------------
@@ -611,38 +597,38 @@ inline void SetupFPUControlWord()
 
 inline void SetupFPUControlWordForceExceptions()
 {
-    // use local to Get and store control word
-    uint16 tmpCtrlW;
-    __asm
-    {
-        fnclex						/* clear all current exceptions */
-        fnstcw word ptr[tmpCtrlW]	/* Get current control word */
-        and [tmpCtrlW], 0FCC0h		/* Keep infinity control + rounding control */
-        or [tmpCtrlW], 0230h		/* Set to 53-bit, mask only inexact, underflow */
-        fldcw word ptr[tmpCtrlW]	/* put new control word in FPU */
-    }
+	// use local to Get and store control word
+	uint16 tmpCtrlW;
+	__asm
+	{
+		fnclex						/* clear all current exceptions */
+		fnstcw word ptr[tmpCtrlW]	/* Get current control word */
+		and [tmpCtrlW], 0FCC0h		/* Keep infinity control + rounding control */
+		or [tmpCtrlW], 0230h		/* Set to 53-bit, mask only inexact, underflow */
+		fldcw word ptr[tmpCtrlW]	/* put new control word in FPU */
+	}
 }
 
 #ifdef CHECK_FLOAT_EXCEPTIONS
 
 inline void SetupFPUControlWord()
 {
-    SetupFPUControlWordForceExceptions();
+	SetupFPUControlWordForceExceptions();
 }
 
 #else
 
 inline void SetupFPUControlWord()
 {
-    // use local to Get and store control word
-    uint16 tmpCtrlW;
-    __asm
-    {
-        fnstcw word ptr[tmpCtrlW]	/* Get current control word */
-        and [tmpCtrlW], 0FCC0h		/* Keep infinity control + rounding control */
-        or [tmpCtrlW], 023Fh		/* Set to 53-bit, mask only inexact, underflow */
-        fldcw word ptr[tmpCtrlW]	/* put new control word in FPU */
-    }
+	// use local to Get and store control word
+	uint16 tmpCtrlW;
+	__asm
+	{
+		fnstcw word ptr[tmpCtrlW]	/* Get current control word */
+		and [tmpCtrlW], 0FCC0h		/* Keep infinity control + rounding control */
+		or [tmpCtrlW], 023Fh		/* Set to 53-bit, mask only inexact, underflow */
+		fldcw word ptr[tmpCtrlW]	/* put new control word in FPU */
+	}
 }
 
 #endif
@@ -651,11 +637,11 @@ inline void SetupFPUControlWord()
 
 inline void SetupFPUControlWord()
 {
-    __volatile unsigned short int __cw;
-    __asm __volatile("fnstcw %0" : "=m" (__cw));
-    __cw = __cw & 0x0FCC0;	// keep infinity control, keep rounding mode
-    __cw = __cw | 0x023F;	// Set 53-bit, no exceptions
-    __asm __volatile("fldcw %0" : : "m" (__cw));
+	__volatile unsigned short int __cw;
+	__asm __volatile("fnstcw %0" : "=m" (__cw));
+	__cw = __cw & 0x0FCC0;	// keep infinity control, keep rounding mode
+	__cw = __cw | 0x023F;	// Set 53-bit, no exceptions
+	__asm __volatile("fldcw %0" : : "m" (__cw));
 }
 
 #elif defined( COMPILER_MSVCX360 )
@@ -663,14 +649,14 @@ inline void SetupFPUControlWord()
 #ifdef CHECK_FPU_CONTROL_WORD_SET
 FORCEINLINE bool IsFPUControlWordSet()
 {
-    float f = 0.996f;
-    union
-    {
-        double flResult;
-        int pResult[2];
-    };
-    flResult = __fctiw(f);
-    return (pResult[1] == 1);
+	float f = 0.996f;
+	union
+	{
+		double flResult;
+		int pResult[2];
+	};
+	flResult = __fctiw(f);
+	return (pResult[1] == 1);
 }
 #else
 #define IsFPUControlWordSet() true
@@ -678,22 +664,21 @@ FORCEINLINE bool IsFPUControlWordSet()
 
 inline void SetupFPUControlWord()
 {
-    // Set round-to-nearest in FPSCR
-    // (cannot assemble, must use op-code form)
-    __emit(0xFF80010C);	// mtfsfi  7,0
+	// Set round-to-nearest in FPSCR
+	// (cannot assemble, must use op-code form)
+	__emit(0xFF80010C);	// mtfsfi  7,0
 
-                        // Favour compatibility over speed (make sure the VPU Set to Java-compliant mode)
-                        // NOTE: the VPU *always* uses round-to-nearest
-    __vector4  a = { 0.0f, 0.0f, 0.0f, 0.0f };
-    a;				//	Avoid compiler warning
-    __asm
-    {
-        mtvscr a;	// Clear the Vector Status & Control Register to zero
-    }
+						// Favour compatibility over speed (make sure the VPU Set to Java-compliant mode)
+						// NOTE: the VPU *always* uses round-to-nearest
+	__vector4  a = { 0.0f, 0.0f, 0.0f, 0.0f };
+	a;				//	Avoid compiler warning
+	__asm
+	{
+		mtvscr a;	// Clear the Vector Status & Control Register to zero
+	}
 }
 
 #endif // COMPILER_MSVCX360
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Standard functions for handling endian-ness
@@ -706,25 +691,25 @@ inline void SetupFPUControlWord()
 template <typename T>
 inline T WordSwapC(T w)
 {
-    uint16 temp;
+	uint16 temp;
 
-    temp = ((*((uint16 *)&w) & 0xff00) >> 8);
-    temp |= ((*((uint16 *)&w) & 0x00ff) << 8);
+	temp = ((*((uint16*)& w) & 0xff00) >> 8);
+	temp |= ((*((uint16*)& w) & 0x00ff) << 8);
 
-    return *((T*)&temp);
+	return *((T*)& temp);
 }
 
 template <typename T>
 inline T DWordSwapC(T dw)
 {
-    uint32_t temp;
+	uint32_t temp;
 
-    temp = *((uint32_t *)&dw) >> 24;
-    temp |= ((*((uint32_t *)&dw) & 0x00FF0000) >> 8);
-    temp |= ((*((uint32_t *)&dw) & 0x0000FF00) << 8);
-    temp |= ((*((uint32_t *)&dw) & 0x000000FF) << 24);
+	temp = *((uint32_t*)& dw) >> 24;
+	temp |= ((*((uint32_t*)& dw) & 0x00FF0000) >> 8);
+	temp |= ((*((uint32_t*)& dw) & 0x0000FF00) << 8);
+	temp |= ((*((uint32_t*)& dw) & 0x000000FF) << 24);
 
-    return *((T*)&temp);
+	return *((T*)& temp);
 }
 
 //-------------------------------------
@@ -739,17 +724,17 @@ inline T DWordSwapC(T dw)
 template <typename T>
 inline T WordSwap360Intr(T w)
 {
-    T output;
-    __storeshortbytereverse(w, 0, &output);
-    return output;
+	T output;
+	__storeshortbytereverse(w, 0, &output);
+	return output;
 }
 
 template <typename T>
 inline T DWordSwap360Intr(T dw)
 {
-    T output;
-    __storewordbytereverse(dw, 0, &output);
-    return output;
+	T output;
+	__storewordbytereverse(dw, 0, &output);
+	return output;
 }
 
 #elif defined( COMPILER_MSVC32 )
@@ -763,21 +748,21 @@ inline T DWordSwap360Intr(T dw)
 template <typename T>
 inline T WordSwapAsm(T w)
 {
-    __asm
-    {
-        mov ax, w
-        xchg al, ah
-    }
+	__asm
+	{
+		mov ax, w
+		xchg al, ah
+	}
 }
 
 template <typename T>
 inline T DWordSwapAsm(T dw)
 {
-    __asm
-    {
-        mov eax, dw
-        bswap eax
-    }
+	__asm
+	{
+		mov eax, dw
+		bswap eax
+	}
 }
 
 #pragma warning(pop)
@@ -798,7 +783,6 @@ inline T DWordSwapAsm(T dw)
 #else
 #define PLAT_LITTLE_ENDIAN 1
 #endif
-
 
 // If a swapped float passes through the fpu, the bytes may Get changed.
 // Prevent this by swapping floats as DWORDs.
@@ -848,34 +832,34 @@ inline T DWordSwapAsm(T dw)
 // @Note (toml 05-02-02): this technique expects the compiler to
 // optimize the expression and eliminate the other path. On any new
 // platform/compiler this should be tested.
-inline short BigShort(short val) { int test = 1; return (*(char *)&test == 1) ? WordSwap(val) : val; }
-inline uint16 BigWord(uint16 val) { int test = 1; return (*(char *)&test == 1) ? WordSwap(val) : val; }
-inline long BigLong(long val) { int test = 1; return (*(char *)&test == 1) ? DWordSwap(val) : val; }
-inline uint32_t BigDWord(uint32_t val) { int test = 1; return (*(char *)&test == 1) ? DWordSwap(val) : val; }
-inline short LittleShort(short val) { int test = 1; return (*(char *)&test == 1) ? val : WordSwap(val); }
-inline uint16 LittleWord(uint16 val) { int test = 1; return (*(char *)&test == 1) ? val : WordSwap(val); }
-inline long LittleLong(long val) { int test = 1; return (*(char *)&test == 1) ? val : DWordSwap(val); }
-inline uint32_t LittleDWord(uint32_t val) { int test = 1; return (*(char *)&test == 1) ? val : DWordSwap(val); }
+inline short BigShort(short val) { int test = 1; return (*(char*)& test == 1) ? WordSwap(val) : val; }
+inline uint16 BigWord(uint16 val) { int test = 1; return (*(char*)& test == 1) ? WordSwap(val) : val; }
+inline long BigLong(long val) { int test = 1; return (*(char*)& test == 1) ? DWordSwap(val) : val; }
+inline uint32_t BigDWord(uint32_t val) { int test = 1; return (*(char*)& test == 1) ? DWordSwap(val) : val; }
+inline short LittleShort(short val) { int test = 1; return (*(char*)& test == 1) ? val : WordSwap(val); }
+inline uint16 LittleWord(uint16 val) { int test = 1; return (*(char*)& test == 1) ? val : WordSwap(val); }
+inline long LittleLong(long val) { int test = 1; return (*(char*)& test == 1) ? val : DWordSwap(val); }
+inline uint32_t LittleDWord(uint32_t val) { int test = 1; return (*(char*)& test == 1) ? val : DWordSwap(val); }
 inline short SwapShort(short val) { return WordSwap(val); }
 inline uint16 SwapWord(uint16 val) { return WordSwap(val); }
 inline long SwapLong(long val) { return DWordSwap(val); }
 inline uint32_t SwapDWord(uint32_t val) { return DWordSwap(val); }
 
 // Pass floats by pointer for swapping to avoid truncation in the fpu
-inline void BigFloat(float *pOut, const float *pIn) { int test = 1; (*(char *)&test == 1) ? SafeSwapFloat(pOut, pIn) : (*pOut = *pIn); }
-inline void LittleFloat(float *pOut, const float *pIn) { int test = 1; (*(char *)&test == 1) ? (*pOut = *pIn) : SafeSwapFloat(pOut, pIn); }
-inline void SwapFloat(float *pOut, const float *pIn) { SafeSwapFloat(pOut, pIn); }
+inline void BigFloat(float* pOut, const float* pIn) { int test = 1; (*(char*)& test == 1) ? SafeSwapFloat(pOut, pIn) : (*pOut = *pIn); }
+inline void LittleFloat(float* pOut, const float* pIn) { int test = 1; (*(char*)& test == 1) ? (*pOut = *pIn) : SafeSwapFloat(pOut, pIn); }
+inline void SwapFloat(float* pOut, const float* pIn) { SafeSwapFloat(pOut, pIn); }
 
 #endif
 
-inline uint32_t LoadLittleDWord(uint32_t *base, unsigned int dwordIndex)
+inline uint32_t LoadLittleDWord(uint32_t* base, unsigned int dwordIndex)
 {
-    return LittleDWord(base[dwordIndex]);
+	return LittleDWord(base[dwordIndex]);
 }
 
-inline void StoreLittleDWord(uint32_t *base, unsigned int dwordIndex, uint32_t dword)
+inline void StoreLittleDWord(uint32_t* base, unsigned int dwordIndex, uint32_t dword)
 {
-    base[dwordIndex] = LittleDWord(dword);
+	base[dwordIndex] = LittleDWord(dword);
 }
 
 // Protect against bad auto operator=
@@ -935,9 +919,9 @@ inline void StoreLittleDWord(uint32_t *base, unsigned int dwordIndex, uint32_t d
 #define WM_XMP_PLAYBACKBEHAVIORCHANGED		(WM_USER + 122)
 #define WM_XMP_PLAYBACKCONTROLLERCHANGED	(WM_USER + 123)
 
-inline const char *GetPlatformExt(void)
+inline const char* GetPlatformExt(void)
 {
-    return IsPlatformX360() ? ".360" : "";
+	return IsPlatformX360() ? ".360" : "";
 }
 
 // flat view, 6 hw threads
@@ -970,55 +954,54 @@ inline const char *GetPlatformExt(void)
 template <class T>
 inline T* Construct(T* pMemory)
 {
-    return ::new(pMemory) T;
+	return ::new(pMemory) T;
 }
 
 template <class T, typename ARG1>
 inline T* Construct(T* pMemory, ARG1 a1)
 {
-    return ::new(pMemory) T(a1);
+	return ::new(pMemory) T(a1);
 }
 
 template <class T, typename ARG1, typename ARG2>
 inline T* Construct(T* pMemory, ARG1 a1, ARG2 a2)
 {
-    return ::new(pMemory) T(a1, a2);
+	return ::new(pMemory) T(a1, a2);
 }
 
 template <class T, typename ARG1, typename ARG2, typename ARG3>
 inline T* Construct(T* pMemory, ARG1 a1, ARG2 a2, ARG3 a3)
 {
-    return ::new(pMemory) T(a1, a2, a3);
+	return ::new(pMemory) T(a1, a2, a3);
 }
 
 template <class T, typename ARG1, typename ARG2, typename ARG3, typename ARG4>
 inline T* Construct(T* pMemory, ARG1 a1, ARG2 a2, ARG3 a3, ARG4 a4)
 {
-    return ::new(pMemory) T(a1, a2, a3, a4);
+	return ::new(pMemory) T(a1, a2, a3, a4);
 }
 
 template <class T, typename ARG1, typename ARG2, typename ARG3, typename ARG4, typename ARG5>
 inline T* Construct(T* pMemory, ARG1 a1, ARG2 a2, ARG3 a3, ARG4 a4, ARG5 a5)
 {
-    return ::new(pMemory) T(a1, a2, a3, a4, a5);
+	return ::new(pMemory) T(a1, a2, a3, a4, a5);
 }
 
 template <class T>
 inline T* CopyConstruct(T* pMemory, T const& src)
 {
-    return ::new(pMemory) T(src);
+	return ::new(pMemory) T(src);
 }
 
 template <class T>
 inline void Destruct(T* pMemory)
 {
-    pMemory->~T();
+	pMemory->~T();
 
 #ifdef _DEBUG
-    memset(pMemory, 0xDD, sizeof(T));
+	memset(pMemory, 0xDD, sizeof(T));
 #endif
 }
-
 
 //
 // GET_OUTER()
@@ -1044,7 +1027,6 @@ inline void Destruct(T* pMemory)
 
 #define GET_OUTER( OuterType, OuterMember ) \
    ( ( OuterType * ) ( (uint8_t *)this - offsetof( OuterType, OuterMember ) ) )
-
 
 /*	TEMPLATE_FUNCTION_TABLE()
 
@@ -1105,7 +1087,6 @@ FunctionWrapper<9>::Function
 
 PLATFORM_INTERFACE bool vtune(bool resume);
 
-
 #define TEMPLATE_FUNCTION_TABLE(RETURN_TYPE, NAME, ARGS, COUNT)			  \
                                                                       \
 typedef RETURN_TYPE (FASTCALL *__Type_##NAME) ARGS;						        \
@@ -1143,7 +1124,6 @@ const __Type_##NAME* NAME::functions = (__Type_##NAME*)&m;				    \
 template<const int nArgument>													                \
 RETURN_TYPE FASTCALL __Function_##NAME<nArgument>::Run ARGS
 
-
 #define LOOP_INTERCHANGE(BOOLEAN, CODE)\
 	if( (BOOLEAN) )\
 	{\
@@ -1156,18 +1136,18 @@ RETURN_TYPE FASTCALL __Function_##NAME<nArgument>::Run ARGS
 #ifdef COMPILER_MSVC
 FORCEINLINE uint32_t RotateBitsLeft32(uint32_t nValue, int nRotateBits)
 {
-    return _rotl(nValue, nRotateBits);
+	return _rotl(nValue, nRotateBits);
 }
 FORCEINLINE uint64_t RotateBitsLeft64(uint64_t nValue, int nRotateBits)
 {
-    return _rotl64(nValue, nRotateBits);
+	return _rotl64(nValue, nRotateBits);
 }
 FORCEINLINE uint32_t RotateBitsRight32(uint32_t nValue, int nRotateBits)
 {
-    return _rotr(nValue, nRotateBits);
+	return _rotr(nValue, nRotateBits);
 }
 FORCEINLINE uint64_t RotateBitsRight64(uint64_t nValue, int nRotateBits)
 {
-    return _rotr64(nValue, nRotateBits);
+	return _rotr64(nValue, nRotateBits);
 }
 #endif

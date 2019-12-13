@@ -144,9 +144,8 @@ namespace fake_lags
 
 	bool adaptive(CUserCmd* cmd)
 	{
-		static constexpr int MAX_CHOKE = 15;
+		static constexpr int MAX_CHOKE = 6;
 		static constexpr float TELEPORT_DISTANCE = 64.f;
-
 
 		auto local_player = interfaces::local_player;
 		auto velocity = local_player->m_vecVelocity();
@@ -156,7 +155,6 @@ namespace fake_lags
 		int choked_ticks = std::ceilf(TELEPORT_DISTANCE / distance_per_tick);
 
 		return std::min<int>(choked_ticks, MAX_CHOKE);
-
 	}
 
 	bool is_enabled(CUserCmd* cmd)

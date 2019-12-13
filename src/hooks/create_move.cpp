@@ -8,7 +8,7 @@
 #include "..//runtime_saver.h"
 #include "..//Backtrack_new.h"
 #include "..//soundesp.h"
-#pragma intrinsic(_ReturnAddress)  
+#pragma intrinsic(_ReturnAddress)
 
 float side = 1.0f;
 
@@ -16,7 +16,7 @@ float real_angle = 0.0f;
 float view_angle = 0.0f;
 
 static CCSGOPlayerAnimState g_AnimState;
-static int max_choke_ticks = 14;
+static int max_choke_ticks = 6;
 
 float AngleDiff(float destAngle, float srcAngle) {
 	float delta;
@@ -131,7 +131,6 @@ namespace hooks
 {
 	bool __stdcall client_mode::create_move_shared::hooked(float input_sample_frametime, CUserCmd* cmd)
 	{
-
 		netchannel::setup();
 
 		static auto original = client_mode::hook.get_original<fn>(index);
@@ -183,7 +182,7 @@ namespace hooks
 				max_choke_ticks = 11;
 		}
 		else {
-			max_choke_ticks = 13 - latency_ticks;
+			max_choke_ticks = 5 - latency_ticks;
 		}
 
 		static float SpawnTime = 0.0f;
@@ -240,7 +239,6 @@ namespace hooks
 			} */
 
 			if (settings::desync::desync_mode == 1) {
-
 				/*
 				if( do_fakeduck )
 					return;
@@ -273,12 +271,12 @@ namespace hooks
 
 					broke_lby = false;
 					*send_packet = false;
-					cmd->viewangles.yaw += 120.0f * side; //was 120.f
+					cmd->viewangles.yaw += 120.0f * -side; //was 120.f and side
 				}
 				else {
 					broke_lby = true;
 					*send_packet = false;
-					cmd->viewangles.yaw += 120.0f * -side; //was 120.f
+					cmd->viewangles.yaw += 120.0f * -side; //was 120.f and -side
 				}
 			}
 
@@ -335,8 +333,6 @@ namespace hooks
 			*sendpacket2 = true;
 			cmd->viewangles = g::client_state->viewangles;
 		}
-
-		//desync::handle(cmd, send_packet);
 
 		static ConVar* m_yaw = m_yaw = g::cvar->find("m_yaw");
 		static ConVar* m_pitch = m_pitch = g::cvar->find("m_pitch");
@@ -426,9 +422,6 @@ namespace hooks
 
 		engine_prediction::finish(cmd);
 		features::edgeJumpPost(cmd);
-
-		//if (cmd->buttons & IN_SCORE)
-			//hooks::dispatch_user_message::hook.CallOriginal(std::forward<IBaseClientDLL*>(interfaces::base_client), 50, 0, 0, nullptr); // 50 = CS_UM_ServerRankRevealAll
 
 		if (!(cmd->buttons & IN_BULLRUSH))
 			cmd->buttons |= IN_BULLRUSH;

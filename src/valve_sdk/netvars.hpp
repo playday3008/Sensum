@@ -18,7 +18,7 @@ private:
 
 public:
 	// Return a const instance, others shouldnt modify this.
-	static auto get() -> const netvar_manager&
+	static auto get() -> const netvar_manager &
 	{
 		static netvar_manager instance;
 		return instance;

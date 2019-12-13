@@ -3,8 +3,8 @@
 class IBaseClientDLL
 {
 public:
-	ClientClass * GetAllClasses()
+	ClientClass* GetAllClasses()
 	{
-		return CallVFunction<ClientClass*(__thiscall*)(void*)>(this, 8)(this);
+		return CallVFunction<ClientClass * (__thiscall*)(void*)>(this, 8)(this);
 	}
 };

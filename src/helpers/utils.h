@@ -42,6 +42,4 @@ namespace utils
 	ImU32 to_im32(const Color& color, const float& alpha = 1.f);
 	wchar_t* to_wstring(const char* str);
 	void RankRevealAll();
-
 }
-
