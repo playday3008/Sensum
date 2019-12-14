@@ -1,5 +1,0 @@
-// Informační soubory pomáhají IDE sady Visual Studio interpretovat identifikátory Visual C++,
-// jako například názvy funkcí a makra.
-// Další informace viz https://go.microsoft.com/fwlink/?linkid=865984
-#define xD
-#define xD

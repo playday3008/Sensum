@@ -207,7 +207,6 @@
     <ClCompile Include="valve_sdk\misc\UtlBuffer.cpp" />
     <ClCompile Include="valve_sdk\misc\UtlString.cpp" />
     <ClCompile Include="valve_sdk\netvars.cpp" />
-    <ClCompile Include="vec3d.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Backtrack_new.h" />
@@ -244,6 +243,7 @@
     <ClInclude Include="IStudioRender.h" />
     <ClInclude Include="MaterialManager.h" />
     <ClInclude Include="nade_helper.h" />
+    <ClInclude Include="render\fonts\undefeated.hpp" />
     <ClInclude Include="render\render.h" />
     <ClInclude Include="runtime_saver.h" />
     <ClInclude Include="security\importer.h" />
@@ -259,7 +259,6 @@
     <ClInclude Include="singleton.hpp" />
     <ClInclude Include="soundesp.h" />
     <ClInclude Include="Sounds.h" />
-    <ClInclude Include="undefeated.hpp" />
     <ClInclude Include="valve_sdk\csgostructs.hpp" />
     <ClInclude Include="valve_sdk\interfaces\CClientState.h" />
     <ClInclude Include="valve_sdk\interfaces\CGlobalVarsBase.h" />
@@ -321,10 +320,6 @@
     <ClInclude Include="valve_sdk\misc\UtlVector.hpp" />
     <ClInclude Include="valve_sdk\netvars.hpp" />
     <ClInclude Include="valve_sdk\steam.h" />
-    <ClInclude Include="vec3d.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -27,10 +27,8 @@ namespace math
 	void vector2angles(const Vector& forward, Vector& up, QAngle& angles);
 	bool screen_transform(const Vector& in, Vector& out);
 	bool world2screen(const Vector& in, Vector& out);
-	bool world2screenvec2(const vec3_t& in, vec3_t& out);
 	bool screen_transform2(const Vector& in, Vector& out);
 	bool WorldToScreen2(const Vector& in, Vector& out);
-	bool WorldToScreen(const Vector& vOrigin, Vector& vScreen);
 	void correct_movement(CUserCmd* cmd, const QAngle& old_angles);
 	void correct_movement(CUserCmd* cmd, const QAngle& old_angles, const float& old_forward, const float& old_sidemove);
 	void MovementFix(CUserCmd* m_Cmd, QAngle wish_angle, QAngle old_angles);

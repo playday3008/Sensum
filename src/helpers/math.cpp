@@ -3,7 +3,6 @@
 #include "console.h"
 #include "../globals.h"
 #include "../valve_sdk/csgostructs.hpp"
-#include "../vec3d.h"
 
 #include <d3dx9.h>
 #include <D3dx9math.h>
@@ -314,47 +313,6 @@ bool math::world2screen(const Vector& in, Vector& out)
 	out.y = (h / 2.0f) - (out.y * h) / 2.0f;
 
 	return true;
-}
-
-bool math::world2screenvec2(const vec3_t& in, vec3_t& out)
-{
-	static float* ViewMatrixOld = nullptr;
-	float* ViewMatrix = nullptr;
-
-	if (!globals::view_matrix::has_offset)
-		return false;
-
-	ViewMatrix = (float*)(*(PDWORD)globals::view_matrix::offset);
-
-	int w, h;
-	interfaces::engine_client->GetScreenSize(w, h);
-
-	if (ViewMatrix && *ViewMatrix)
-	{
-		out.x = ViewMatrix[0] * in.x + ViewMatrix[1] * in.y + ViewMatrix[2] * in.z + ViewMatrix[3];
-		out.y = ViewMatrix[4] * in.x + ViewMatrix[5] * in.y + ViewMatrix[6] * in.z + ViewMatrix[7];
-		float w = ViewMatrix[12] * in.x + ViewMatrix[13] * in.y + ViewMatrix[14] * in.z + ViewMatrix[15];
-
-		if (w < 0.01f)
-			return false;
-
-		float invw = 1.0f / w;
-		out.x *= invw;
-		out.y *= invw;
-
-		float x = (float)w / 2.f;
-		float y = (float)h / 2.f;
-
-		x += 0.5f * out.x * w + 0.5f;
-		y -= 0.5f * out.y * h + 0.5f;
-
-		out.x = x;
-		out.y = y;
-
-		return true;
-	}
-
-	return false;
 }
 
 static bool math::screen_transform2(const Vector& in, Vector& out) {
