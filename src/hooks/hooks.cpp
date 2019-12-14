@@ -192,11 +192,11 @@ namespace hooks
 		if (settings::visuals::choke)
 			visuals::Choke();
 
-		if (settings::desync::enabled2)
-			visuals::AAIndicator();
+		/*if (settings::desync::enabled2)
+			visuals::AAIndicator(); */
 
-		if (settings::misc::damage_indicator)
-			visuals::DrawDamageIndicator();
+		/*if (settings::misc::damage_indicator)
+			visuals::DrawDamageIndicator(); */
 
 		for (int i = 1; i < interfaces::entity_list->GetHighestEntityIndex(); i++) {
 			auto entity = reinterpret_cast<c_planted_c4*>(interfaces::entity_list->GetClientEntity(i));

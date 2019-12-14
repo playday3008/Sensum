@@ -8,6 +8,8 @@
 #include "../helpers/notifies.h"
 #include "../features/features.h"
 
+#define VERSION "1.5.0"
+
 /*const char* const KeyNames[] =
 {
 	"Unknown",
@@ -772,7 +774,7 @@ namespace render
 			static const auto copyright_size = ImGui::CalcTextSize(copyright);
 
 			static char buildtime[256];
-			sprintf(buildtime, "Built on %s", __DATE__);
+			sprintf(buildtime, "Built on %s | Version %s", __DATE__, VERSION);
 			static const auto buildtime_size = ImGui::CalcTextSize(buildtime);
 			static const auto name_size = ImGui::CalcTextSize("Sensum");
 

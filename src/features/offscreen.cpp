@@ -27,7 +27,8 @@ namespace offscreen_entities
 		Vector popvec;
 		math::angle2vectors(QAngle(0, 270, 0) - aim + QAngle(0, angles.yaw, 0), popvec);
 
-		const auto screen_pos = Vector(display_size.x / 2, display_size.y / 2, 0) + (popvec * 380.f);
+		//const auto screen_pos = Vector(display_size.x / 2, display_size.y / 2, 0) + (popvec * 380.f);
+		const auto screen_pos = Vector(display_size.x / 2, display_size.y / 2, 0) + (popvec * 190.f);
 
 		globals::draw_list->AddCircleFilled(ImVec2(screen_pos.x, screen_pos.y), 12.f, color);
 	}

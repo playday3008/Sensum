@@ -186,7 +186,8 @@ namespace visuals
 
 			if (math::world2screen(indicator[i].Position, ScreenPosition))
 			{
-				VGSHelper::Get().DrawTextW(std::to_string(indicator[i].iDamage).c_str(), ScreenPosition.x, ScreenPosition.y, color, 18);
+				//VGSHelper::Get().DrawTextW(std::to_string(indicator[i].iDamage).c_str(), ScreenPosition.x, ScreenPosition.y, color, 18);
+				globals::draw_list->AddText(NULL, 0.0f, ImVec2(ScreenPosition.x, ScreenPosition.y), IM_COL32(color.r(), color.g(), color.b(), color.a()), std::to_string(indicator[i].iDamage).c_str());
 			}
 		}
 	}
@@ -476,7 +477,9 @@ namespace visuals
 		int cx = x / 2;
 		int cy = y / 2;
 
-		VGSHelper::Get().DrawText(side > 0.0f ? "<" : ">", side > 0.0f ? cx - 50 : cx + 40, cy - 10, Color::White, 19);
+		//VGSHelper::Get().DrawText(side > 0.0f ? "<" : ">", side > 0.0f ? cx - 50 : cx + 40, cy - 10, Color::White, 19);
+		//globals::draw_list->AddText(ImVec2(side > 0.0f ? cx - 50 : cx + 40, cy - 10), IM_COL32(255, 255, 255, 255), side > 0.0f ? "<" : ">");
+		globals::draw_list->AddText(NULL, 19.f, ImVec2(side > 0.0f ? cx - 50 : cx + 40, cy - 10), IM_COL32(255, 255, 255, 255), side > 0.0f ? "<" : ">");
 	}
 
 	void DesyncChams()
@@ -621,7 +624,7 @@ namespace visuals
 
 		std::string damage_text;
 		damage_text += "HP LEFT: ";
-		damage_text += std::to_string((int)(hp_reimaing));
+		damage_text += std::to_string((int)(hp_reimaing + 1.f));
 
 		//render on screen bomb bar
 		/*if (explode_time <= 10) {
@@ -893,6 +896,12 @@ namespace visuals
 
 		if (settings::visuals::spread_cross)
 			SpreadCircle();
+
+		if (settings::desync::enabled2)
+			AAIndicator();
+
+		if (settings::misc::damage_indicator)
+			DrawDamageIndicator();
 
 		ImGui::PopFont();
 	}

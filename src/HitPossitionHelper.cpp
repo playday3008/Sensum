@@ -106,7 +106,7 @@ void HitPossitionHelper::ShotTracer(Vector shot_pos, Vector hit_pos)
 
 	Color clr = settings::visuals::colorBulletTracer;
 
-	BeamInfo_t beamInfo;
+	/*BeamInfo_t beamInfo;
 	beamInfo.m_nType = TE_BEAMPOINTS;
 	beamInfo.m_pszModelName = "sprites/physbeam.vmt";
 	beamInfo.m_nModelIndex = -1;
@@ -128,6 +128,36 @@ void HitPossitionHelper::ShotTracer(Vector shot_pos, Vector hit_pos)
 	beamInfo.m_nFlags = FBEAM_ONLYNOISEONCE | FBEAM_NOTILE | FBEAM_HALOBEAM;
 
 	beamInfo.m_vecStart = shot_pos - Vector(0, -0.1f, 0.1f); // -0.1f, 0.1f
+	beamInfo.m_vecEnd = hit_pos;*/
+
+	auto start_pos = shot_pos;
+
+	if (!start_pos.IsValid() || !hit_pos.IsValid() || start_pos.DistTo(hit_pos) < 0.1f)
+		return;
+
+	start_pos.z -= 4.f;
+
+	BeamInfo_t beamInfo;
+	beamInfo.m_nType = TE_BEAMPOINTS;
+	beamInfo.m_pszModelName = "sprites/physbeam.vmt";
+	beamInfo.m_nModelIndex = -1;
+	beamInfo.m_flHaloScale = 0.0f;
+	beamInfo.m_flLife = 1.f;
+	beamInfo.m_flWidth = 2.0f;
+	beamInfo.m_flEndWidth = 2.0f;
+	beamInfo.m_flFadeLength = 0.0f;
+	beamInfo.m_flAmplitude = 2.0f;
+	beamInfo.m_flBrightness = 255.f;
+	beamInfo.m_flSpeed = 0.2f;
+	beamInfo.m_nStartFrame = 0;
+	beamInfo.m_flFrameRate = 0.f;
+	beamInfo.m_flRed = settings::visuals::colorBulletTracer.r();
+	beamInfo.m_flGreen = settings::visuals::colorBulletTracer.g();
+	beamInfo.m_flBlue = settings::visuals::colorBulletTracer.b();
+	beamInfo.m_nSegments = 2;
+	beamInfo.m_bRenderable = true;
+	beamInfo.m_nFlags = FBEAM_FADEIN | FBEAM_FADEOUT;
+	beamInfo.m_vecStart = start_pos;
 	beamInfo.m_vecEnd = hit_pos;
 
 	auto beam = g::view_render_beams->CreateBeamPoints(beamInfo);

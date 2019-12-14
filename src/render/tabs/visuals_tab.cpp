@@ -139,22 +139,18 @@ namespace render
 				checkbox("Is Flashed", &settings::esp::is_flashed);
 				checkbox("Is Defusing", &settings::esp::is_defusing);
 				checkbox("Is Desyncing", &settings::esp::is_desyncing);
-				checkbox("Snap Lines", &settings::esp::snaplines);
+				checkbox("Has Kit", &settings::esp::haskit);
 				checkbox("Ammo ESP", &settings::esp::ammo);
 				checkbox("Money ESP", &settings::esp::money);
 				checkbox("Choke ESP", &settings::visuals::choke);
 				checkbox("Sound ESP", &settings::esp::soundesp);
-				checkbox("Buy Log", &settings::esp::buylog);
+
 				//checkbox("Beams", u8"Лучи света", &settings::esp::beams); //Doesnt work.
 				//checkbox("Sound Direction (?)", &settings::esp::sound); //Doesnt work.
 				//tooltip("Sound ESP", u8"Показывает стрелками направление звука, откуда слышно игрока.");
 
 				checkbox("Bomb Damage ESP", &settings::esp::bomb_esp);
-				checkbox("Has Kit ESP", &settings::esp::haskit);
-
 				checkbox("Offscreen ESP", u8"Точка направления (?)", &settings::esp::offscreen);
-				checkbox("Enemy Armor Status (?)", &settings::esp::kevlarinfo);
-				tooltip("Will display HK if enemy has kevlar + helmer or K if enemy has kevlar only.");
 			});
 
 			ImGui::NextColumn();
@@ -297,11 +293,15 @@ namespace render
 					"Sound: Boom"
 				};
 
+				checkbox("Buy Log", &settings::esp::buylog);
 				checkbox("Planted C4", &settings::visuals::planted_c4);
 				checkbox("Defuse Kits", u8"Дефуза", &settings::visuals::defuse_kit);
 				checkbox("World Weapons", u8"Подсветка оружий", &settings::visuals::dropped_weapons);
 				checkbox("World Grenades", u8"Подсветка гранат", &settings::visuals::world_grenades);
 				checkbox("Sniper Crosshair", u8"Снайперский прицел", &settings::visuals::sniper_crosshair);
+				checkbox("Snap Lines", &settings::esp::snaplines);
+				checkbox("Armor Status (?)", &settings::esp::kevlarinfo);
+				tooltip("Will display HK if enemy has kevlar + helmer or K if enemy has kevlar only.");
 				checkbox("Grenade Prediction", u8"Прогноз полета гранат", &settings::visuals::grenade_prediction);
 				checkbox("Damage Indicator", &settings::misc::damage_indicator);
 				checkbox("Aimbot Fov", &settings::esp::drawFov);

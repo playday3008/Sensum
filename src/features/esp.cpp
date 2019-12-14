@@ -48,6 +48,35 @@ namespace esp
 		return true;
 	}
 
+	auto get_box(const Vector* transformed_points) -> RECT
+	{
+		static Vector screen_points[8];
+		for (int i = 0; i < 8; i++)
+		{
+			if (!math::world2screen(transformed_points[i], screen_points[i]))
+				return {};
+		}
+
+		auto top = screen_points[0].y;
+		auto left = screen_points[0].x;
+		auto right = screen_points[0].x;
+		auto bottom = screen_points[0].y;
+
+		for (int i = 1; i < 8; i++)
+		{
+			if (left > screen_points[i].x)
+				left = screen_points[i].x;
+			if (top > screen_points[i].y)
+				top = screen_points[i].y;
+			if (right < screen_points[i].x)
+				right = screen_points[i].x;
+			if (bottom < screen_points[i].y)
+				bottom = screen_points[i].y;
+		}
+
+		return RECT{ (long)left, (long)top, (long)right, (long)bottom };
+	}
+
 	void render(ImDrawList* draw_list)
 	{
 		if (!is_enabled())
@@ -81,10 +110,13 @@ namespace esp
 			if (data.index == 0 || !data.hitboxes[0][0].IsValid())
 				continue;
 
-			if (settings::esp::offscreen)
+			const auto bbox = get_box(data.points);
+
+			const auto on_screen = (bbox.left > 0 || bbox.right > 0) && (bbox.top > 0 || bbox.bottom > 0);
+			if (settings::esp::offscreen && (!on_screen || g::local_player->m_bIsScoped()))
 				offscreen_entities::dot(m_local.world_pos, data.hitboxes[0][0], offscreen_entities::origin_color);
 
-			if (settings::esp::visible_only && (!data.is_visible || data.in_smoke || m_local.is_flashed))
+			if (settings::esp::visible_only && (!data.is_visible || data.in_smoke || m_local.is_flashed || !on_screen))
 				continue;
 
 			{

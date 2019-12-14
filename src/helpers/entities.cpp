@@ -174,7 +174,7 @@ namespace entities
 		m_local.damage = damage;
 		hp_reimaing -= damage;
 
-		return hp_reimaing;
+		return hp_reimaing + 1.f;
 	}
 
 	float get_bomb_time(c_planted_c4* bomb, const int& tick_base)

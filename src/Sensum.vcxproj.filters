@@ -4,9 +4,6 @@
     <Filter Include="features">
       <UniqueIdentifier>{96110a9e-6a7c-4f81-8439-0098de2376a8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="helpers">
-      <UniqueIdentifier>{aeae5db0-75a8-4cb2-b337-374a068dc2fb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="options">
       <UniqueIdentifier>{a9d718e4-2001-444f-b3bb-120e3851551e}</UniqueIdentifier>
     </Filter>
@@ -61,6 +58,9 @@
     <Filter Include="security">
       <UniqueIdentifier>{bf2b8af1-74b2-484c-8e4a-737cf672c13b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="hooks\helpers">
+      <UniqueIdentifier>{aeae5db0-75a8-4cb2-b337-374a068dc2fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="valve_sdk\csgostructs.cpp">
@@ -88,7 +88,7 @@
       <Filter>valve_sdk\misc</Filter>
     </ClCompile>
     <ClCompile Include="helpers\math.cpp">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClCompile>
     <ClCompile Include="valve_sdk\math\VMatrix.cpp">
       <Filter>valve_sdk\math</Filter>
@@ -119,13 +119,13 @@
       <Filter>features\misc</Filter>
     </ClCompile>
     <ClCompile Include="helpers\console.cpp">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClCompile>
     <ClCompile Include="helpers\utils.cpp">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClCompile>
     <ClCompile Include="helpers\input.cpp">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClCompile>
     <ClCompile Include="deps\blackbone\LocalHook\LocalHookBase.cpp">
       <Filter>deps\blackbone\LocalHook</Filter>
@@ -134,7 +134,7 @@
       <Filter>deps\blackbone\LocalHook</Filter>
     </ClCompile>
     <ClCompile Include="helpers\vfunc_hook.cpp">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClCompile>
     <ClCompile Include="valve_sdk\misc\checksum_crc.cpp">
       <Filter>valve_sdk\interfaces</Filter>
@@ -175,12 +175,6 @@
     <ClCompile Include="features\skins.cpp">
       <Filter>features\misc</Filter>
     </ClCompile>
-    <ClCompile Include="features\visuals.cpp">
-      <Filter>features\visuals</Filter>
-    </ClCompile>
-    <ClCompile Include="features\esp.cpp">
-      <Filter>features\visuals</Filter>
-    </ClCompile>
     <ClCompile Include="features\color_modulate.cpp">
       <Filter>features\visuals</Filter>
     </ClCompile>
@@ -203,7 +197,7 @@
       <Filter>features\movement</Filter>
     </ClCompile>
     <ClCompile Include="helpers\http.cpp">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClCompile>
     <ClCompile Include="features\aimbot.cpp">
       <Filter>features\movement</Filter>
@@ -215,7 +209,7 @@
       <Filter>features\misc</Filter>
     </ClCompile>
     <ClCompile Include="helpers\notifies.cpp">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClCompile>
     <ClCompile Include="hooks\hooks.cpp">
       <Filter>hooks</Filter>
@@ -250,9 +244,6 @@
     <ClCompile Include="features\engine_prediction.cpp">
       <Filter>features\movement</Filter>
     </ClCompile>
-    <ClCompile Include="features\grenade_prediction.cpp">
-      <Filter>features\visuals</Filter>
-    </ClCompile>
     <ClCompile Include="config.cpp">
       <Filter>options</Filter>
     </ClCompile>
@@ -262,14 +253,11 @@
     <ClCompile Include="features\clantag.cpp">
       <Filter>features\misc</Filter>
     </ClCompile>
-    <ClCompile Include="features\offscreen.cpp">
-      <Filter>features\visuals</Filter>
-    </ClCompile>
     <ClCompile Include="helpers\entities.cpp">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClCompile>
     <ClCompile Include="helpers\imdraw.cpp">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClCompile>
     <ClCompile Include="features\desync.cpp">
       <Filter>features\movement</Filter>
@@ -281,7 +269,7 @@
       <Filter>hooks</Filter>
     </ClCompile>
     <ClCompile Include="helpers\autowall.cpp">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClCompile>
     <ClCompile Include="features\fake_duck.cpp">
       <Filter>features\movement</Filter>
@@ -310,14 +298,11 @@
     <ClCompile Include="Selfnade.cpp">
       <Filter>features\movement</Filter>
     </ClCompile>
-    <ClCompile Include="Chams.cpp">
-      <Filter>features\visuals</Filter>
-    </ClCompile>
     <ClCompile Include="MaterialManager.cpp">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClCompile>
     <ClCompile Include="HitPossitionHelper.cpp">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClCompile>
     <ClCompile Include="Backtrack_new.cpp">
       <Filter>features\movement</Filter>
@@ -339,6 +324,21 @@
     </ClCompile>
     <ClCompile Include="block_bot.cpp">
       <Filter>features\movement</Filter>
+    </ClCompile>
+    <ClCompile Include="features\esp.cpp">
+      <Filter>hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="features\grenade_prediction.cpp">
+      <Filter>hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="Chams.cpp">
+      <Filter>hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="features\offscreen.cpp">
+      <Filter>hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="features\visuals.cpp">
+      <Filter>hooks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -471,9 +471,6 @@
     <ClInclude Include="valve_sdk\interfaces\IRefCounted.h">
       <Filter>valve_sdk\interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="features\features.h">
-      <Filter>features</Filter>
-    </ClInclude>
     <ClInclude Include="jsoncpp\json.h">
       <Filter>deps\jsoncpp</Filter>
     </ClInclude>
@@ -523,10 +520,10 @@
       <Filter>valve_sdk\interfaces</Filter>
     </ClInclude>
     <ClInclude Include="helpers\console.h">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClInclude>
     <ClInclude Include="helpers\input.h">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClInclude>
     <ClInclude Include="deps\blackbone\LocalHook\HookHandlerCdecl.h">
       <Filter>deps\blackbone\LocalHook</Filter>
@@ -577,19 +574,19 @@
       <Filter>valve_sdk\interfaces</Filter>
     </ClInclude>
     <ClInclude Include="helpers\http.h">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClInclude>
     <ClInclude Include="settings.h">
       <Filter>options</Filter>
     </ClInclude>
     <ClInclude Include="helpers\notifies.h">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClInclude>
     <ClInclude Include="hooks\hooks.h">
       <Filter>hooks</Filter>
     </ClInclude>
     <ClInclude Include="helpers\proto_parse.h">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClInclude>
     <ClInclude Include="valve_sdk\interfaces\IMemAlloc.h">
       <Filter>valve_sdk\interfaces</Filter>
@@ -607,40 +604,34 @@
       <Filter>options</Filter>
     </ClInclude>
     <ClInclude Include="helpers\entities.h">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClInclude>
     <ClInclude Include="valve_sdk\interfaces\IViewRenderBeams.h">
       <Filter>valve_sdk\interfaces</Filter>
     </ClInclude>
     <ClInclude Include="helpers\imdraw.h">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClInclude>
     <ClInclude Include="security\importer.h">
       <Filter>security</Filter>
     </ClInclude>
     <ClInclude Include="helpers\autowall.h">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClInclude>
     <ClInclude Include="hooks\c_game_event_listener.h">
       <Filter>hooks</Filter>
     </ClInclude>
     <ClInclude Include="helpers\array.h">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClInclude>
     <ClInclude Include="helpers\math.h">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClInclude>
     <ClInclude Include="helpers\utils.h">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClInclude>
     <ClInclude Include="helpers\vfunc_hook.h">
-      <Filter>helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="esp.hpp">
-      <Filter>features\visuals</Filter>
-    </ClInclude>
-    <ClInclude Include="singleton.hpp">
-      <Filter>features\visuals</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClInclude>
     <ClInclude Include="Sounds.h">
       <Filter>features\misc</Filter>
@@ -648,20 +639,17 @@
     <ClInclude Include="vec3d.h">
       <Filter>valve_sdk\math</Filter>
     </ClInclude>
-    <ClInclude Include="Chams.h">
-      <Filter>features\visuals</Filter>
-    </ClInclude>
     <ClInclude Include="MaterialManager.h">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClInclude>
     <ClInclude Include="glow_helper.h">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClInclude>
     <ClInclude Include="HitPossitionHelper.h">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClInclude>
     <ClInclude Include="runtime_saver.h">
-      <Filter>helpers</Filter>
+      <Filter>hooks\helpers</Filter>
     </ClInclude>
     <ClInclude Include="Backtrack_new.h">
       <Filter>features\movement</Filter>
@@ -677,6 +665,18 @@
     </ClInclude>
     <ClInclude Include="undefeated.hpp">
       <Filter>render\fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="esp.hpp">
+      <Filter>hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="Chams.h">
+      <Filter>hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="singleton.hpp">
+      <Filter>hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="features\features.h">
+      <Filter>hooks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

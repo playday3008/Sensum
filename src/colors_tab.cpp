@@ -67,7 +67,6 @@ namespace render
 			{
 				ColorEdit4("Smoke##glow", &settings::glow::glowSmoke, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 				ColorEdit4("Molotov & Inc##glow", &settings::glow::glowMolotovIncendiary, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
-				ColorEdit4("Flash##glow", &settings::glow::glowFlashbang, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 				ColorEdit4("HE##glow", &settings::glow::glowHE, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 				ColorEdit4("Dropped C4##glow", &settings::glow::glowDroppedC4Color, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 			}
