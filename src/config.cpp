@@ -2,9 +2,9 @@
 #include "helpers/console.h"
 
 #include <fstream>
-#include <experimental/filesystem>
+#include <filesystem>
 
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 
 namespace config
 {
