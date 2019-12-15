@@ -1,9 +1,9 @@
 #include "options.hpp"
 #include "helpers/console.h"
 
-#include <experimental/filesystem>
+#include <filesystem>
 
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 
 namespace Config
 {
