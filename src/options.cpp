@@ -1,7 +1,8 @@
 #include "options.hpp"
 #include "helpers/console.h"
-
 #include <experimental/filesystem>
+
+#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
 
 namespace fs = std::experimental::filesystem;
 

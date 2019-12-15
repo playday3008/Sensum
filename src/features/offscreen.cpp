@@ -3,7 +3,6 @@
 #include "../render/render.h"
 #include "../helpers/entities.h"
 #include "../esp.hpp"
-#include "../vec3d.h"
 
 #include <mutex>
 

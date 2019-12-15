@@ -31,6 +31,7 @@ namespace hooks
 	vfunc_hook events::hook;
 	//vfunc_hook SL::hook;
 	vfunc_hook engine_mode::hook;
+	vfunc_hook find_mdl_override::hook;
 
 	c_game_event_listener* event_listener;
 
@@ -94,6 +95,9 @@ namespace hooks
 		engine_mode::hook.setup(g::engine_client);
 		engine_mode::hook.hook_index(engine_mode::IsConnected::index, engine_mode::IsConnected::hooked);
 
+		find_mdl_override::hook.setup(g::mdl_cache);
+		find_mdl_override::hook.hook_index(find_mdl_override::find_mdl::index, find_mdl_override::find_mdl::hooked);
+
 		//set_vmt_hook<fire_bullets>(interfaces::fire_bullets, xorstr_("client.dll"));
 		//set_vmt_hook<retrieve_message>(interfaces::game_coordinator);
 
@@ -126,8 +130,19 @@ namespace hooks
 		events::hook.unhook_all();
 		//SL::hook.unhook_all();
 		engine_mode::hook.unhook_all();
+		find_mdl_override::hook.unhook_all();
 
 		delete sequence::hook;
+	}
+
+	MDLHandle_t __fastcall find_mdl_override::find_mdl::hooked(void* ecx, void* edx, char* FilePath)
+	{
+		auto original = hook.get_original<fn>(index);
+
+		/*if (strstr(FilePath, "arms"))
+			sprintf(FilePath, "models/player/custom_player/kuristaja/nanosuit/nanosuit_arms.mdl"); */
+
+		return original(ecx, FilePath);
 	}
 
 	void __stdcall client_mode::override_view::hooked(CViewSetup* view)
@@ -191,12 +206,6 @@ namespace hooks
 
 		if (settings::visuals::choke)
 			visuals::Choke();
-
-		/*if (settings::desync::enabled2)
-			visuals::AAIndicator(); */
-
-		/*if (settings::misc::damage_indicator)
-			visuals::DrawDamageIndicator(); */
 
 		for (int i = 1; i < interfaces::entity_list->GetHighestEntityIndex(); i++) {
 			auto entity = reinterpret_cast<c_planted_c4*>(interfaces::entity_list->GetClientEntity(i));
@@ -280,11 +289,11 @@ namespace hooks
 	{
 		static const auto original = hook.get_original<fn>(index);
 
-		Chams::Get().OnSceneEnd();
-		visuals::more_chams();
+		Chams::Get().OnSceneEnd(); //not causing fps drops
+		visuals::more_chams(); //not causing fps drops
 
 		if (settings::chams::desync && settings::desync::enabled2)
-			visuals::DesyncChams();
+			visuals::DesyncChams(); //not causing fps drops
 
 		original(view);
 
@@ -296,10 +305,10 @@ namespace hooks
 	{
 		static auto original = hook.get_original<fn>(index);
 
-		visuals::glow();
+		visuals::glow(); //not causing fps drops
 
 		if (settings::glow::glowOverride)
-			visuals::glow_override();
+			visuals::glow_override(); //not causing fps drops
 
 		return original(interfaces::client_mode, value);
 	}

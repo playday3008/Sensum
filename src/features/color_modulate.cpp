@@ -361,28 +361,12 @@ namespace color_modulation
 				material->SetMaterialVarFlag(MATERIAL_VAR_WIREFRAME, settings::chams::arms::enabled && settings::chams::arms::wireframe);
 			}
 
-			if (_group == static_prop_textures) //Static props, aka Ticket box on A Mirage or boxes.
-			{
-				material->ColorModulate(0.5f, 0.5f, 0.5f); //was 0.5
-			}
-
 			if (!night_mode_first)
-				if (settings::visuals::night_mode) night_mode_first = true; //Thanks, Credits to Klavaro - MartiNJ409
+				if (settings::visuals::night_mode) 
+					night_mode_first = true; //Thanks, Credits to Klavaro - MartiNJ409
 				else continue;
 
 			sv_skyname->SetValue(settings::visuals::night_mode ? "sky_csgo_night02" : sv_skyname_backup);
-
-			if (!settings::visuals::night_mode)
-			{
-				static auto mat_force_tonemap_scale = interfaces::cvar->find(xorstr_("mat_force_tonemap_scale"));
-
-				mat_force_tonemap_scale->SetValue(1.0f);
-
-				if (_group == static_prop_textures) //Static props, aka Ticket box on A Mirage or boxes.
-				{
-					material->ColorModulate(1.f, 1.f, 1.f); //was 0.5
-				}
-			}
 		}
 	}
 }

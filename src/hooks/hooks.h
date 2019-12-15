@@ -163,10 +163,22 @@ namespace hooks
 	{
 		static const int index = 10;
 		using fn = MDLHandle_t(__thiscall*)(IMDLCache*, const char* relative_path);
-		//static MDLHandle_t __stdcall hooked(IMDLCache*&, const char*& relative_path);
-		static MDLHandle_t __fastcall hooked(IMDLCache*&, char* FilePath);
+		static MDLHandle_t __stdcall hooked(IMDLCache*&, const char*& relative_path);
 		static blackbone::Detour<fn> hook;
 	};
+
+	struct find_mdl_override
+	{
+		static vfunc_hook hook;
+
+		struct find_mdl
+		{
+			static const int index = 10;
+			using fn = MDLHandle_t(__thiscall*)(void*, char* FilePath);
+			static MDLHandle_t __fastcall hooked(void* ecx, void* edx, char* FilePath);
+		};
+	};
+
 
 	struct scene_end
 	{

@@ -4,6 +4,9 @@
 #include <fstream>
 #include <experimental/filesystem>
 
+
+#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
+
 namespace fs = std::experimental::filesystem;
 
 namespace config

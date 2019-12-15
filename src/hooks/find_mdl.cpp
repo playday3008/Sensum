@@ -54,17 +54,14 @@ namespace hooks
 	{
 		const auto path = get_new_model(relative_path);
 
-		if((relative_path, "arms"))
-			return hook.CallOriginal(std::forward<IMDLCache*>(thisptr), (const char*)"models/player/custom_player/kuristaja/nanosuit/nanosuit_arms.mdl");
+		char buf[256];
+		sprintf_s(buf, "%s", "working");
 
-		return hook.CallOriginal(std::forward<IMDLCache*>(thisptr), std::forward<const char*>(path.c_str()));
+		g::hud_chat->ChatPrintf(0, 0, buf);
+
+		if (strstr(relative_path, "knife_default_ct.mdl") || strstr(relative_path, "knife_default_t.mdl"))
+			sprintf((char*)relative_path, "models/weapons/v_minecraft_pickaxe.mdl");
+			
+		return hook.CallOriginal(std::forward<IMDLCache*>(thisptr), std::forward<const char*>(relative_path));
 	} */
-
-	MDLHandle_t __fastcall find_mdl::hooked(IMDLCache*& thisptr, char* FilePath)
-	{
-		if (strstr(FilePath, "arms"))
-			return hook.CallOriginal(std::forward<IMDLCache*>(thisptr), (const char*)"models/player/custom_player/kuristaja/nanosuit/nanosuit_arms.mdl");
-
-		return hook.CallOriginal(std::forward<IMDLCache*>(thisptr), (const char*)FilePath);
-	}
 }
