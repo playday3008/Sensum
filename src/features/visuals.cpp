@@ -474,12 +474,31 @@ namespace visuals
 		if (!g::engine_client->IsInGame() || !g::engine_client->IsConnected())
 			return;
 
+		const auto radius = 80.f;
+
 		int cx = x / 2;
 		int cy = y / 2;
 
-		//VGSHelper::Get().DrawText(side > 0.0f ? "<" : ">", side > 0.0f ? cx - 50 : cx + 40, cy - 10, Color::White, 19);
-		//globals::draw_list->AddText(ImVec2(side > 0.0f ? cx - 50 : cx + 40, cy - 10), IM_COL32(255, 255, 255, 255), side > 0.0f ? "<" : ">");
-		globals::draw_list->AddText(NULL, 19.f, ImVec2(side > 0.0f ? cx - 50 : cx + 40, cy - 10), IM_COL32(255, 255, 255, 255), side > 0.0f ? "<" : ">");
+		auto draw_arrow = [&](float rot, ImU32 color) -> void
+		{
+			globals::draw_list->AddTriangleFilled(ImVec2(cx + 1.f + cosf(rot) * radius, cy + 1.f + sinf(rot) * radius),
+				ImVec2(cx + 1.f + cosf(rot + DEG2RAD(10)) * (radius - 22.f),
+					cy + 1.f + sinf(rot + DEG2RAD(10)) * (radius - 22.f)),
+				ImVec2(cx + 1.f + cosf(rot - DEG2RAD(10)) * (radius - 22.f),
+					cy + 1.f + sinf(rot - DEG2RAD(10)) * (radius - 22.f)),
+				IM_COL32_BLACK);
+
+			globals::draw_list->AddTriangleFilled(ImVec2(cx + cosf(rot) * radius, cy + sinf(rot) * radius),
+				ImVec2(cx + cosf(rot + DEG2RAD(10)) * (radius - 22.f),
+					cy + sinf(rot + DEG2RAD(10)) * (radius - 22.f)),
+				ImVec2(cx + cosf(rot - DEG2RAD(10)) * (radius - 22.f),
+					cy + sinf(rot - DEG2RAD(10)) * (radius - 22.f)),
+				color);
+		};
+
+		
+		draw_arrow(side > 0.0f ? PI : -PI * 4, IM_COL32(settings::esp::aa_indicator_color.r(), settings::esp::aa_indicator_color.g(), settings::esp::aa_indicator_color.b(), settings::esp::aa_indicator_color.a()));
+		//globals::draw_list->AddText(NULL, 19.f, ImVec2(side > 0.0f ? cx - 50 : cx + 40, cy - 10), IM_COL32(255, 255, 255, 255), side > 0.0f ? "<" : ">");
 	}
 
 	void DesyncChams()

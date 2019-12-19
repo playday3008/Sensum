@@ -140,7 +140,7 @@ namespace hooks
 		auto original = hook.get_original<fn>(index);
 
 		/*if (strstr(FilePath, "arms"))
-			sprintf(FilePath, "models/player/custom_player/kuristaja/nanosuit/nanosuit_arms.mdl"); */
+			sprintf(FilePath, "models/player/custom_player/kuristaja/nanosuit/nanosuit_arms.mdl");*/
 
 		return original(ecx, FilePath);
 	}

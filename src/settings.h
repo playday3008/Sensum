@@ -183,6 +183,7 @@ namespace settings
 		extern Color occludedColor;
 
 		extern Color colorSoundEsp;
+		extern Color aa_indicator_color;
 	}
 
 	namespace glow

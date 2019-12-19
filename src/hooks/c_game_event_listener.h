@@ -86,6 +86,11 @@ void WeaponCheck(std::string weapon, c_base_player* player)
 	static int white = 0;
 
 	std::stringstream text;
+
+	/*if (strstr(weapon.c_str(), "item_kevlar") || strstr(weapon.c_str(), "item_assaultsuit"))
+		text.str().c_str = "";*/ // WIP
+
+
 	text << allcolors[yellow] << "[Buy]" << " " << allcolors[green] << "Player " << allcolors[white] << player->GetPlayerInfo().szName << allcolors[green] << "bought" << allcolors[white] << wepName;
 
 	g::hud_chat->ChatPrintf(0, filter, text.str().c_str());

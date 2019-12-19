@@ -53,6 +53,7 @@ namespace settings
 		Color visibleColor = Color(0, 200, 80);
 		Color occludedColor = Color(0, 0, 0);
 		Color colorSoundEsp = Color(154, 0, 255, 255);
+		Color aa_indicator_color = Color(255, 255, 255, 255);
 	}
 
 	namespace glow
@@ -279,6 +280,7 @@ namespace settings
 			Option::Load(root["esp.buylog"], esp::buylog);
 			Option::Load(root["esp.visible_color"], esp::visibleColor, Color(0, 200, 80));
 			Option::Load(root["esp.occluded_color"], esp::occludedColor, Color::Black);
+			Option::Load(root["esp.aa_indicator_color"], esp::aa_indicator_color, Color::White);
 			Option::Load(root["esp.is_desyncing"], esp::is_desyncing);
 
 			Option::Load(root["visuals.world_grenades"], visuals::world_grenades, true);
@@ -544,6 +546,7 @@ namespace settings
 			Option::Save(config["esp.occluded_color"], esp::occludedColor);
 			Option::Save(config["esp.draw_aimbot_fov_color"], settings::visuals::drawfov_color);
 			Option::Save(config["visuals.sky"], visuals::sky);
+			Option::Save(config["esp.aa_indicator_color"], esp::aa_indicator_color);
 
 			config["visuals.world_grenades"] = visuals::world_grenades;
 			config["visuals.sniper_crosshair"] = visuals::sniper_crosshair;
