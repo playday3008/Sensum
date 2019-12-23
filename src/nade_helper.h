@@ -5,15 +5,13 @@
 #include "features/features.h"
 #include "globals.h"
 
-struct nadedata
+class GrenadeData
 {
-	const char* name;
-	const char* description;
-	const char* weapon;
-	float posx;
-	float posy;
-	float posz;
-	float anglex;
-	float angley;
-	float anglez;
+public:
+	std::string info;
+	Vector pos = Vector(0, 0, 0);
+	Vector ang = Vector(0, 0, 0);
+	float ring_height = 0.f;
 };
+
+

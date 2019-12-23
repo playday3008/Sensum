@@ -481,11 +481,11 @@ namespace visuals
 
 		auto draw_arrow = [&](float rot, ImU32 color) -> void
 		{
-			globals::draw_list->AddTriangleFilled(ImVec2(cx + 1.f + cosf(rot) * radius, cy + 1.f + sinf(rot) * radius),
-				ImVec2(cx + 1.f + cosf(rot + DEG2RAD(10)) * (radius - 22.f),
-					cy + 1.f + sinf(rot + DEG2RAD(10)) * (radius - 22.f)),
-				ImVec2(cx + 1.f + cosf(rot - DEG2RAD(10)) * (radius - 22.f),
-					cy + 1.f + sinf(rot - DEG2RAD(10)) * (radius - 22.f)),
+			globals::draw_list->AddTriangleFilled(ImVec2(cx + cosf(rot) * radius, cy + sinf(rot) * radius),
+				ImVec2(cx + cosf(rot + DEG2RAD(10)) * (radius - 23.f),
+					cy + sinf(rot + DEG2RAD(10)) * (radius - 23.f)),
+				ImVec2(cx + cosf(rot - DEG2RAD(10)) * (radius - 23.f),
+					cy + sinf(rot - DEG2RAD(10)) * (radius - 23.f)),
 				IM_COL32_BLACK);
 
 			globals::draw_list->AddTriangleFilled(ImVec2(cx + cosf(rot) * radius, cy + sinf(rot) * radius),

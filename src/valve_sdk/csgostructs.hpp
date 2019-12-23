@@ -273,6 +273,7 @@ public:
 	bool IsRifle();
 	bool IsPistol();
 	bool IsSniper();
+	bool IsSmoke();
 	bool HasScope();
 	bool IsGun();
 

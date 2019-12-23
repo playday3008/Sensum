@@ -448,6 +448,13 @@ bool c_base_combat_weapon::IsSniper()
 	return get_weapon_data()->WeaponType == WEAPONTYPE_SNIPER_RIFLE;
 }
 
+bool c_base_combat_weapon::IsSmoke()
+{
+	auto index = m_iItemDefinitionIndex();
+
+	return index == WEAPON_SMOKEGRENADE;
+}
+
 bool c_base_combat_weapon::HasScope()
 {
 	auto index = m_iItemDefinitionIndex();

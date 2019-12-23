@@ -236,6 +236,7 @@ namespace settings
 		bool edge_jump_duck_in_air = false;
 		bool override_viewmodel = false;
 		bool block_bot = false;
+		bool smoke_helper = false;
 
 		float viewmodel_offset_x = 0.f;
 		float viewmodel_offset_y = 0.f;

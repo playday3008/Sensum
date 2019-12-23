@@ -49,10 +49,12 @@ namespace visuals
 	void DesyncChams();
 	void AAIndicator();
 	void KnifeLeft();
-	void NadeHelper();
+	void DrawRing3D();
 	void DrawDamageIndicator();
 	void runCM(CUserCmd* cmd);
 	void renderSkeleton(c_base_player* pEntity);
+	void RenderInfo(ImDrawList* draw_list);
+	void RenderCircle(ImDrawList* draw_list);
 }
 
 namespace esp

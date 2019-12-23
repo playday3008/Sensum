@@ -367,6 +367,7 @@ namespace settings
 		extern bool override_viewmodel;
 		extern bool edge_jump_duck_in_air;
 		extern bool block_bot;
+		extern bool smoke_helper;
 
 		extern float viewmodel_offset_x;
 		extern float viewmodel_offset_y;

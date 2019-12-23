@@ -94,6 +94,12 @@ namespace esp
 			entities::local_mutex.unlock();
 		}
 
+		if (settings::misc::smoke_helper)
+		{
+			visuals::RenderInfo(draw_list);
+			visuals::RenderCircle(draw_list);
+		}
+			
 		static const auto white_color = ImGui::GetColorU32(ImVec4::White);
 		static const auto smoke_color = ImGui::GetColorU32(ImVec4(1.f, 1.f, 1.f, 0.4f));
 		static const auto orange_color = ImGui::GetColorU32(ImVec4::Orange);
@@ -431,6 +437,38 @@ void VGSHelper::DrawText(std::string text, float x, float y, Color color, int si
 	{
 		g::surface->DrawSetTextPos(x, y);
 		g::surface->DrawPrintText(buf, wcslen(buf));
+	}
+}
+
+void VGSHelper::DrawRing3D(int16_t x, int16_t y, int16_t z, int16_t radius, uint16_t points, Color color1, float thickness)
+{
+	Vector pos = Vector(x, y, z);
+
+	float step = (float)M_PI * 2.0f / points;
+
+	for (float a = 0; a < (M_PI * 2.0f); a += step)
+	{
+		Vector start(radius * cosf(a) + pos.x, radius * sinf(a) + pos.y, pos.z);
+		Vector end(radius * cosf(a + step) + pos.x, radius * sinf(a + step) + pos.y, pos.z);
+
+		Vector start2d;
+		Vector end2d;
+
+		Vector start22d(start2d.x, start2d.y);
+		Vector end22d(end2d.x, end2d.y);
+		if (math::world2screen(start, start2d) &&
+			math::world2screen(end, end2d))
+		{
+			start22d.x = start2d.x;
+			start22d.y = start2d.y;
+
+			end22d.x = end2d.x;
+			end22d.y = end2d.y;
+
+			VGSHelper::Get().DrawLine(start22d[0], start22d[1], end22d[0], end22d[1], Color::White);
+
+			//DrawLine(start22d, end22d, color1, thickness);
+		}
 	}
 }
 

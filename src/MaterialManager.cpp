@@ -220,6 +220,7 @@ void MaterialManager::OverrideMaterial(bool ignoreZ, bool flat, bool wireframe, 
 	{
 		material = materialFlat;
 		material->AlphaModulate(0.45f);
+		material->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, ignoreZ);
 	}
 
 	material->SetMaterialVarFlag(MATERIAL_VAR_WIREFRAME, wireframe);

@@ -236,6 +236,8 @@ namespace render
 				checkbox("No 3rd Person on Equiped Weapons.", &settings::misc::disable_on_weapon);
 				checkbox("Anti OBS", &settings::misc::anti_obs);
 				checkbox("Left Hand Knife", &settings::misc::lefthandknife);
+				checkbox("Smoke Helper (?)", &settings::misc::smoke_helper);
+				tooltip("Jump = jump throw, LClick/RClick = left/right mouse buttons.");
 				checkbox("-98 Nade (?)", &settings::misc::selfnade);
 				tooltip("Look up, Hold mouse 2,When you're fully primed to throw with mouse 2 start holding mouse 1, crouch when released.");
 				columns(2);

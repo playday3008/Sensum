@@ -77,9 +77,6 @@ namespace hooks
 		vgui_panel::hook.setup(interfaces::vgui_panel, xorstr_("vgui2.dll"));
 		vgui_panel::hook.hook_index(vgui_panel::paint_traverse::index, vgui_panel::paint_traverse::hooked);
 
-		//mdlrender::hook.setup(interfaces::g_studiorender);
-		//mdlrender::hook.hook_index(mdlrender::draw_model_execute::index, mdlrender::draw_model_execute::hooked);
-
 		sound_hook::hook.setup(interfaces::engine_sound, xorstr_("engine.dll"));
 		sound_hook::hook.hook_index(sound_hook::emit_sound1::index, sound_hook::emit_sound1::hooked);
 
@@ -88,9 +85,6 @@ namespace hooks
 
 		events::hook.setup(interfaces::game_events, xorstr_("engine.dll"));
 		events::hook.hook_index(events::fire_event::index, events::fire_event::hooked);
-
-		//SL::hook.setup(interfaces::g_SpatialPartition);
-		//SL::hook.hook_index(SL::SuppressList::index, SL::SuppressList::hooked);
 
 		engine_mode::hook.setup(g::engine_client);
 		engine_mode::hook.hook_index(engine_mode::IsConnected::index, engine_mode::IsConnected::hooked);
@@ -125,10 +119,8 @@ namespace hooks
 		client_mode::hook.unhook_all();
 		vgui_panel::hook.unhook_all();
 		sound_hook::hook.unhook_all();
-		//mdlrender::hook.unhook_all();
 		renderview::hook.unhook_all();
 		events::hook.unhook_all();
-		//SL::hook.unhook_all();
 		engine_mode::hook.unhook_all();
 		find_mdl_override::hook.unhook_all();
 
@@ -168,31 +160,13 @@ namespace hooks
 		if (!g::local_player->m_bIsScoped())
 			view->fov = settings::misc::debug_fov;
 
-		if (globals::binds::fake_duck > 0)
+		if (globals::binds::fake_duck > 0 && input_system::is_key_down(globals::binds::fake_duck))
 		{
 			view->origin.z = g::local_player->GetAbsOrigin().z + 64.f;
 		}
 
-		//view->fov = settings::misc::debug_fov;
-
 		original(interfaces::client_mode, view);
 	}
-
-	/*void __stdcall SL::SuppressList::hooked(int a2, bool a3) {
-		static auto ofunc = hook.get_original<fn>(index);
-
-		static auto OnRenderStart_Return = utils::pattern_scan(("client_panorama.dll"), "FF 50 40 8B 1D ? ? ? ?") + 0x3;
-		static auto FrameNetUpdateEnd_Return = utils::pattern_scan(("client_panorama.dll"), "5F 5E 5D C2 04 00 83 3D ? ? ? ? ?");
-
-		if (g::local_player && g::local_player->IsAlive()) {
-			if (_ReturnAddress() == OnRenderStart_Return) {
-				static auto set_abs_angles = utils::pattern_scan(("client_panorama.dll"), "55 8B EC 83 E4 F8 83 EC 64 53 56 57 8B F1 E8");
-				reinterpret_cast<void(__thiscall*)(void*, const QAngle&)>(set_abs_angles)(g::local_player, QAngle(0.0f, g_AnimState.m_flGoalFeetYaw, 0.0f));
-			}
-		}
-
-		ofunc(g::g_SpatialPartition, a2, a3);
-	}*/
 
 	void __stdcall vgui_panel::paint_traverse::hooked(vgui::VPANEL panel, bool forceRepaint, bool allowForce)
 	{
@@ -202,7 +176,8 @@ namespace hooks
 		if (g::engine_client->IsInGame() && g::engine_client->IsConnected() && settings::misc::noscope && !strcmp("HudZoom", interfaces::vgui_panel->GetName(panel)))
 			return;
 
-		//visuals::NadeHelper(); //todo
+		if (settings::misc::smoke_helper)
+			visuals::DrawRing3D();
 
 		if (settings::visuals::choke)
 			visuals::Choke();
@@ -243,21 +218,6 @@ namespace hooks
 		}
 	}
 
-	/*void __fastcall mdlrender::draw_model_execute::hooked(void* pEcx, void* pEdx, void* pResults, DrawModelInfo_t* pInfo, matrix3x4_t* pBoneToWorld, float* flpFlexWeights, float* flpFlexDelayedWeights, Vector& vrModelOrigin, int32_t iFlags)
-	{
-		static auto original = hook.get_original<DrawModelExecute>(index);
-
-		//visuals::chams_misc(pInfo);
-		//bool forced_mat = !g::mdl_render->IsForcedMaterialOverride();
-		//if (forced_mat)
-			//Chams::Get().OnDrawModelExecute(pResults, pInfo, pBoneToWorld, flpFlexWeights, flpFlexDelayedWeights, vrModelOrigin, iFlags);
-
-		original(pEcx, pResults, pInfo, pBoneToWorld, flpFlexWeights, flpFlexDelayedWeights, vrModelOrigin, iFlags);
-
-		//if (forced_mat)
-			//g::mdl_render->ForcedMaterialOverride(nullptr);
-	}*/
-
 	void __stdcall sound_hook::emit_sound1::hooked(IRecipientFilter& filter, int iEntIndex, int iChannel, const char* pSoundEntry, unsigned int nSoundEntryHash, const char* pSample, float flVolume, int nSeed, float flAttenuation, int iFlags, int iPitch, const Vector* pOrigin, const Vector* pDirection, void* pUtlVecOrigins, bool bUpdatePositions, float soundtime, int speakerentity, int unk)
 	{
 		static const auto original = hook.get_original<fn>(index);
@@ -289,11 +249,11 @@ namespace hooks
 	{
 		static const auto original = hook.get_original<fn>(index);
 
-		Chams::Get().OnSceneEnd(); //not causing fps drops
-		visuals::more_chams(); //not causing fps drops
+		Chams::Get().OnSceneEnd();
+		visuals::more_chams();
 
 		if (settings::chams::desync && settings::desync::enabled2)
-			visuals::DesyncChams(); //not causing fps drops
+			visuals::DesyncChams();
 
 		original(view);
 
@@ -305,10 +265,10 @@ namespace hooks
 	{
 		static auto original = hook.get_original<fn>(index);
 
-		visuals::glow(); //not causing fps drops
+		visuals::glow();
 
 		if (settings::glow::glowOverride)
-			visuals::glow_override(); //not causing fps drops
+			visuals::glow_override();
 
 		return original(interfaces::client_mode, value);
 	}
