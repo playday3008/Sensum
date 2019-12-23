@@ -120,7 +120,6 @@ GrenadeData Cache[] =
 {
 	{ "B Center (LClick)", Vector(827.971313f, -1463.968750f, 1614.093750f), Vector(-21.995483f, 162.191437f, 0.f), 0.f },
 	{ "Mid Center (LClick)", Vector(1711.974121f, 463.987732f, 1614.093750f), Vector(-10.675973f, -167.299591f, 0.f), 0.f },
-	{ "White Box (LClick)", Vector(2156.583740f, -182.968750f, 1613.483887f), Vector(-22.077839f, 161.943924f, 0.f), 0.f },
 	{ "One-way (LClick)", Vector(1037.031250f, 513.031250f, 1613.550293f), Vector(-49.137814f, 104.639671f, 0.f), 0.f },
 	{ "Mid (LClick)", Vector(1711.968750f, -71.968750f, 1614.093750f), Vector(-10.560504f, 161.185349f, 0.f), 0.f },
 	{ "Bombsite A (Duck)", Vector(154.413376f, 2096.080566f, 1688.093750f), Vector(9.370919f, -29.337667f, 0.f), 0.f },
