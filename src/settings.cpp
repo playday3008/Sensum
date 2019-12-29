@@ -165,6 +165,8 @@ namespace settings
 		float player_info_box_alpha = 1.0f;
 		float grief_box_alpha = 1.0f;
 		int viewmodel_mode = 0;
+		bool no_sky = false;
+		bool no_shadows = false;
 
 		ImVec4 sky = ImVec4(0.25, 0.25, 0.25, 1.0);
 		ImVec4 recoilcolor = ImVec4{ 0.f, 0.f, 0.f, 1.0f };
@@ -292,6 +294,8 @@ namespace settings
 			Option::Load(root["visuals.dropped_weapons"], visuals::dropped_weapons);
 			Option::Load(root["visuals.sky"], visuals::sky, ImVec4(0.25, 0.25, 0.25, 1.0));
 			Option::Load(root["visuals.night_mode"], visuals::night_mode);
+			Option::Load(root["visuals.no_sky"], visuals::no_sky);
+			Option::Load(root["visuals.no_shadows"], visuals::no_shadows);
 
 			imdraw::apply_style(visuals::night_mode);
 
@@ -390,6 +394,7 @@ namespace settings
 			Option::Load(root["misc.edge_jump"], settings::misc::edge_jump);
 			Option::Load(root["misc.edge_jump_duck_in_air"], settings::misc::edge_jump_duck_in_air);
 			Option::Load(root["misc.anti_obs"], misc::anti_obs);
+			Option::Load(root["misc.smoke_helper"], misc::smoke_helper);
 
 			Option::Load(root["glow.enemy"], glow::glowEnemyEnabled);
 			Option::Load(root["glow.team"], glow::glowTeamEnabled);
@@ -556,7 +561,10 @@ namespace settings
 			config["visuals.planted_c4"] = visuals::planted_c4;
 			config["visuals.dropped_weapons"] = visuals::dropped_weapons;
 			config["visuals.night_mode"] = visuals::night_mode;
+			config["visuals.no_sky"] = visuals::no_sky;
+			config["visuals.no_shadows"] = visuals::no_shadows;
 
+				
 			config["chams.visible_only"] = chams::visible_only;
 			config["chams.flat"] = chams::flat;
 			config["chams.wireframe"] = chams::wireframe;
@@ -649,6 +657,7 @@ namespace settings
 			config["misc.edge_jump"] = settings::misc::edge_jump;
 			config["misc.edge_jump_duck_in_air"] = settings::misc::edge_jump_duck_in_air;
 			config["misc.anti_obs"] = misc::anti_obs;
+			config["misc.smoke_helper"] = misc::smoke_helper;
 
 			Option::Save(config["misc_spread_crosshair_color"], settings::visuals::spread_cross_color);
 			Option::Save(config["mics.rcs_cross_color"], visuals::recoilcolor);

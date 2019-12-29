@@ -52,9 +52,10 @@ namespace visuals
 	void DrawRing3D();
 	void DrawDamageIndicator();
 	void runCM(CUserCmd* cmd);
-	void renderSkeleton(c_base_player* pEntity);
 	void RenderInfo(ImDrawList* draw_list);
 	void RenderCircle(ImDrawList* draw_list);
+	void remove_3dsky();
+	void remove_shadows();
 }
 
 namespace esp

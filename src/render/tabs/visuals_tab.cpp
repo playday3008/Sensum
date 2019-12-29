@@ -144,6 +144,8 @@ namespace render
 				checkbox("Money ESP", &settings::esp::money);
 				checkbox("Choke ESP", &settings::visuals::choke);
 				checkbox("Sound ESP", &settings::esp::soundesp);
+				checkbox("No Sky", &settings::visuals::no_sky);
+				checkbox("No Shadows", &settings::visuals::no_shadows);
 
 				//checkbox("Beams", u8"Лучи света", &settings::esp::beams); //Doesnt work.
 				//checkbox("Sound Direction (?)", &settings::esp::sound); //Doesnt work.
@@ -236,7 +238,6 @@ namespace render
 				}
 				columns(1);
 
-				//checkbox("Viewmodel Weapons", &settings::chams::wepchams);
 				ImGui::SameLine();
 				checkbox("Planted C4", &settings::chams::plantedc4_chams);
 				checkbox("Weapons (?)       ", &settings::chams::wep_droppedchams);
@@ -244,11 +245,6 @@ namespace render
 				ImGui::SameLine();
 				checkbox("Nades", &settings::chams::nade_chams);
 				checkbox("Health Chams", &settings::chams::health_chams);
-
-				//separator("BT Chams - Mode");
-				//ImGui::Combo("BT Chams Mode", &settings::chams::bttype, bttype, IM_ARRAYSIZE(bttype));
-				//checkbox("BT Chams - Flat", &settings::chams::btflat);
-				//ColorEdit4("BT Color", &settings::chams::btColorChams);
 
 				/*separator("Arms", u8"Руки");
 

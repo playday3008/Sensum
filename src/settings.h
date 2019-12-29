@@ -292,6 +292,8 @@ namespace settings
 		extern float player_info_box_alpha;
 		extern float grief_box_alpha;
 		extern int viewmodel_mode;
+		extern bool no_sky;
+		extern bool no_shadows;
 
 		extern ImVec4 spread_cross_color;
 		extern ImVec4 drawfov_color;

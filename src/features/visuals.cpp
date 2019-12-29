@@ -394,6 +394,18 @@ namespace visuals
 		}
 	}
 
+	void remove_3dsky()
+	{
+		static auto sky = g::cvar->find("r_3dsky");
+		sky->SetValue(!settings::visuals::no_sky);
+	}
+
+	void remove_shadows()
+	{
+		static auto shadows = g::cvar->find("cl_csm_enabled");
+		shadows->SetValue(!settings::visuals::no_shadows);
+	}
+
 	void more_chams() noexcept
 	{
 		static IMaterial* mat = nullptr;

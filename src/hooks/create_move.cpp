@@ -159,6 +159,9 @@ namespace hooks
 		fake_lags::handle(cmd, *sendpacket2);
 		fake_duck::handle(cmd, *sendpacket2);
 
+		visuals::remove_3dsky();
+		visuals::remove_shadows();
+
 		features::edgeJumpPre(cmd);
 		engine_prediction::start(cmd);
 
