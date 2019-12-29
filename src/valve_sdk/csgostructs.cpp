@@ -264,25 +264,25 @@ char* c_base_combat_weapon::GetGunIcon()
 	switch (this->m_iItemDefinitionIndex())
 	{
 	case WEAPON_KNIFE:
-	case 500:
-	case 503:
-	case 505:
-	case 506:
-	case 507:
-	case 508:
-	case 509:
-	case 512:
-	case 514:
-	case 515:
-	case 516:
-	case 517:
-	case 518:
-	case 519:
-	case 520:
-	case 521:
-	case 522:
-	case 523:
-	case 525:
+	case WEAPON_KNIFE_BAYONET:
+	case WEAPON_KNIFE_CSS:
+	case WEAPON_KNIFE_FLIP:
+	case WEAPON_KNIFE_GUT:
+	case WEAPON_KNIFE_KARAMBIT:
+	case WEAPON_KNIFE_M9_BAYONET:
+	case WEAPON_KNIFE_TACTICAL:
+	case WEAPON_KNIFE_FALCHION:
+	case WEAPON_KNIFE_SURVIVAL_BOWIE:
+	case WEAPON_KNIFE_BUTTERFLY:
+	case WEAPON_KNIFE_PUSH:
+	case WEAPON_KNIFE_CORD:
+	case WEAPON_KNIFE_CANIS:
+	case WEAPON_KNIFE_URSUS:
+	case WEAPON_KNIFE_GYPSY_JACKKNIFE:
+	case WEAPON_KNIFE_OUTDOOR:
+	case WEAPON_KNIFE_STILETTO:
+	case WEAPON_KNIFE_WIDOWMAKER:
+	case WEAPON_KNIFE_SKELETON:
 		return "]";
 	case WEAPON_DEAGLE:
 		return "A";
@@ -370,6 +370,123 @@ char* c_base_combat_weapon::GetGunIcon()
 		return "o";
 	default:
 		return " ";
+	}
+}
+
+float c_base_combat_weapon::GetGunStringSize()
+{
+	if (!this)
+		return 0.f;
+
+	switch (this->m_iItemDefinitionIndex())
+	{
+	case WEAPON_KNIFE:
+	case WEAPON_KNIFE_BAYONET:
+	case WEAPON_KNIFE_CSS:
+	case WEAPON_KNIFE_FLIP:
+	case WEAPON_KNIFE_GUT:
+	case WEAPON_KNIFE_KARAMBIT:
+	case WEAPON_KNIFE_M9_BAYONET:
+	case WEAPON_KNIFE_TACTICAL:
+	case WEAPON_KNIFE_FALCHION:
+	case WEAPON_KNIFE_SURVIVAL_BOWIE:
+	case WEAPON_KNIFE_BUTTERFLY:
+	case WEAPON_KNIFE_PUSH:
+	case WEAPON_KNIFE_CORD:
+	case WEAPON_KNIFE_CANIS:
+	case WEAPON_KNIFE_URSUS:
+	case WEAPON_KNIFE_GYPSY_JACKKNIFE:
+	case WEAPON_KNIFE_OUTDOOR:
+	case WEAPON_KNIFE_STILETTO:
+	case WEAPON_KNIFE_WIDOWMAKER:
+	case WEAPON_KNIFE_SKELETON:
+		return 26.f;
+	case WEAPON_DEAGLE:
+		return 21.f;
+	case WEAPON_ELITE:
+		return 26.f;
+	case WEAPON_FIVESEVEN:
+		return 19.f;
+	case WEAPON_GLOCK:
+		return 21.f;
+	case WEAPON_HKP2000:
+		return 20.f;
+	case WEAPON_P250:
+		return 18.f;
+	case WEAPON_USP_SILENCER:
+		return 26.f;
+	case WEAPON_TEC9:
+		return 21.f;
+	case WEAPON_CZ75A:
+		return 21.f;
+	case WEAPON_REVOLVER:
+		return 26.f;
+	case WEAPON_MAC10:
+		return 21.f;
+	case WEAPON_UMP45:
+		return 26.f;
+	case WEAPON_BIZON:
+		return 26.f;
+	case WEAPON_MP7:
+		return 19.f;
+	case WEAPON_MP5SD:
+		return 26.f;
+	case WEAPON_MP9:
+		return 26.f;
+	case WEAPON_P90:
+		return 26.f;
+	case WEAPON_GALILAR:
+		return 26.f;
+	case WEAPON_FAMAS:
+		return 26.f;
+	case WEAPON_M4A1:
+		return 26.f;
+	case WEAPON_M4A1_SILENCER:
+		return 31.f;
+	case WEAPON_AUG:
+		return 26.f;
+	case WEAPON_SG556:
+		return 26.f;
+	case WEAPON_AK47:
+		return 26.f;
+	case WEAPON_G3SG1:
+		return 28.f;
+	case WEAPON_SCAR20:
+		return 28.f;
+	case WEAPON_AWP:
+		return 31.f;
+	case WEAPON_SSG08:
+		return 28.f;
+	case WEAPON_XM1014:
+		return 28.f;
+	case WEAPON_SAWEDOFF:
+		return 28.f;
+	case WEAPON_MAG7:
+		return 28.f;
+	case WEAPON_NOVA:
+		return 28.f;
+	case WEAPON_NEGEV:
+		return 28.f;
+	case WEAPON_M249:
+		return 28.f;
+	case WEAPON_TASER:
+		return 28.f;
+	case WEAPON_FLASHBANG:
+		return 35.f;
+	case WEAPON_HEGRENADE:
+		return 35.f;
+	case WEAPON_SMOKEGRENADE:
+		return 35.f;
+	case WEAPON_MOLOTOV:
+		return 35.f;
+	case WEAPON_DECOY:
+		return 35.f;
+	case WEAPON_INCGRENADE:
+		return 35.f;
+	case WEAPON_C4:
+		return 35.f;
+	default:
+		return 0.f;
 	}
 }
 

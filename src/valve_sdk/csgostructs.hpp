@@ -266,6 +266,7 @@ public:
 	CCSWeaponInfo* get_weapon_data();
 	bool HasBullets();
 	char* GetGunIcon();
+	float GetGunStringSize();
 	bool CanFire();
 	bool IsGrenade();
 	bool IsKnife();

@@ -381,6 +381,7 @@ namespace entities
 			player_data.weapon = utils::get_weapon_name(player->m_hActiveWeapon());
 			player_data.icon = player->m_hActiveWeapon()->GetGunIcon();
 			player_data.kevlar_icon = player->GetArmorIcon();
+			player_data.wep_str_size = player->m_hActiveWeapon()->GetGunStringSize();
 
 			player_data.is_dormant = false;
 			player_data.is_scoped = player->m_bIsScoped();

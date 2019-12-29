@@ -368,8 +368,7 @@ namespace esp
 					break;
 				case 1:
 					ImGui::PushFont(render::fonts::weapon_icon);
-					//imdraw::outlined_text(data.icon.c_str(), ImVec2(box.left + width / 2.f - 28 / 2.f, y_pos), white_color); //was 33
-					imdraw::outlined_text(data.icon.c_str(), ImVec2(box.left + width / 2.f - (icon_size.x + 24) / 2.f, y_pos), white_color); //was 28
+					imdraw::outlined_text(data.icon.c_str(), ImVec2(box.left + width / 2.f - data.wep_str_size / 2.f, y_pos), white_color); //was 28
 					ImGui::PopFont();
 					break;
 				}

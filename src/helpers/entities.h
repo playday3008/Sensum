@@ -52,6 +52,8 @@ namespace entities
 		std::string icon;
 		std::string kevlar_icon;
 
+		float wep_str_size;
+
 		bool is_shooting = false;
 		Vector shot_origin;
 
