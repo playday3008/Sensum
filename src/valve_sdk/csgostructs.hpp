@@ -174,7 +174,6 @@ public:
 	bool IsWeapon();
 	bool IsPlantedC4();
 	bool IsDefuseKit();
-	int getWeaponSubType();
 	bool is_dormant();
 	Vector& GetAbsOrigin();
 	void SetAbsOrigin(const Vector& origin);

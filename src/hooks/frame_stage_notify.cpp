@@ -31,10 +31,6 @@ namespace hooks
 
 	void __stdcall post_data_update::hooked(int update_type)
 	{
-		skins::handle();
-		resolver::handle();
-		sound_esp.draw();
-
 		hook.get_original<fn>(index)(static_cast<IClientNetworkable*>(interfaces::local_player), update_type);
 	}
 }

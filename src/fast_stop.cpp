@@ -51,9 +51,6 @@ namespace features
 
 			if (!(cmd->buttons & IN_BACK))
 			{
-				if (cmd->buttons & IN_MOVELEFT || cmd->buttons & IN_MOVERIGHT || settings::misc::auto_strafe)
-					return;
-
 				cmd->forwardmove -= -move_backward.x;
 			}
 		}

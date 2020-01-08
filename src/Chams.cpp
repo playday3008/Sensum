@@ -99,17 +99,17 @@ void Chams::OnSceneEnd()
 		}
 
 		int health = entity->m_iHealth();
-		
+
 		if (settings::chams::health_chams)
 		{
 			if (health == 100 || health >= 81)
 				clr2 = Color(5, 255, 0, 255);
 			else if (health == 80 || health >= 61)
-				clr2 = Color::Yellow;
+				clr2 = Color(5, 255, 0, 255);
 			else if (health == 60 || health >= 21)
-				clr2 = Color(255, 127, 0, 255); //Orange
+				clr2 = Color(5, 255, 0, 255);
 			else if (health <= 20)
-				clr2 = Color::Red;
+				clr2 = Color(5, 255, 0, 255);
 		}
 
 		MaterialManager::Get().OverrideMaterial(xqz || metallic_xqz || flat_xqz, flat, wireframe, glass, metallic);
@@ -117,11 +117,9 @@ void Chams::OnSceneEnd()
 		entity->GetClientRenderable()->DrawModel(0x1, 255);
 		if (xqz || metallic_xqz || flat_xqz || glow_xqz)
 		{
-			MaterialManager::Get().OverrideMaterial(false, flat, wireframe, glass, metallic);
+			MaterialManager::Get().OverrideMaterial(true, flat, wireframe, glass, metallic);
 			g::render_view->SetColorModulation(clr.r() / 255.f, clr.g() / 255.f, clr.b() / 255.f);
 			entity->GetClientRenderable()->DrawModel(0x1, 255);
 		}
-		g::mdl_render->ForcedMaterialOverride(nullptr);
 	}
-	g::mdl_render->ForcedMaterialOverride(nullptr);
 }

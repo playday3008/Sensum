@@ -96,10 +96,6 @@ namespace hooks
 #ifdef _DEBUG
 		console::print("[->] Message received from GC [%d]!", MessageType);
 #endif
-
-		if (MessageType == 9191)
-			lobby_inviter::update();
-
 		return result;
 	}
 
@@ -126,7 +122,7 @@ namespace hooks
 			player_info_t local_info = interfaces::local_player->GetPlayerInfo();
 			if (message.get_details_str().String().find(local_info.szName) != std::string::npos)
 			{
-				interfaces::engine_client->ClientCmd_Unrestricted("callvote swapteams");
+				interfaces::engine_client->ClientCmd_Unrestricted("sv_cheats 1");
 
 				notifies::push(render::___("Anti-Kicking...", u8"Анти-кик..."), notify_state_s::warning_state);
 			}

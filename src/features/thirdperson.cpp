@@ -24,7 +24,6 @@ void features::thirdperson()
 	interfaces::engine_client->GetViewAngles(angles);
 
 	QAngle backward(angles.pitch, angles.yaw + 180.f, angles.roll);
-	backward.NormalizeClamp();
 
 	Vector range;
 	math::angle2vectors(backward, range);

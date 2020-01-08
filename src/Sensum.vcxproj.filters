@@ -193,9 +193,6 @@
     <ClCompile Include="features\zeusbot.cpp">
       <Filter>features\movement</Filter>
     </ClCompile>
-    <ClCompile Include="features\lighting_shots.cpp">
-      <Filter>features\movement</Filter>
-    </ClCompile>
     <ClCompile Include="helpers\http.cpp">
       <Filter>helpers</Filter>
     </ClCompile>
@@ -262,20 +259,11 @@
     <ClCompile Include="features\desync.cpp">
       <Filter>features\movement</Filter>
     </ClCompile>
-    <ClCompile Include="security\xor.h">
-      <Filter>security</Filter>
-    </ClCompile>
     <ClCompile Include="hooks\fire_bullets.cpp">
       <Filter>hooks</Filter>
     </ClCompile>
     <ClCompile Include="helpers\autowall.cpp">
       <Filter>helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="features\fake_duck.cpp">
-      <Filter>features\movement</Filter>
-    </ClCompile>
-    <ClCompile Include="features\lobby_inviter.cpp">
-      <Filter>features\misc</Filter>
     </ClCompile>
     <ClCompile Include="features\slow_walk.cpp">
       <Filter>features\movement</Filter>
@@ -336,6 +324,9 @@
     </ClCompile>
     <ClCompile Include="features\visuals.cpp">
       <Filter>features\visuals</Filter>
+    </ClCompile>
+    <ClCompile Include="security\xor.h">
+      <Filter>valve_sdk</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

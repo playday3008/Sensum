@@ -100,13 +100,6 @@ namespace skins
 	const char* get_icon_override(const std::string& original);
 }
 
-namespace lighting_shots
-{
-	extern bool need_switch_weapon;
-
-	void handle(CUserCmd* cmd);
-}
-
 namespace zeusbot
 {
 	void handle(CUserCmd* cmd);
@@ -152,23 +145,6 @@ namespace clantag
 namespace desync
 {
 	extern bool flip_yaw;
-	void handle(CUserCmd* cmd, bool& send_packet);
-	float get_max_desync_delta();
-}
-
-namespace fake_duck
-{
-	extern bool current_state;
-
-	void handle(CUserCmd* cmd, bool& send_packet);
-}
-
-namespace lobby_inviter
-{
-	extern 	uint32_t max_count;
-
-	void update();
-	void inviteAll();
 }
 
 namespace slow_walk

@@ -290,9 +290,9 @@ namespace entities
 	{
 		tick_data.local = local;
 		tick_data.angles = local->m_angEyeAngles();
-		tick_data.is_alive = local->IsAlive();
-		tick_data.is_flashed = local->IsFlashed();
-		tick_data.is_scoped = local->m_bIsScoped();
+		tick_data.is_alive = !local->IsAlive();
+		tick_data.is_flashed = !local->IsFlashed();
+		tick_data.is_scoped = !local->m_bIsScoped();
 
 		tick_data.tick_base = tick_base;
 
@@ -444,7 +444,6 @@ namespace entities
 				player_data.hitboxes[k][0] = (min + max) * 0.5f;
 
 				math::vector2angles(player_data.hitboxes[k][0] - eye_pos, aim_angles);
-				aim_angles.NormalizeClamp();
 
 				if (is_hitbox_has_multipoints(k))
 				{

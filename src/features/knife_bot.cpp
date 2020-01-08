@@ -70,7 +70,6 @@ namespace knife_bot
 						continue;
 
 					math::vector2angles(hitbox - eye_pos, angles);
-					angles.NormalizeClamp();
 
 					const auto old_angles = cmd->viewangles;
 					cmd->buttons |= distance <= stab_dist ? IN_ATTACK2 : IN_ATTACK;

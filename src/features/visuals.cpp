@@ -509,7 +509,7 @@ namespace visuals
 		};
 
 		
-		draw_arrow(side > 0.0f ? PI : -PI * 4, IM_COL32(settings::esp::aa_indicator_color.r(), settings::esp::aa_indicator_color.g(), settings::esp::aa_indicator_color.b(), settings::esp::aa_indicator_color.a()));
+		draw_arrow(side > 0.0f ? PI : PI * 2, IM_COL32(settings::esp::aa_indicator_color.r(), settings::esp::aa_indicator_color.g(), settings::esp::aa_indicator_color.b(), settings::esp::aa_indicator_color.a()));
 		//globals::draw_list->AddText(NULL, 19.f, ImVec2(side > 0.0f ? cx - 50 : cx + 40, cy - 10), IM_COL32(255, 255, 255, 255), side > 0.0f ? "<" : ">");
 	}
 
@@ -703,7 +703,7 @@ namespace visuals
 		if (!weapon)
 			return;
 
-		float spread = weapon->GetInaccuracy() * 1000;
+		float spread = weapon->GetInaccuracy() * 100;
 
 		if (spread == 0.f)
 			return;

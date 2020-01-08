@@ -130,12 +130,9 @@
     <ClCompile Include="features\color_modulate.cpp" />
     <ClCompile Include="features\desync.cpp" />
     <ClCompile Include="features\engine_prediction.cpp" />
-    <ClCompile Include="features\fake_duck.cpp" />
     <ClCompile Include="features\fake_lags.cpp" />
     <ClCompile Include="features\grenade_prediction.cpp" />
     <ClCompile Include="features\knife_bot.cpp" />
-    <ClCompile Include="features\lighting_shots.cpp" />
-    <ClCompile Include="features\lobby_inviter.cpp" />
     <ClCompile Include="features\moon_walk.cpp" />
     <ClCompile Include="features\no_flash.cpp" />
     <ClCompile Include="features\no_smoke.cpp" />

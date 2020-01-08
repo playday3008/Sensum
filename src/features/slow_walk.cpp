@@ -25,7 +25,7 @@ namespace slow_walk
 		if (!is_enabled(cmd))
 			return;
 
-		const float amount = 0.0034f * 60.f;
+		const float amount = 0.0034f * 180.f;
 		const auto velocity = interfaces::local_player->m_vecVelocity();
 
 		QAngle direction;

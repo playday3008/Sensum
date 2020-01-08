@@ -39,21 +39,6 @@ namespace hooks
 
 	long __stdcall d3d9::end_scene::hooked(IDirect3DDevice9* device)
 	{
-		static uintptr_t gameoverlay_return_address = 0;
-		if (!gameoverlay_return_address) {
-			MEMORY_BASIC_INFORMATION info;
-			VirtualQuery(_ReturnAddress(), &info, sizeof(MEMORY_BASIC_INFORMATION));
-
-			char mod[MAX_PATH];
-			GetModuleFileNameA((HMODULE)info.AllocationBase, mod, MAX_PATH);
-
-			if (strstr(mod, "gameoverlay"))
-				gameoverlay_return_address = (uintptr_t)(_ReturnAddress());
-		}
-
-		if (gameoverlay_return_address != (uintptr_t)(_ReturnAddress()) && settings::misc::anti_obs)
-			return hook.get_original<fn>(index)(device);
-
 		IDirect3DStateBlock9* pixel_state = NULL;
 		IDirect3DVertexDeclaration9* vertDec;
 		IDirect3DVertexShader9* vertShader;

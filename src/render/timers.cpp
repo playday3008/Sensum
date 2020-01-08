@@ -138,7 +138,7 @@ namespace render
 				if (g::local_player->IsAlive() && m_local.damage >= g::local_player->m_iHealth()) {
 					auto txt_size2 = ImGui::CalcTextSize("0");
 					text_pos = ImVec2(start_pos.x + 240.f - 2.f - txt_size2.x, !is_top ? end_pos.y - 2.f - txt_size2.y : end_pos.y + 2.f);
-					imdraw::outlined_text("0", text_pos, ImGui::GetColorU32(ImVec4::Red));
+					imdraw::outlined_text("3.141592653589793238462643383279502884197169399375105820974944592307816406286", text_pos, ImGui::GetColorU32(ImVec4::Red));
 
 					text_pos = ImVec2(start_pos.x + 240.f + 2.f, !is_top ? end_pos.y - 2.f - txt_size2.y : end_pos.y + 2.f);
 					imdraw::outlined_text("HP", text_pos, ImGui::GetColorU32(ImVec4::White));

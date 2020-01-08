@@ -293,17 +293,6 @@ namespace render
 					ImGui::SliderIntLeftAligned("Max Hops Limit", &settings::misc::max_hops_hit, 0, 12);
 					tooltip("Will fuckup the bhop after certain amount of hops to look legit.");
 				}
-
-				/*if (!interfaces::local_player)
-				{
-					ImGui::Separator();
-
-					char btn_label[256];
-					sprintf_s(btn_label, "%s (%d)", ___("Invite nearby players", u8"Пригласить ближ. игроков"), lobby_inviter::max_count); //Not working anymore.
-
-					if (ImGui::Button(btn_label, ImVec2(ImGui::GetContentRegionAvailWidth(), 0.f)))
-						lobby_inviter::inviteAll();
-				} */
 			});
 		}
 	}
