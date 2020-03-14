@@ -5,11 +5,10 @@
 #include "../helpers/console.h"
 #include "../helpers/entities.h"
 #include "..\\hooks\hooks.h"
-#include "..//Backtrack_new.h"
 #include "..//helpers/notifies.h"
 
-QAngle CurrentPunch = { 0,0,0 };
-QAngle RCSLastPunch = { 0,0,0 };
+static QAngle CurrentPunch = { 0,0,0 };
+static QAngle RCSLastPunch = { 0,0,0 };
 
 namespace aimbot
 {
@@ -288,6 +287,7 @@ namespace aimbot
 		if ((punch.pitch != 0.f || punch.yaw != 0.f) && interfaces::local_player->m_aimPunchAngle().roll == 0.f)
 		{
 			angle -= punch;
+			angle.NormalizeClamp();
 		}
 
 		punches::last_corrected = punch;
@@ -328,6 +328,7 @@ namespace aimbot
 			angle.pitch -= NewPunch.pitch * (a_settings.recoil.yaw / 50.f);
 			angle.yaw -= NewPunch.yaw * (a_settings.recoil.pitch / 50.f);
 		}
+		angle.NormalizeClamp();
 	}
 
 	void OnMove(CUserCmd* pCmd)
@@ -350,6 +351,7 @@ namespace aimbot
 			RCS2(angles, target);
 		}
 		RCSLastPunch = CurrentPunch;
+		angles.NormalizeClamp();
 		pCmd->viewangles = angles;
 		if (IsNotSilent(fov)) {
 			g::engine_client->SetViewAngles(angles);
@@ -521,6 +523,7 @@ namespace aimbot
 						continue;
 
 					math::vector2angles(hitbox - eye_pos, aim_angles);
+					aim_angles.NormalizeClamp();
 
 					fov = a_settings.dynamic_fov ?
 						math::GetRealDistanceFOV(eye_pos.DistTo(hitbox), current_angles, aim_angles) :
@@ -658,6 +661,7 @@ namespace aimbot
 
 				QAngle aim_angles;
 				math::vector2angles(hitbox - eye_pos, aim_angles);
+				aim_angles.NormalizeClamp();
 
 				result = item;
 				result.aim_angles = aim_angles;
@@ -847,12 +851,17 @@ namespace aimbot
 			if (!RCS(angles, target))
 				punches::last_corrected = { 0, 0, 0 };
 
+			angles.NormalizeClamp();
+
 			RCS(silent_angles, target);
+			silent_angles.NormalizeClamp();
 		}
 		punches::last = punches::current;
 
 		if (target)
 			math::smooth(a_settings.smooth, current, angles, angles, a_settings.recoil.humanize);
+
+		angles.NormalizeClamp();
 
 		cmd->viewangles = angles;
 

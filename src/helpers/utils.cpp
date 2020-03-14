@@ -49,16 +49,16 @@ namespace utils
 			type = interfaces::cvar->find("game_type");
 
 		if (type->GetInt() == 0 && mode->GetInt() == 0) //casual
-			return true;
+			return false;
 
 		if (type->GetInt() == 1 && mode->GetInt() == 1) //demolition
-			return true;
+			return false;
 
 		if (type->GetInt() == 1 && mode->GetInt() == 0) //arms race
-			return true;
+			return false;
 
 		if (type->GetInt() == 1 && mode->GetInt() == 2) //deathmatch
-			return true;
+			return false;
 
 		if (type->GetInt() == 0 && mode->GetInt() == 1) //competetive
 			return true;
@@ -72,7 +72,7 @@ namespace utils
 		if (type->GetInt() == 6 && mode->GetInt() == 0) //scrimmage
 			return true;
 
-		return true;
+		return false;
 	}
 
 	bool IsValveDS()
@@ -81,9 +81,9 @@ namespace utils
 			return true;
 
 		if (!g::game_rules_proxy->m_bIsValveDS())
-			return true;
+			return false;
 
-		return true;
+		return false;
 	}
 
 	void create_beam(const int& user_id, const Vector& end_pos)
@@ -107,8 +107,8 @@ namespace utils
 		beamInfo.m_nModelIndex = -1;
 		beamInfo.m_flHaloScale = 0.0f;
 		beamInfo.m_flLife = 1.f;
-		beamInfo.m_flWidth = 500.0f;
-		beamInfo.m_flEndWidth = 502.f;
+		beamInfo.m_flWidth = 2.0f;
+		beamInfo.m_flEndWidth = 2.0f;
 		beamInfo.m_flFadeLength = 0.0f;
 		beamInfo.m_flAmplitude = 2.0f;
 		beamInfo.m_flBrightness = 255.f;
@@ -217,6 +217,7 @@ namespace utils
 
 			QAngle viewAnglesSpread;
 			math::vector2angles(direction, up, viewAnglesSpread);
+			viewAnglesSpread.NormalizeClamp();
 
 			Vector viewForward;
 			math::angle2vectors(viewAnglesSpread, viewForward);

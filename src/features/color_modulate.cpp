@@ -25,9 +25,6 @@ namespace color_modulation
 	ConVar* viewmodel_fov = nullptr;
 	ConVar* debug_fov = nullptr;
 	ConVar* r_3dsky = nullptr;
-	ConVar* pitchup = nullptr;
-	ConVar* pitchdown = nullptr;
-	ConVar* noclip = nullptr;
 	ConVar* r_DrawSpecificStaticProp = nullptr;
 
 	ConVar* viewmodel_offset_x = nullptr;
@@ -256,6 +253,12 @@ namespace color_modulation
 			viewmodel_offset_y->SetValue(settings::misc::viewmodel_offset_y);
 			viewmodel_offset_z->SetValue(settings::misc::viewmodel_offset_z);
 		}
+		else
+		{
+			viewmodel_offset_x->SetValue(backup_viewmodel_x);
+			viewmodel_offset_y->SetValue(backup_viewmodel_y);
+			viewmodel_offset_z->SetValue(backup_viewmodel_z);
+		}
 	}
 
 	void SetMatForce()
@@ -265,7 +268,7 @@ namespace color_modulation
 
 		static auto mat_force_tonemap_scale = interfaces::cvar->find(xorstr_("mat_force_tonemap_scale"));
 
-		mat_force_tonemap_scale->SetValue(-settings::esp::mfts);
+		mat_force_tonemap_scale->SetValue(settings::esp::mfts);
 	}
 
 	void sniper_crosshair()
@@ -364,7 +367,7 @@ namespace color_modulation
 					night_mode_first = true; //Thanks, Credits to Klavaro - MartiNJ409
 				else continue;
 
-			sv_skyname->SetValue(settings::visuals::night_mode ? "sky_csgo_night02" : "sky_csgo_night02");
+			sv_skyname->SetValue(settings::visuals::night_mode ? "sky_csgo_night02" : sv_skyname_backup);
 		}
 	}
 }

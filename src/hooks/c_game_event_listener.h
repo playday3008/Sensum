@@ -3,7 +3,6 @@
 #include "..//HitPossitionHelper.h"
 #include "..//runtime_saver.h"
 #include "..//esp.hpp"
-#include "../soundesp.h"
 
 #pragma comment(lib, "Winmm.lib") //PlaySoundA fix
 
@@ -113,10 +112,6 @@ class c_game_event_listener final : public IGameEventListener2
 			color_modulation::event();
 			globals::team_damage.clear();
 		}
-		else if (name == FNV("player_footstep"))
-		{
-			sound_esp.event_player_footstep(context);
-		}
 		else if (name == FNV("player_death"))
 		{
 			auto attacker = c_base_player::GetPlayerByUserId(context->GetInt("attacker"));
@@ -135,8 +130,6 @@ class c_game_event_listener final : public IGameEventListener2
 				return;
 
 			HitPossitionHelper::Get().OnFireEvent(context);
-
-			sound_esp.event_player_hurt(context);
 
 			if (attacker->m_iTeamNum() == target->m_iTeamNum())
 				globals::team_damage[context->GetInt("attacker")] += context->GetInt("dmg_health");
@@ -281,19 +274,31 @@ class c_game_event_listener final : public IGameEventListener2
 				/* CHAMS MODES: */
 
 				if (settings::chams::enemymodenew == 0) //Normal
-					settings::chams::enemymodenew = 5; //XQZ
+					settings::chams::enemymodenew = 9; //XQZ
 
 				if (settings::chams::enemymodenew == 1) //Flat
-					settings::chams::enemymodenew = 7; //Flat XQZ
+					settings::chams::enemymodenew = 10; //Flat XQZ
 
 				if (settings::chams::enemymodenew == 2) //Wireframe
-					settings::chams::enemymodenew = 5; //XQZ
+					settings::chams::enemymodenew = 9; //XQZ
 
 				if (settings::chams::enemymodenew == 3) //Glass
-					settings::chams::enemymodenew = 5; //XQZ
+					settings::chams::enemymodenew = 9; //XQZ
 
 				if (settings::chams::enemymodenew == 4) //Metallic
-					settings::chams::enemymodenew = 6; //Metallic XQZ
+					settings::chams::enemymodenew = 11; //Metallic XQZ
+
+				if (settings::chams::enemymodenew == 5) //Crystal blue
+					settings::chams::enemymodenew = 9; //XQZ
+
+				if (settings::chams::enemymodenew == 6) //Metal gibs
+					settings::chams::enemymodenew = 9; //XQZ
+
+				if (settings::chams::enemymodenew == 7) //Shards
+					settings::chams::enemymodenew = 9; //XQZ
+
+				if (settings::chams::enemymodenew == 8) //Dev glow
+					settings::chams::enemymodenew = 9; //XQZ
 			}
 			else if (chance < settings::esp::esp_chance)
 			{
@@ -301,20 +306,32 @@ class c_game_event_listener final : public IGameEventListener2
 
 				/* CHAMS MODES: */
 
-				if (settings::chams::enemymodenew == 5) //XQZ
+				if (settings::chams::enemymodenew == 9) //XQZ
 					settings::chams::enemymodenew = 0; //Normal
 
-				if (settings::chams::enemymodenew == 7) //Flat XQZ
+				if (settings::chams::enemymodenew == 10) //Flat XQZ
 					settings::chams::enemymodenew = 1; //Flat
 
-				if (settings::chams::enemymodenew == 5) //XQZ
+				if (settings::chams::enemymodenew == 9) //XQZ
 					settings::chams::enemymodenew = 2; //Wireframe
 
-				if (settings::chams::enemymodenew == 5) //XQZ
+				if (settings::chams::enemymodenew == 9) //XQZ
 					settings::chams::enemymodenew = 3; //Glass
 
-				if (settings::chams::enemymodenew == 6) //Metallic XQZ
+				if (settings::chams::enemymodenew == 11) //Metallic XQZ
 					settings::chams::enemymodenew = 4; //Metallic
+
+				if (settings::chams::enemymodenew == 9) //XQZ
+					settings::chams::enemymodenew = 5; //Crystal blue
+
+				if (settings::chams::enemymodenew == 9) //XQZ
+					settings::chams::enemymodenew = 6; //Metal gibs
+
+				if (settings::chams::enemymodenew == 9) //XQZ
+					settings::chams::enemymodenew = 7; //Shards
+
+				if (settings::chams::enemymodenew == 9) //XQZ
+					settings::chams::enemymodenew = 8; //Dev glow
 			}
 		}
 		else if (name == FNV("cs_pre_restart") || name == FNV("switch_team") || name == FNV("announce_phase_end") || name == FNV("round_freeze_end"))

@@ -143,7 +143,6 @@ namespace render
 				checkbox("Ammo ESP", &settings::esp::ammo);
 				checkbox("Money ESP", &settings::esp::money);
 				checkbox("Choke ESP", &settings::visuals::choke);
-				checkbox("Sound ESP", &settings::esp::soundesp);
 				checkbox("No Sky", &settings::visuals::no_sky);
 				checkbox("No Shadows", &settings::visuals::no_shadows);
 
@@ -165,9 +164,13 @@ namespace render
 				"Visible - Wireframe",
 				"Visible - Glass",
 				"Visible - Metallic",
-				"XQZ",
-				"Metallic XQZ",
-				"Flat XQZ"
+				"Visible - Crystal Blue",
+				"Visible - Metal Gibs",
+				"Visible - Shards",
+				"Visible - Glow",
+				"XQZ - Normal",
+				"XQZ - Flat",
+				"XQZ - Metallic"
 				};
 
 				static const char* bttype[] = {
@@ -258,15 +261,42 @@ namespace render
 
 				ColorEdit4(___("Arms", u8"Руки"), &settings::chams::arms::color); */
 
+				static const char* glow_modes[] = {
+					"Exterior",
+					"Interior",
+					"Outline"
+				};
+
 				child(___("Glow", u8"Цветные Модели"), []()
 				{
-					checkbox("Enemy", &settings::glow::glowEnemyEnabled);
-					ImGui::SameLine();
+
+					columns(2);
+					{
+						checkbox("Enemy", &settings::glow::glowEnemyEnabled);
+
+						ImGui::NextColumn();
+
+						ImGui::PushItemWidth(-1);
+						ImGui::Combo("Enemy - Mode", &settings::glow::style_enemy, glow_modes, IM_ARRAYSIZE(glow_modes));
+						ImGui::PopItemWidth();
+					}
+					columns(1);
+
+					columns(2);
+					{
+						checkbox("Team  ", &settings::glow::glowTeamEnabled);
+
+						ImGui::NextColumn();
+
+						ImGui::PushItemWidth(-1);
+						ImGui::Combo("Team - Mode", &settings::glow::style_teammate, glow_modes, IM_ARRAYSIZE(glow_modes));
+						ImGui::PopItemWidth();
+					}
+					columns(1);
+
 					checkbox("Planted C4", &settings::glow::glowC4PlantedEnabled);
 					ImGui::SameLine();
 					checkbox("Nades", &settings::glow::glowNadesEnabled);
-					checkbox("Team  ", &settings::glow::glowTeamEnabled);
-					ImGui::SameLine();
 					checkbox("Weapons (?)", &settings::glow::glowDroppedWeaponsEnabled);
 					tooltip("Dropped Weapons Glow");
 				});

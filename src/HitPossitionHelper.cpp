@@ -41,7 +41,7 @@ void HitPossitionHelper::PlayerHurt(IGameEvent* event)
 	//int LastTick = -1;
 	for (auto info = saver.hitpositions.begin(); info != saver.hitpositions.end();)
 	{
-		if (Time > info->Time + (g::global_vars->interval_per_tick * 365))
+		if (Time > info->Time + (g::global_vars->interval_per_tick * 2))
 		{
 			info = saver.hitpositions.erase(info);
 			continue;

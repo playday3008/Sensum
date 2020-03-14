@@ -7,9 +7,8 @@
 #include "../hooks/hooks.h"
 #include "..//runtime_saver.h"
 #include "..//render/render.h"
-#include "..//Backtrack_new.h"
 #include "..//helpers/autowall.h"
-#include "..//soundesp.h"
+#include "..//MaterialManager.h"
 
 #include <mutex>
 
@@ -509,7 +508,7 @@ namespace visuals
 		};
 
 		
-		draw_arrow(side > 0.0f ? PI : PI * 2, IM_COL32(settings::esp::aa_indicator_color.r(), settings::esp::aa_indicator_color.g(), settings::esp::aa_indicator_color.b(), settings::esp::aa_indicator_color.a()));
+		draw_arrow(side > 0.0f ? PI : -PI * 4, IM_COL32(settings::esp::aa_indicator_color.r(), settings::esp::aa_indicator_color.g(), settings::esp::aa_indicator_color.b(), settings::esp::aa_indicator_color.a()));
 		//globals::draw_list->AddText(NULL, 19.f, ImVec2(side > 0.0f ? cx - 50 : cx + 40, cy - 10), IM_COL32(255, 255, 255, 255), side > 0.0f ? "<" : ">");
 	}
 
@@ -556,7 +555,7 @@ namespace visuals
 		{
 		case 0: material = Normal;
 			break;
-		case 1: material = Dogtags;
+		case 1: material = MaterialManager::Get().material_crystal_blue;
 			break;
 		case 2: material = Flat;
 			break;
@@ -703,7 +702,7 @@ namespace visuals
 		if (!weapon)
 			return;
 
-		float spread = weapon->GetInaccuracy() * 100;
+		float spread = weapon->GetInaccuracy() * 1000;
 
 		if (spread == 0.f)
 			return;
@@ -738,10 +737,10 @@ namespace visuals
 			switch (client_class->m_ClassID) {
 			case EClassId::CCSPlayer:
 				if (is_enemy && settings::glow::glowEnemyEnabled) {
-					glow.set(settings::glow::glowEnemyColor.r() / 255.f, settings::glow::glowEnemyColor.g() / 255.f, settings::glow::glowEnemyColor.b() / 255.f, settings::glow::glowEnemyColor.a() / 255.f);
+					glow.set(settings::glow::glowEnemyColor.r() / 255.f, settings::glow::glowEnemyColor.g() / 255.f, settings::glow::glowEnemyColor.b() / 255.f, settings::glow::glowEnemyColor.a() / 255.f, settings::glow::style_enemy);
 				}
 				else if (is_teammate && settings::glow::glowTeamEnabled) {
-					glow.set(settings::glow::glowTeamColor.r() / 255.f, settings::glow::glowTeamColor.g() / 255.f, settings::glow::glowTeamColor.b() / 255.f, settings::glow::glowTeamColor.a() / 255.f);
+					glow.set(settings::glow::glowTeamColor.r() / 255.f, settings::glow::glowTeamColor.g() / 255.f, settings::glow::glowTeamColor.b() / 255.f, settings::glow::glowTeamColor.a() / 255.f, settings::glow::style_teammate);
 				}
 				break;
 			case EClassId::CPlantedC4:

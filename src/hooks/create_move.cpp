@@ -6,8 +6,6 @@
 #include "../helpers/entities.h"
 #include "../features/features.h"
 #include "..//runtime_saver.h"
-#include "..//Backtrack_new.h"
-#include "..//soundesp.h"
 #pragma intrinsic(_ReturnAddress)
 
 float side = 1.0f;
@@ -16,7 +14,7 @@ float real_angle = 0.0f;
 float view_angle = 0.0f;
 
 static CCSGOPlayerAnimState g_AnimState;
-static int max_choke_ticks = 25;
+static int max_choke_ticks = 6;
 
 float AngleDiff(float destAngle, float srcAngle) {
 	float delta;
@@ -158,6 +156,9 @@ namespace hooks
 		slow_walk::handle(cmd);
 		fake_lags::handle(cmd, *sendpacket2);
 
+		visuals::remove_3dsky();
+		visuals::remove_shadows();
+
 		features::edgeJumpPre(cmd);
 		engine_prediction::start(cmd);
 
@@ -165,7 +166,7 @@ namespace hooks
 		entities::fetch_targets(cmd);
 
 		static int latency_ticks = 0;
-		float fl_latency = g::engine_client->GetNetChannelInfo()->GetLatency(FLOW_OUTGOING);
+		float fl_latency = g::engine_client->GetNetChannelInfo()->GetLatency(FLOW_INCOMING);
 		int latency = TIME_TO_TICKS(fl_latency);
 		if (g::client_state->chokedcommands <= 0) {
 			latency_ticks = latency;
@@ -216,6 +217,21 @@ namespace hooks
 			if ((weapon_index == WEAPON_GLOCK || weapon_index == WEAPON_FAMAS) && weapon->m_flNextPrimaryAttack() >= g::global_vars->curtime)
 				return;
 
+			auto weapon_data = weapon->get_weapon_data();
+
+			if (weapon_data->WeaponType == WEAPONTYPE_GRENADE) {
+				if (!weapon->m_bPinPulled()) {
+					float throwTime = weapon->m_fThrowTime();
+					if (throwTime > 0.f)
+						return;
+				}
+
+				if ((cmd->buttons & IN_ATTACK) || (cmd->buttons & IN_ATTACK2)) {
+					if (weapon->m_fThrowTime() > 0.f)
+						return;
+				}
+			}
+
 			static bool broke_lby = false;
 
 			if (settings::desync::desync_mode == 1) {
@@ -230,7 +246,7 @@ namespace hooks
 					|| std::fabsf(g::local_player->m_vecVelocity().z) <= 100.0f;
 
 				if ((cmd->command_number % 2) == 1) {
-					cmd->viewangles.yaw = 950.f; 
+					cmd->viewangles.yaw += 120.0f * side; //was 120.0f * side
 					if (should_move)
 						cmd->sidemove -= minimal_move;
 					*send_packet = false;
@@ -246,14 +262,17 @@ namespace hooks
 
 					broke_lby = false;
 					*send_packet = false;
-					cmd->viewangles.yaw = 950.f;
+					cmd->viewangles.yaw += 120.0f * side; //was 120.f and side
 				}
 				else {
 					broke_lby = true;
 					*send_packet = false;
-					cmd->viewangles.yaw = 950.f;
+					cmd->viewangles.yaw += 120.0f * -side; //was 120.f and -side
 				}
 			}
+
+			math::FixAngles(cmd->viewangles);
+			math::MovementFix(cmd, OldAngles, cmd->viewangles);
 		};
 
 		if (settings::visuals::grenade_prediction)
@@ -274,7 +293,8 @@ namespace hooks
 
 		visuals::runCM(cmd);
 
-		g_Backtrack.OnMove(cmd);
+		if (settings::misc::fast_stop)
+			features::fastStop(cmd);
 
 		if (g::local_player && g::local_player->IsAlive() && (cmd->buttons & IN_ATTACK || cmd->buttons & IN_ATTACK2))
 			saver.LastShotEyePos = g::local_player->GetEyePos();
@@ -282,12 +302,16 @@ namespace hooks
 		/*if (settings::misc::block_bot) //WIP blockbot, not fully working.
 			features::blockBot(cmd); */
 
+		//if (settings::misc::selfnade)
+			//features::SelfNade(cmd);
+
 		if (settings::misc::lefthandknife)
 			visuals::KnifeLeft();
 
 		if (settings::desync::enabled2 && std::fabsf(g::local_player->m_flSpawnTime() - g::global_vars->curtime) > 1.0f)
 			Desync(cmd, sendpacket2);
 
+		math::FixAngles(cmd->viewangles);
 		cmd->viewangles.yaw = std::remainderf(cmd->viewangles.yaw, 360.0f);
 
 		if (settings::desync::enabled2 && g::client_state->chokedcommands >= max_choke_ticks) {
@@ -384,9 +408,17 @@ namespace hooks
 		engine_prediction::finish(cmd);
 		features::edgeJumpPost(cmd);
 
+		if (settings::misc::selfnade)
+			features::SelfNade(cmd);
+
 		if (!(cmd->buttons & IN_BULLRUSH))
 			cmd->buttons |= IN_BULLRUSH;
 
+		cmd->viewangles.pitch = std::clamp(cmd->viewangles.pitch, -89.0f, 89.0f);
+		cmd->viewangles.yaw = std::clamp(cmd->viewangles.yaw, -180.0f, 180.0f);
+		cmd->viewangles.roll = 0.0f;
+		cmd->forwardmove = std::clamp(cmd->forwardmove, -450.0f, 450.0f);
+		cmd->sidemove = std::clamp(cmd->sidemove, -450.0f, 450.0f);
 		return false;
 	}
 }

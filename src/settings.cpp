@@ -45,14 +45,12 @@ namespace settings
 		bool haskit = false;
 		bool money = false;
 		bool antiobs = false;
-		bool soundesp = false;
 		bool mat_force_apply = false;
 		bool is_desyncing = false;
 		bool buylog = false;
 
 		Color visibleColor = Color(0, 200, 80);
 		Color occludedColor = Color(0, 0, 0);
-		Color colorSoundEsp = Color(154, 0, 255, 255);
 		Color aa_indicator_color = Color(255, 255, 255, 255);
 	}
 
@@ -64,6 +62,9 @@ namespace settings
 		bool glowDroppedWeaponsEnabled = false;
 		bool glowNadesEnabled = false;
 		bool glowOverride = false;
+
+		int style_enemy = 0;
+		int style_teammate = 0;
 
 		Color glowEnemyColor = Color(255, 0, 0, 255);
 		Color glowTeamColor(0, 255, 0, 255);
@@ -274,7 +275,6 @@ namespace settings
 			Option::Load(root["esp.mat_force_value"], esp::mfts);
 			Option::Load(root["esp.draw_aimbot_fov"], esp::drawFov);
 			Option::Load(root["esp.chance_value"], settings::esp::esp_chance);
-			Option::Load(root["esp.sound_esp"], settings::esp::soundesp);
 			Option::Load(root["esp.draw_aimbot_fov_color"], settings::visuals::drawfov_color);
 			Option::Load(root["esp.damage_indicator"], settings::misc::damage_indicator);
 			Option::Load(root["esp_weapon_mode"], settings::esp::weapon_mode);
@@ -540,7 +540,6 @@ namespace settings
 			config["esp.mat_force_value"] = esp::mfts;
 			config["esp.draw_aimbot_fov"] = esp::drawFov;
 			config["esp.chance_value"] = settings::esp::esp_chance;
-			config["esp.sound_esp"] = settings::esp::soundesp;
 			config["esp.damage_indicator"] = settings::misc::damage_indicator;
 			config["esp_weapon_mode"] = settings::esp::weapon_mode;
 			config["esp.player_info_box_alpha"] = settings::visuals::player_info_box_alpha;

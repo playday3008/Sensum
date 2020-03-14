@@ -116,6 +116,7 @@ namespace fake_lags
 					continue;
 
 				math::vector2angles(entity_pos - eye_pos, aim_angles);
+				aim_angles.NormalizeClamp();
 
 				targets.push_back({ math::GetFovToPlayer(angles, aim_angles), entity_pos, entity });
 			}

@@ -4,7 +4,6 @@
 #include "../helpers/utils.h"
 #include "../helpers/console.h"
 #include "../features/features.h"
-#include "..//soundesp.h"
 
 namespace hooks
 {
@@ -31,6 +30,9 @@ namespace hooks
 
 	void __stdcall post_data_update::hooked(int update_type)
 	{
+		skins::handle();
+		resolver::handle();
+	
 		hook.get_original<fn>(index)(static_cast<IClientNetworkable*>(interfaces::local_player), update_type);
 	}
 }

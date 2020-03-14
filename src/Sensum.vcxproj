@@ -115,7 +115,6 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Backtrack_new.cpp" />
     <ClCompile Include="block_bot.cpp" />
     <ClCompile Include="Chams.cpp" />
     <ClCompile Include="colors_tab.cpp" />
@@ -191,7 +190,6 @@
     <ClCompile Include="jsoncpp\jsoncpp.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="options.cpp" />
-    <ClCompile Include="soundesp.cpp" />
     <ClCompile Include="Sounds.cpp" />
     <ClCompile Include="valve_sdk\csgostructs.cpp" />
     <ClCompile Include="valve_sdk\math\Vectors.cpp" />
@@ -206,7 +204,6 @@
     <ClCompile Include="valve_sdk\netvars.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Backtrack_new.h" />
     <ClInclude Include="Chams.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="deps\blackbone\LocalHook\HookHandlerCdecl.h" />
@@ -254,7 +251,6 @@
     <ClInclude Include="jsoncpp\json.h" />
     <ClInclude Include="options.hpp" />
     <ClInclude Include="singleton.hpp" />
-    <ClInclude Include="soundesp.h" />
     <ClInclude Include="Sounds.h" />
     <ClInclude Include="valve_sdk\csgostructs.hpp" />
     <ClInclude Include="valve_sdk\interfaces\CClientState.h" />

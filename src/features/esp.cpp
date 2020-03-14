@@ -185,7 +185,7 @@ namespace esp
 				static const auto scoped_text_size = ImGui::CalcTextSize("Scoped");
 				auto x = box.left + width / 2.f - scoped_text_size.x / 2.f;
 
-				imdraw::outlined_text("Scoped", ImVec2(x, box.top - scoped_text_size.y - -80.f), white_color);
+				imdraw::outlined_text("Scoped", ImVec2(x, box.top - scoped_text_size.y - 20.f), white_color);
 			}
 
 			if (settings::esp::is_flashed && data.is_flashed && !data.is_dormant)
@@ -193,21 +193,21 @@ namespace esp
 				static const auto flashed_text_size = ImGui::CalcTextSize("Flashed");
 				auto x = box.left + width / 2.f - flashed_text_size.x / 2.f;
 
-				imdraw::outlined_text("Flashed", ImVec2(x, box.top - flashed_text_size.y - -365.f), yellow_color);
+				imdraw::outlined_text("Flashed", ImVec2(x, box.top - flashed_text_size.y - 12.f), yellow_color);
 			}
 
 			if (settings::esp::is_defusing && data.is_defusing && !data.is_dormant)
 			{
 				static const auto defusing_text_size = ImGui::CalcTextSize("Defusing");
 
-				imdraw::outlined_text("Defusing", ImVec2(box.right + 2.f, box.top - defusing_text_size.y - -88.f), red_color);
+				imdraw::outlined_text("Defusing", ImVec2(box.right + 2.f, box.top - defusing_text_size.y - -30.f), red_color);
 			}
 
 			if (settings::esp::kevlarinfo && data.has_kevlar && data.has_helmet && !data.is_dormant && is_matchmaking())
 			{
 				static const auto defusing_text_size = ImGui::CalcTextSize("HK");
 
-				imdraw::outlined_text("HK", ImVec2(box.right + 2.f, box.top - defusing_text_size.y - -5.f), white_color);
+				imdraw::outlined_text("HK", ImVec2(box.right + 2.f, box.top - defusing_text_size.y - -10.0f), white_color);
 			}
 
 			if (settings::esp::kevlarinfo && data.has_kevlar && !data.has_helmet && !data.is_dormant && is_matchmaking())
@@ -369,6 +369,7 @@ namespace esp
 				case 1:
 					ImGui::PushFont(render::fonts::weapon_icon);
 					imdraw::outlined_text(data.icon.c_str(), ImVec2(box.left + width / 2.f - data.wep_str_size / 2.f, y_pos), white_color); //was 28
+					ImGui::PopFont();
 					break;
 				}
 			}

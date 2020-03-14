@@ -500,6 +500,7 @@ float math::GetRealDistanceFOV(const float& distance, const QAngle& current, con
 float math::GetFovToPlayer(const QAngle& current_angles, const QAngle& aim_angles)
 {
 	QAngle delta = aim_angles - current_angles;
+	delta.NormalizeClamp();
 
 	return sqrtf(powf(delta.pitch, 2.0f) + powf(delta.yaw, 2.0f));
 }
@@ -540,6 +541,7 @@ void math::angle2vectors(const QAngle& angles, Vector* forward, Vector* right, V
 void math::smooth(const float& amount, const QAngle& current_angles, const QAngle& aim_angles, QAngle& angles, const bool& humanize)
 {
 	angles = aim_angles;
+	angles.NormalizeClamp();
 
 	auto corrected_amount = amount;
 	auto tickrate = 1.0f / interfaces::global_vars->interval_per_tick;
@@ -574,6 +576,7 @@ void math::smooth(const float& amount, const QAngle& current_angles, const QAngl
 	const auto smoothed = current_vector + delta / corrected_amount;
 
 	vector2angles(smoothed, angles);
+	angles.NormalizeClamp();
 }
 
 float math::AngleNormalize(float angle)

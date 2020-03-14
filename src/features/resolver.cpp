@@ -14,6 +14,7 @@ namespace resolver
 			if (player && player->IsPlayer() && player != interfaces::local_player)
 			{
 				player->m_angEyeAngles().yaw = player->m_flLowerBodyYawTarget();
+				player->m_angEyeAngles().NormalizeClamp();
 			}
 		}
 	}

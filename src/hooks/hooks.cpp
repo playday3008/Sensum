@@ -12,7 +12,6 @@
 #include "..//runtime_saver.h"
 #include "..//jsoncpp/json.h"
 #include "..//helpers/input.h"
-#include "..//soundesp.h"
 
 using namespace blackbone;
 
@@ -26,10 +25,8 @@ namespace hooks
 	vfunc_hook client_mode::hook;
 	vfunc_hook sound_hook::hook;
 	vfunc_hook vgui_panel::hook;
-	//vfunc_hook mdlrender::hook;
 	vfunc_hook renderview::hook;
 	vfunc_hook events::hook;
-	//vfunc_hook SL::hook;
 	vfunc_hook engine_mode::hook;
 	vfunc_hook find_mdl_override::hook;
 
@@ -94,6 +91,20 @@ namespace hooks
 
 		//set_vmt_hook<fire_bullets>(interfaces::fire_bullets, xorstr_("client.dll"));
 		//set_vmt_hook<retrieve_message>(interfaces::game_coordinator);
+
+		event_listener = new c_game_event_listener();
+		interfaces::game_events->add_listener(event_listener, xorstr_("game_newmap"), false);
+		interfaces::game_events->add_listener(event_listener, xorstr_("switch_team"), false);
+		interfaces::game_events->add_listener(event_listener, xorstr_("player_hurt"), false);
+		interfaces::game_events->add_listener(event_listener, xorstr_("bullet_impact"), false);
+		interfaces::game_events->add_listener(event_listener, xorstr_("item_purchase"), false);
+		interfaces::game_events->add_listener(event_listener, xorstr_("player_spawned"), false);
+		interfaces::game_events->add_listener(event_listener, xorstr_("cs_pre_restart"), false);
+		interfaces::game_events->add_listener(event_listener, xorstr_("round_freeze_end"), false);
+		interfaces::game_events->add_listener(event_listener, xorstr_("announce_phase_end"), false);
+		interfaces::game_events->add_listener(event_listener, xorstr_("round_start"), false);
+		interfaces::game_events->add_listener(event_listener, xorstr_("player_footstep"), false);
+		interfaces::game_events->add_listener(event_listener, xorstr_("player_death"), false);
 	}
 
 	void destroy()
@@ -104,6 +115,11 @@ namespace hooks
 		d3d9::hook.unhook_all();
 		client_mode::hook.unhook_all();
 		vgui_panel::hook.unhook_all();
+		sound_hook::hook.unhook_all();
+		renderview::hook.unhook_all();
+		events::hook.unhook_all();
+		engine_mode::hook.unhook_all();
+		find_mdl_override::hook.unhook_all();
 
 		delete sequence::hook;
 	}
@@ -112,8 +128,8 @@ namespace hooks
 	{
 		auto original = hook.get_original<fn>(index);
 
-		if (strstr(FilePath, "arms"))
-			sprintf(FilePath, "models/player/custom_player/kuristaja/nanosuit/nanosuit_arms.mdl");
+		/*if (strstr(FilePath, "arms"))
+			sprintf(FilePath, "models/player/custom_player/kuristaja/nanosuit/nanosuit_arms.mdl");*/
 
 		return original(ecx, FilePath);
 	}
@@ -123,8 +139,11 @@ namespace hooks
 		static const auto original = hook.get_original<fn>(index);
 
 		no_flash::handle();
+		no_smoke::handle();
 		clantag::animate();
 		color_modulation::handle();
+
+		features::thirdperson();
 
 		if (!interfaces::engine_client->IsConnected() || !interfaces::engine_client->IsInGame())
 			return original(interfaces::client_mode, view);
@@ -154,6 +173,9 @@ namespace hooks
 		if (g::engine_client->IsInGame() && g::engine_client->IsConnected() && settings::misc::noscope && !strcmp("HudZoom", interfaces::vgui_panel->GetName(panel)))
 			return;
 
+		if (settings::misc::smoke_helper)
+			visuals::DrawRing3D();
+
 		if (settings::visuals::choke)
 			visuals::Choke();
 
@@ -176,7 +198,7 @@ namespace hooks
 		{
 			const auto panelName = interfaces::vgui_panel->GetName(panel);
 
-			if (!strcmp(panelName, "FocusOverlayPanel"))  //FocusOverlayPanel
+			if (!strcmp(panelName, "FocusOverlayPanel")) 
 				panelId = panel;
 		}
 		else if (panelId == panel)
@@ -241,6 +263,9 @@ namespace hooks
 		static auto original = hook.get_original<fn>(index);
 
 		visuals::glow();
+
+		if (settings::glow::glowOverride)
+			visuals::glow_override();
 
 		return original(interfaces::client_mode, value);
 	}

@@ -49,6 +49,10 @@ void Chams::OnSceneEnd()
 		bool flat_xqz = false;
 		bool glow = false;
 		bool glow_xqz = false;
+		bool crystal_blue = false;
+		bool metal_gibs = false;
+		bool shards = false;
+		bool dev_glow = false;
 
 		ChamsModes mode = IsLocal ? LocalChamsMode : (IsTeam ? TeamChamsMode : EnemyChamsMode);
 
@@ -70,56 +74,71 @@ void Chams::OnSceneEnd()
 
 		switch (mode)
 		{
-		case ChamsModes::NORMAL:
+		case ChamsModes::regular:
 			normal = true;
 			break;
-		case ChamsModes::FLAT:
+		case ChamsModes::flat:
 			flat = true;
 			break;
-		case ChamsModes::WIREFRAME:
+		case ChamsModes::wireframe:
 			wireframe = true;
 			break;
-		case ChamsModes::GLASS:
+		case ChamsModes::glass:
 			glass = true;
 			break;
-		case ChamsModes::METALLIC:
+		case ChamsModes::reflective:
 			metallic = true;
 			break;
-		case ChamsModes::XQZ:
+		case ChamsModes::crystal_blue:
+			crystal_blue = true;
+			break;
+		case ChamsModes::metal_gibs:
+			metal_gibs = true;
+			break;
+		case ChamsModes::shards:
+			shards = true;
+			break;
+		case ChamsModes::dev_glow:
+			dev_glow = true;
+			break;
+		case ChamsModes::regular_xqz:
+			normal = true;
 			xqz = true;
 			break;
-		case ChamsModes::METALLIC_XQZ:
-			metallic = true;
-			metallic_xqz = true;
-			break;
-		case ChamsModes::FLAT_XQZ:
+		case ChamsModes::flat_xqz:
 			flat = true;
 			flat_xqz = true;
+			break;
+		case ChamsModes::reflective_xqz:
+			metallic = true;
+			metallic_xqz = true;
 			break;
 		}
 
 		int health = entity->m_iHealth();
-
+		
 		if (settings::chams::health_chams)
 		{
 			if (health == 100 || health >= 81)
 				clr2 = Color(5, 255, 0, 255);
 			else if (health == 80 || health >= 61)
-				clr2 = Color(5, 255, 0, 255);
+				clr2 = Color::Yellow;
 			else if (health == 60 || health >= 21)
-				clr2 = Color(5, 255, 0, 255);
+				clr2 = Color(255, 127, 0, 255); //Orange
 			else if (health <= 20)
-				clr2 = Color(5, 255, 0, 255);
+				clr2 = Color::Red;
 		}
 
-		MaterialManager::Get().OverrideMaterial(xqz || metallic_xqz || flat_xqz, flat, wireframe, glass, metallic);
+		MaterialManager::Get().OverrideMaterial(xqz || metallic_xqz || flat_xqz, flat, wireframe, glass, metallic, crystal_blue, metal_gibs, shards, dev_glow);
 		g::render_view->SetColorModulation(clr2.r() / 255.f, clr2.g() / 255.f, clr2.b() / 255.f);
 		entity->GetClientRenderable()->DrawModel(0x1, 255);
 		if (xqz || metallic_xqz || flat_xqz || glow_xqz)
 		{
-			MaterialManager::Get().OverrideMaterial(true, flat, wireframe, glass, metallic);
+			MaterialManager::Get().OverrideMaterial(false, flat, wireframe, glass, metallic, crystal_blue, metal_gibs, shards, dev_glow);
 			g::render_view->SetColorModulation(clr.r() / 255.f, clr.g() / 255.f, clr.b() / 255.f);
 			entity->GetClientRenderable()->DrawModel(0x1, 255);
 		}
+		g::mdl_render->ForcedMaterialOverride(nullptr);
 	}
+	g::mdl_render->ForcedMaterialOverride(nullptr);
 }

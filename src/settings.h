@@ -174,7 +174,6 @@ namespace settings
 		extern bool money;
 		extern bool ammo;
 		extern bool antiobs;
-		extern bool soundesp;
 		extern bool mat_force_apply;
 		extern bool is_desyncing;
 		extern bool buylog;
@@ -182,7 +181,6 @@ namespace settings
 		extern Color visibleColor;
 		extern Color occludedColor;
 
-		extern Color colorSoundEsp;
 		extern Color aa_indicator_color;
 	}
 
@@ -194,6 +192,9 @@ namespace settings
 		extern bool glowDroppedWeaponsEnabled;
 		extern bool glowNadesEnabled;
 		extern bool glowOverride;
+
+		extern int style_enemy;
+		extern int style_teammate;
 
 		extern Color glowEnemyColor;
 		extern Color glowTeamColor;

@@ -82,6 +82,7 @@ namespace zeusbot
 						continue;
 
 					math::vector2angles(hitbox - eye_pos, angles);
+					angles.NormalizeClamp();
 
 					const auto fov = math::GetFovToPlayer(cmd->viewangles, angles);
 					if (fov > best_fov && best_fov > 0.f)
@@ -111,6 +112,7 @@ namespace zeusbot
 			return;
 
 		math::vector2angles(best_pos - eye_pos, angles);
+		angles.NormalizeClamp();
 
 		if (!utils::hitchance(target, angles, 80.f))
 			return;
@@ -123,7 +125,7 @@ namespace zeusbot
 
 		math::correct_movement(cmd, old_angles);
 
-		if ((cmd->buttons & IN_ATTACK))
+		if (!(cmd->buttons & IN_ATTACK))
 			cmd->buttons |= IN_ATTACK;
 	}
 }

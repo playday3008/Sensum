@@ -132,17 +132,17 @@ bool c_base_entity::is_dormant()
 
 float c_base_combat_weapon::GetInaccuracy()
 {
-	return CallVFunction<float(__thiscall*)(void*)>(this, 479)(this);
+	return CallVFunction<float(__thiscall*)(void*)>(this, 482)(this);
 }
 
 float c_base_combat_weapon::GetSpread()
 {
-	return CallVFunction<float(__thiscall*)(void*)>(this, 449)(this);
+	return CallVFunction<float(__thiscall*)(void*)>(this, 452)(this);
 }
 
 void c_base_combat_weapon::UpdateAccuracyPenalty()
 {
-	CallVFunction<void(__thiscall*)(void*)>(this, 480)(this);
+	CallVFunction<void(__thiscall*)(void*)>(this, 483)(this);
 }
 
 void c_base_player::PVSFix()
@@ -232,7 +232,7 @@ bool c_base_entity::IsWeapon()
 
 bool c_base_entity::IsPlantedC4()
 {
-	return GetClientClass()->m_ClassID == 128;//CPlantedC4;
+	return GetClientClass()->m_ClassID == CPlantedC4;
 }
 
 bool c_base_entity::IsDefuseKit()
@@ -242,8 +242,7 @@ bool c_base_entity::IsDefuseKit()
 
 CCSWeaponInfo* c_base_combat_weapon::get_weapon_data()
 {
-	//return interfaces::weapon_system->GetWpnData(m_iItemDefinitionIndex());
-	return CallVFunction<CCSWeaponInfo * (__thiscall*)(void*)>(this, 457)(this);
+	return CallVFunction<CCSWeaponInfo * (__thiscall*)(void*)>(this, 460)(this);
 }
 
 bool c_base_combat_weapon::HasBullets()
@@ -465,21 +464,21 @@ float c_base_combat_weapon::GetGunStringSize()
 	case WEAPON_M249:
 		return 28.f;
 	case WEAPON_TASER:
-		return 28.f;
+		return 18.f;
 	case WEAPON_FLASHBANG:
-		return 35.f;
+		return 18.f;
 	case WEAPON_HEGRENADE:
-		return 35.f;
+		return 18.f;
 	case WEAPON_SMOKEGRENADE:
-		return 35.f;
+		return 18.f;
 	case WEAPON_MOLOTOV:
-		return 35.f;
+		return 18.f;
 	case WEAPON_DECOY:
-		return 35.f;
+		return 18.f;
 	case WEAPON_INCGRENADE:
-		return 35.f;
+		return 18.f;
 	case WEAPON_C4:
-		return 35.f;
+		return 18.f;
 	default:
 		return 0.f;
 	}

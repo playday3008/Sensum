@@ -8,27 +8,22 @@
 
 enum class ChamsModes : int
 {
-	NORMAL,
-	FLAT,
-	WIREFRAME,
-	GLASS,
-	METALLIC,
-	XQZ,
-	METALLIC_XQZ,
-	FLAT_XQZ
+	regular,
+	flat,
+	wireframe,
+	glass,
+	reflective,
+	crystal_blue,
+	metal_gibs,
+	shards,
+	dev_glow,
+	regular_xqz,
+	flat_xqz,
+	reflective_xqz
 };
 
 class Chams : public Singleton<Chams>
 {
 public:
 	void OnSceneEnd();
-private:
-	IMaterial* materialRegular = nullptr;
-	IMaterial* materialRegularIgnoreZ = nullptr;
-	IMaterial* materialFlat = nullptr;
-	IMaterial* materialFlatIgnoreZ = nullptr;
-	IMaterial* materialReflective = nullptr;
-	IMaterial* materialReflectiveIgnoreZ = nullptr;
-	IMaterial* materialGlow = nullptr;
-	IMaterial* materialGlowIgnoreZ = nullptr;
 };
