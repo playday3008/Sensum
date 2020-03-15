@@ -2,9 +2,47 @@
 #include "settings.h"
 #include "features/features.h"
 #include "hooks/hooks.h"
-#include "Backtrack_new.h"
 #include <fstream>
 #include "esp.hpp"
+
+bool IsXQZ()
+{
+	if (settings::chams::enemymodenew == 0)
+		return false;
+
+	if (settings::chams::enemymodenew == 1)
+		return false;
+
+	if (settings::chams::enemymodenew == 2)
+		return false;
+
+	if (settings::chams::enemymodenew == 3)
+		return false;
+
+	if (settings::chams::enemymodenew == 4)
+		return false;
+
+	if (settings::chams::enemymodenew == 5)
+		return false;
+
+	if (settings::chams::enemymodenew == 6)
+		return false;
+
+	if (settings::chams::enemymodenew == 7)
+		return false;
+
+	if (settings::chams::enemymodenew == 8)
+		return false;
+
+	if (settings::chams::enemymodenew == 9)
+		return true;
+
+	if (settings::chams::enemymodenew == 10)
+		return true;
+
+	if (settings::chams::enemymodenew == 11)
+		return true;
+}
 
 void Chams::OnSceneEnd()
 {
@@ -69,8 +107,9 @@ void Chams::OnSceneEnd()
 			continue;
 		}
 
-		Color clr = IsLocal ? LocalColor : (IsTeam ? TeamColor : EnemyColor);
-		Color clr2 = IsLocal ? LocalColorXqz : (IsTeam ? TeamColorXqz : EnemyColorXqz);
+
+		Color clr = IsLocal ? LocalColor : (IsTeam ? TeamColor : (!IsXQZ() ? EnemyColorXqz : EnemyColor));
+		Color clr2 = IsLocal ? LocalColorXqz : (IsTeam ? TeamColorXqz : (IsXQZ() ? EnemyColorXqz : EnemyColor));
 
 		switch (mode)
 		{
@@ -129,13 +168,11 @@ void Chams::OnSceneEnd()
 				clr2 = Color::Red;
 		}
 
-		MaterialManager::Get().OverrideMaterial(xqz || metallic_xqz || flat_xqz, flat, wireframe, glass, metallic, crystal_blue, metal_gibs, shards, dev_glow);
-		g::render_view->SetColorModulation(clr2.r() / 255.f, clr2.g() / 255.f, clr2.b() / 255.f);
+		MaterialManager::Get().OverrideMaterial(xqz || metallic_xqz || flat_xqz, flat, wireframe, glass, metallic, crystal_blue, metal_gibs, shards, dev_glow, clr2);
 		entity->GetClientRenderable()->DrawModel(0x1, 255);
 		if (xqz || metallic_xqz || flat_xqz || glow_xqz)
 		{
-			MaterialManager::Get().OverrideMaterial(false, flat, wireframe, glass, metallic, crystal_blue, metal_gibs, shards, dev_glow);
-			g::render_view->SetColorModulation(clr.r() / 255.f, clr.g() / 255.f, clr.b() / 255.f);
+			MaterialManager::Get().OverrideMaterial(false, flat, wireframe, glass, metallic, crystal_blue, metal_gibs, shards, dev_glow, clr);
 			entity->GetClientRenderable()->DrawModel(0x1, 255);
 		}
 		g::mdl_render->ForcedMaterialOverride(nullptr);
