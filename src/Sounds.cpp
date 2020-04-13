@@ -1,5 +1,5 @@
 #include "Sounds.h"
-#pragma warning(disable : 4309)
+#pragma warning(disable : 4309 4838)
 
 namespace Sounds
 {
