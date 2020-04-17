@@ -13,7 +13,7 @@ namespace render
 	{
 		void colors_tab()
 		{
-			separator("Chams");
+			separator("Chams", u8"Чамсы");
 			ColorEdit4("Enemy Visible", &settings::chams::EnemyColor_vis, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 			ImGui::SameLine();
 			ColorEdit4("Enemy XQZ", &settings::chams::EnemyColor_XQZ, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
@@ -28,7 +28,7 @@ namespace render
 			ColorEdit4("Planted C4     ##chams", &settings::chams::colorPlantedC4Chams, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 			ImGui::SameLine();
 			ColorEdit4("Weapons (?)##chams", &settings::chams::ColorWeaponDroppedChams, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
-			tooltip("Dropped Weapons");
+			tooltip("Dropped Weapons", u8"Брошенное оружие");
 			ColorEdit4("Grenades      ##chams", &settings::chams::colorNadeChams, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);
 			ImGui::SameLine();
 			ColorEdit4("Real Angle##chams", &settings::chams::desync_color, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_PickerHueBar);

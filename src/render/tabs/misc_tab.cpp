@@ -116,7 +116,7 @@ namespace render
 						___("Only in air", u8"Только в прыжке"),
 						___("When picking", u8"Во время пика"),
 						___("By button", u8"По кнопке"),
-						___("Adaptive", u8"По кнопке")
+						___("Adaptive", u8"Адаптивный")
 					};
 
 					ImGui::Combo("##lag_type", &settings::fake_lags::type, lag_types, IM_ARRAYSIZE(lag_types));
@@ -209,9 +209,9 @@ namespace render
 
 			child(___("Extra", u8"Прочее"), []()
 			{
-				//checkbox("Russian", u8"Русский язык", &globals::russian_language);
-				//checkbox("Disable Animations (?)", u8"Отключить анимации (?)", &globals::no_animations);
-				//tooltip("Disables the cheat menu animations.", u8"Отключает анимации меню чита.");
+				checkbox("Russian (Beta)", u8"Русский язык (Бета)", &globals::russian_language);
+				checkbox("Disable Animations (?)", u8"Отключить анимации (?)", &globals::no_animations);
+				tooltip("Disables the cheat menu animations.", u8"Отключает анимации меню чита.");
 
 				const char* fastStopModes[] = {
 					"Off",
@@ -226,13 +226,13 @@ namespace render
 				checkbox("No Smoke", u8"Убрать дымовые", &settings::misc::no_smoke);
 				checkbox("Bunny Hop", u8"Распрыжка", &settings::misc::bhop);
 				checkbox("Auto Strafe", u8"Стрейфы", &settings::misc::auto_strafe);
-				checkbox("Knife Bot", u8"Ножевой бот", &settings::misc::knife_bot);
+				//checkbox("Knife Bot", u8"Ножевой бот", &settings::misc::knife_bot);
 				checkbox("Moon Walk", u8"Лунная походка", &settings::misc::moon_walk);
 				checkbox("Deathmatch", u8"Бой насмерть", &settings::misc::deathmatch);
 				checkbox("Post Processing", u8"Постообработка", &globals::post_processing);
-				checkbox("Resolver", u8"Постообработка", &settings::desync::resolver);
-				checkbox("Humanised Bhop", u8"Постообработка", &settings::misc::human_bhop);
-				checkbox("Noscope Overlay", u8"Постообработка", &settings::misc::noscope);
+				checkbox("Resolver", u8"Резольвер", &settings::desync::resolver);
+				checkbox("Humanised Bhop", u8"Человеческий бхоп", &settings::misc::human_bhop);
+				checkbox("Noscope Overlay", &settings::misc::noscope);
 				checkbox("No 3rd Person on Equiped Weapons.", &settings::misc::disable_on_weapon);
 				checkbox("Anti OBS", &settings::misc::anti_obs);
 				checkbox("Left Hand Knife", &settings::misc::lefthandknife);
@@ -284,7 +284,7 @@ namespace render
 
 				if (settings::misc::human_bhop)
 				{
-					separator(___("Humanised Bhop Settings", u8"Фейк лаги"));
+					separator(___("Humanised Bhop Settings", u8"Человеческий бхоп"));
 
 					ImGui::SliderIntLeftAligned("Bhop Hit Chance", &settings::misc::bhop_hit_chance, 0, 100, "%.0f %%");
 					tooltip("The chance of second hop, first hop is always at 100%");

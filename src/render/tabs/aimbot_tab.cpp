@@ -182,7 +182,7 @@ namespace render
 
 				checkbox("Enabled", u8"Включено", &settings->enabled);
 				checkbox("Randomise RCS", u8"Смягчать", &settings->recoil.humanize);
-				tooltip("Enabling this will randomise RCS between 0.1 - 0.5 at X and 0.1 - 0.6 on Y");
+				tooltip("Enabling this will randomise RCS between 0.1 - 0.5 at X and 0.1 - 0.6 on Y", u8"Включение этого будет рандомизировать RCS между 0,1 - 0,5 в X и 0,1 - 0,6 в Y");
 
 				if (settings::aimbot::setting_type == settings_type_t::separately)
 				{
@@ -209,7 +209,7 @@ namespace render
 
 				checkbox("Air Check", u8"Не наводиться в прыжке", &settings->check_air);
 				checkbox("Flash Check", u8"Не наводиться ослепленным", &settings->check_flash);
-				checkbox("Smoke Check", u8"Не наводиться в дымовые", &settings->check_smoke);
+				checkbox("Smoke Check", u8"Не наводиться в дым", &settings->check_smoke);
 
 				if (settings::aimbot::setting_type == settings_type_t::separately)
 				{

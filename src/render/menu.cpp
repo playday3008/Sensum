@@ -473,7 +473,7 @@ namespace render
 			{
 				static const auto white = ImGui::GetColorU32(ImVec4(1.f, 1.f, 1.f, 1.f));
 
-				title_size = ImGui::CalcTextSize("Sensum");
+				title_size = ImGui::CalcTextSize("PonySense");
 				const auto rect_start = ImVec2(win_pos.x, win_pos.y);
 				const auto rect_end = ImVec2(win_pos.x + window_size.x, win_pos.y + title_size.y + 16.f);
 				const auto rect_height = rect_end.y - rect_start.y;
@@ -499,7 +499,7 @@ namespace render
 				if (globals::no_animations)
 				{
 					ImGui::PushStyleColor(ImGuiCol_Text, ImVec4::White);
-					ImGui::Text("Sensum");
+					ImGui::Text("PonySense");
 					ImGui::PopStyleColor();
 				}
 				else
@@ -510,7 +510,7 @@ namespace render
 
 					auto rainbow = _rainbow;
 
-					for (auto& letter : "Sensum")
+					for (auto& letter : "PonySense")
 					{
 						const auto rgb_color = Color::FromHSB(rainbow, 1.f, 1.f);
 
@@ -600,13 +600,13 @@ namespace render
 		{
 			ImVec2 win_pos = ImGui::GetWindowPos();
 
-			static const auto copyright = "t.me/xardch";
+			static const auto copyright = "Fluttershy";
 			static const auto copyright_size = ImGui::CalcTextSize(copyright);
 
 			static char buildtime[256];
 			sprintf(buildtime, "Built on %s | Version %s", __DATE__, VERSION);
 			static const auto buildtime_size = ImGui::CalcTextSize(buildtime);
-			static const auto name_size = ImGui::CalcTextSize("Sensum");
+			static const auto name_size = ImGui::CalcTextSize("PonySense");
 
 			auto draw_list = ImGui::GetWindowDrawList();
 			const auto bottom_color = ImGui::GetColorU32(ImVec4(0.1f, 0.1f, 0.1f, 1.f));
@@ -664,7 +664,7 @@ namespace render
 			style->WindowPadding = ImVec2(0, 0);
 
 			static auto flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar; //ImGuiWindowFlags_NoMove
-			ImGui::Begin("Sensum", nullptr, flags);
+			ImGui::Begin("PonySense", nullptr, flags);
 			{
 				render_header();
 
