@@ -545,7 +545,7 @@ namespace render
 					___(xorstr_("Misc"), xorstr_(u8"Прочее")),
 					___(xorstr_("Skins"), xorstr_(u8"Скины")),
 					___(xorstr_("Players"), xorstr_(u8"Игроки")),
-					___(xorstr_("Colors"), xorstr_(u8"Визуалы")),
+					___(xorstr_("Colors"), xorstr_(u8"Цвета")),
 					___(xorstr_("Configs"), xorstr_(u8"Конфиги"))
 				};
 
